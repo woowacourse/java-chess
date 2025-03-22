@@ -102,13 +102,8 @@ public class Queen implements Piece {
     }
 
     private void attack(Board board, Position newPosition) {
-        Optional<Piece> existingPiece = board.findByPosition(newPosition);
-        if (existingPiece.isPresent() && existingPiece.get().isEnemyWith(this)) {
-            this.position = newPosition;
-            board.remove(newPosition);
-            return;
-        }
-        throw new IllegalArgumentException("공격할 수 없습니다.");
+        this.position = newPosition;
+        board.remove(newPosition);
     }
 
     public static List<Piece> initialize(Color color) {
