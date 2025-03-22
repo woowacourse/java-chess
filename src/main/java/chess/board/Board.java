@@ -19,8 +19,8 @@ public class Board {
     }
 
     public boolean isSameColorPieceExists(Position goal, Color color) {
-        // TODO
-        return false;
+        Piece piece = board.get(goal);
+        return piece.isSameColor(color);
     }
 
     public boolean isPieceExists(Position position) {

@@ -30,4 +30,8 @@ public abstract class Piece {
      */
     protected abstract List<Position> findRoot(Position start, Position goal);
     protected abstract void validateMiddlePath(Board board, List<Position> root);
+
+    public boolean isSameColor(Color other) {
+        return color == other;
+    }
 }
