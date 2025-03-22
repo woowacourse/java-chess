@@ -31,7 +31,7 @@ public class Queen implements Piece {
             Position current = new Position(start.row(), start.column());
             while (!current.equals(end) && current.canMove(direction)) {
                 if (!chessBoard.isEmpty(current)) {
-                    return false;
+                    break;
                 }
                 current = current.move(direction);
             }
