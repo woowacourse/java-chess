@@ -8,11 +8,9 @@ import java.util.List;
 
 public class ChessPieces {
 
-    private final Color color;
     private final List<ChessPiece> chessPieces;
 
-    public ChessPieces(final Color color, final List<ChessPiece> chessPieces) {
-        this.color = color;
+    public ChessPieces(final List<ChessPiece> chessPieces) {
         this.chessPieces = chessPieces;
     }
 

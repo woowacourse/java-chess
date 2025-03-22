@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.pieces.Color;
 import chess.domain.position.Movement;
 import chess.domain.position.Position;
 
@@ -8,8 +9,8 @@ import java.util.List;
 
 public class Knight extends ChessPiece {
 
-    public Knight(final Position position) {
-        super(position);
+    public Knight(final Color color, final Position position) {
+        super(color, position);
     }
 
     @Override

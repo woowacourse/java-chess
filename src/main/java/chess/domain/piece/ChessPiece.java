@@ -1,14 +1,17 @@
 package chess.domain.piece;
 
+import chess.domain.pieces.Color;
 import chess.domain.position.Position;
 
 import java.util.List;
 
 public abstract class ChessPiece {
 
+    protected final Color color;
     protected Position position;
 
-    protected ChessPiece(final Position position) {
+    public ChessPiece(final Color color, final Position position) {
+        this.color = color;
         this.position = position;
     }
 

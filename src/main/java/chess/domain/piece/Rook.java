@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.pieces.Color;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
@@ -7,8 +8,8 @@ import java.util.List;
 
 public class Rook extends ChessPiece {
 
-    public Rook(final Position position) {
-        super(position);
+    public Rook(final Color color, final Position position) {
+        super(color, position);
     }
 
     @Override
