@@ -1,5 +1,7 @@
 package chess;
 
+import chess.domain.Movement;
+import chess.domain.piece.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -164,7 +166,7 @@ class PositionTest {
         assertThat(moved).isEqualTo(H1);
     }
 
-    /////
+    /// //
 
     @DisplayName("A8은 맨 위다.")
     @Test
