@@ -1,12 +1,12 @@
-package chess;
+package chess.domain;
 
-import chess.piece.Bishop;
-import chess.piece.ChessPiece;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.Pawn;
-import chess.piece.Queen;
-import chess.piece.Rook;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.ChessPiece;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,4 +57,6 @@ public class ChessBoard {
         board.put(new Position(Row.TWO, Column.G), new Pawn());
         board.put(new Position(Row.TWO, Column.H), new Pawn());
     }
+
+
 }
