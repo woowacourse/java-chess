@@ -56,7 +56,7 @@ public class Main {
                 Position startPosition = Position.of(i, j);
                 try {
                     Piece piece = validateMove(startPosition, kingPosition);
-                    System.out.print("piece로 인해 ");
+                    System.out.print(piece + "로 인해 ");
                     return true;
                 } catch (Exception ignored) {
                 }
