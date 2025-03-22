@@ -47,9 +47,8 @@ public class Game {
                 + "\n"
                 + "- 체스판에서 각 진영은 검은색(대문자)과 흰색(소문자) 편으로 구분한다.\n"
                 + "- 각 진영이 번갈아가면서 기물을 움직여야 하며 흰색(소문자)가 먼저 움직인다.\n"
-                + "- 게임 시작: start\n"
                 + "- 게임 종료: end\n"
-                + "- 게임 이동: move source target - 예) move b2 b3");
+                + "- 게임 이동: move source target - 예) move B2 B3");
 
         Board board = new Board();
         String input = "start";

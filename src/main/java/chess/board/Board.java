@@ -21,6 +21,7 @@ public final class Board {
 
     private final Map<Position, Color> colors;
     private final Map<Position, Piece> pieces;
+    private Color turn = Color.WHITE;
 
     {
         // 기본 Empty
@@ -74,6 +75,9 @@ public final class Board {
     public void move(Position start, Position end) {
         Piece piece = findPiece(start);
         Color color = colorAt(start);
+        if (color != turn) {
+            throw new IllegalArgumentException("[ERROR] 선택한 색깔의 턴이 아닙니다.");
+        }
         validateEndPosition(start, end);
         piece.validateMove(start, end);
         if (piece.type().canBeBlocked()) {
@@ -87,6 +91,7 @@ public final class Board {
         pieces.remove(start);
         colors.put(start, Color.EMPTY);
         piece.recordMoved();
+        turn = turn.opposite();
     }
 
     private void validatePawn(Piece piece, Position start, Position end) {
