@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 public enum Column {
 
@@ -14,6 +14,7 @@ public enum Column {
     public boolean isFarLeft() {
         return ordinal() == 0;
     }
+
 
     public boolean isFarRight() {
         return ordinal() + 1 == values().length;
@@ -32,7 +33,7 @@ public enum Column {
             return values()[ordinal() - step];
         }
 
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        throw new IllegalStateException("움직일 수 없는 위치입니다. column left");
     }
 
     public boolean canMoveRight(final int step) {
@@ -48,6 +49,6 @@ public enum Column {
             return values()[ordinal() + step];
         }
 
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        throw new IllegalStateException("움직일 수 없는 위치입니다. column right");
     }
 }

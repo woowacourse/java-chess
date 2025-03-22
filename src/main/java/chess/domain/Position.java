@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 public record Position(
         Column column,
@@ -166,5 +166,13 @@ public record Position(
             return moveLeft(-step);
         }
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "column=" + column +
+                ", row=" + row +
+                '}';
     }
 }

@@ -1,4 +1,6 @@
-package chess;
+package chess.domain;
+
+import java.util.List;
 
 public enum Color {
 
@@ -24,5 +26,9 @@ public enum Color {
             case WHITE -> BLACK;
             default -> EMPTY;
         };
+    }
+
+    public static List<Color> getGameColors() {
+        return List.of(WHITE, BLACK);
     }
 }

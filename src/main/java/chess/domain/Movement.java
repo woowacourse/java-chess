@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 public enum Movement {
     UP(0, 1),
@@ -44,5 +44,9 @@ public enum Movement {
 
     public boolean isDiagonal() {
         return x != 0 && y != 0 && Math.abs(x) == Math.abs(y);
+    }
+
+    public boolean isTwoTimeVerticalMove() {
+        return this == UP_UP || this == DOWN_DOWN;
     }
 }
