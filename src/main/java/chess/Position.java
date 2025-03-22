@@ -172,6 +172,10 @@ public record Position(
         return true;
     }
 
+    public boolean canMoveDiagonal(final int x, final int y) {
+        return canMoveHorizontal(x) && canMoveVertical(y);
+    }
+
     public Position move(final Movement movement) {
         return moveVertical(movement.y()).moveHorizontal(movement.x());
     }
