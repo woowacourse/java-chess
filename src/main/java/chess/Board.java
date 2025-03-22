@@ -11,10 +11,17 @@ public class Board {
         this.pieces = pieces;
     }
 
+    //TODO 존재하는 포지션만 주기
+
+    public Hurdles findHurdlePositions() {
+        return new Hurdles(pieces.stream()
+                .map(Piece::getPosition)
+                .toList());
+    }
 
     public Optional<Piece> findByPosition(Position newPosition) {
         return pieces.stream()
-                .filter(piece -> piece.isPositionEquals(newPosition))
+                .filter(piece -> piece.getPosition().equals(newPosition)) //TODO 수정
                 .findFirst();
     }
 }

@@ -75,8 +75,8 @@ public class Knight implements Piece {
     }
 
     @Override
-    public boolean isPositionEquals(Position targetPosition) {
-        return this.position.equals(targetPosition);
+    public Position getPosition() {
+        return this.position;
     }
 
     @Override

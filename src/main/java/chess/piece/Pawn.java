@@ -80,10 +80,9 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public boolean isPositionEquals(Position targetPosition) {
-        return this.position.equals(targetPosition);
+    public Position getPosition() {
+        return this.position;
     }
-
 
     @Override
     public boolean equals(Object o) {
