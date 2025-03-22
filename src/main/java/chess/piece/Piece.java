@@ -19,6 +19,9 @@ public abstract class Piece {
 
     public void validateMove(Position start, Position end) {
         for (Movement movement : movements) {
+            if (!start.canMove(movement)) {
+                continue;
+            }
             Position nextPosition = start.move(movement);
             if (nextPosition.equals(end)) { // 일치하는게 있음
                 return;
