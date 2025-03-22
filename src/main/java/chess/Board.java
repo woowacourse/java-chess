@@ -23,8 +23,15 @@ public class Board {
         if (piece.getMoveType() != PieceMoveType.KNIGHT && hasPiece(route)) {
             throw new IllegalArgumentException("중간에 장애물이 있습니다.");
         }
+        catchPiece(arrivalPosition);
         pieces.remove(startPosition);
         pieces.put(arrivalPosition, piece);
+    }
+
+    private void catchPiece(final Position arrivalPosition){
+        if (pieces.containsKey(arrivalPosition)){
+            pieces.remove(arrivalPosition);
+        }
     }
 
     private boolean hasPiece(final Route route) {
