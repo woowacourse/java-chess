@@ -16,6 +16,20 @@ public record Position(
         this(Row.getRow(rowBaseByOne), Column.getColumn(columnBaseByOne));
     }
 
+    // NOTE: 룩의 이동 가능 범위 검증용으로 씀
+    // 같은 위치 안되고, 상하좌우로 이동하는지
+    public boolean isOnlyVerticalOrHorizontalAndNotSame(final Position other) {
+        // row 같고, col 다른 경우
+        if (row.equals(other.row()) && !column.equals(other.column)) {
+            return true;
+        }
+        if (!row.equals(other.row()) && column.equals(other.column)) {
+            return true;
+        }
+        return false;
+    }
+
+
     public boolean canMoveUp() {
         return row.canMoveUp(1);
     }

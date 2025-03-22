@@ -21,15 +21,16 @@ public enum Row {
     public static Row getRow(char row) {
         int index = row - '1';
         validateIndexIsInRowRange(index);
-        Row result = Row.values()[index];
+        // NOTE: 이거 ordinal() 0번째가 EIGHT임...
+        Row result = Row.values()[7 - index];
         return result;
     }
 
     // 얘는 1베이스로 입력받을까? 인간 친화적으로
     public static Row getRow(int indexBaseByOne) {
-        indexBaseByOne -= 1;
-        validateIndexIsInRowRange(indexBaseByOne);
-        return Row.values()[indexBaseByOne];
+        int index = indexBaseByOne - 1;
+        validateIndexIsInRowRange(index);
+        return Row.values()[7 - index];
     }
 
     private static void validateIndexIsInRowRange(int index) {
