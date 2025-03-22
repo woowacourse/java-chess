@@ -1,7 +1,5 @@
 package chess;
 
-import javax.swing.JColorChooser;
-
 public record Position(
         Column column,
         Row row

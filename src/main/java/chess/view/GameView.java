@@ -2,7 +2,7 @@ package chess.view;
 
 import java.util.Scanner;
 import chess.Position;
-import chess.response.StartPosAndEndPos;
+import chess.request.StartPosAndEndPos;
 
 public class GameView {
     private static final Scanner scanner = new Scanner(System.in);

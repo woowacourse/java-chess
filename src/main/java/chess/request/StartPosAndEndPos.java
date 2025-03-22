@@ -1,4 +1,4 @@
-package chess.response;
+package chess.request;
 
 import chess.Position;
 

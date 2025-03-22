@@ -21,6 +21,24 @@ public enum Column {
         throw new IllegalArgumentException("입력이 잘못되었습니다. ABCDEFGH 사이의 값만 입력해주세요");
     }
 
+    public static int getDifference(Column column1, Column column2) {
+        return Math.abs(toInt(column1) - toInt(column2));
+    }
+
+    private static int toInt(Column column) {
+        return switch (column) {
+            case A -> 1;
+            case B -> 2;
+            case C -> 3;
+            case D -> 4;
+            case E -> 5;
+            case F -> 6;
+            case G -> 7;
+            case H -> 8;
+            default -> throw new IllegalArgumentException("Unknown column: " + column);
+        };
+    }
+
     public boolean isFarLeft() {
         return ordinal() == 0;
     }

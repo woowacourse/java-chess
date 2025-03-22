@@ -1,5 +1,17 @@
 package chess.piece;
 
-public class King {
+import java.util.Map;
+import chess.Color;
+import chess.Position;
 
+public class King extends Piece {
+
+    public King(Color color) {
+        super(color);
+    }
+
+    @Override
+    public boolean isAbleToMove(Position startPosition, Position endPosition, Map<Position, Piece> board) {
+        return false;
+    }
 }
