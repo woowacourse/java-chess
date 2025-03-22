@@ -21,10 +21,9 @@ public class ChessController {
     public void run() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardBasicInitializer());
         List<Color> colors = Color.getGameColors();
-        Color nowTurn = colors.get(0);
+        Color nowTurn = colors.getFirst();
 
-        boolean isKingCaptured = false;
-        while (!isKingCaptured) {
+        while (true) {
             outputView.printChessBoard(chessBoard);
             outputView.printTurnMessage(nowTurn);
 
