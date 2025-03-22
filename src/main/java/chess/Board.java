@@ -43,4 +43,8 @@ public class Board {
         pieces.put(arrival, piece);
         pieces.remove(departure);
     }
+
+    public Optional<Piece> getPiece(Column column, Row row) {
+        return Optional.ofNullable(pieces.get(new Position(column, row)));
+    }
 }

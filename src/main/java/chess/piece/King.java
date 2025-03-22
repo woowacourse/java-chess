@@ -70,4 +70,12 @@ public class King extends Piece{
         }
         throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
     }
+
+    @Override
+    public String toString() {
+        if (getColor().isBlack()) {
+            return "K";
+        }
+        return "k";
+    }
 }

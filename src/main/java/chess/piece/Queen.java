@@ -160,4 +160,12 @@ public class Queen extends Piece{
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public String toString() {
+        if (getColor().isBlack()) {
+            return "Q";
+        }
+        return "q";
+    }
 }

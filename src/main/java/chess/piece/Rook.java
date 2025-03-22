@@ -87,4 +87,13 @@ public class Rook extends Piece{
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public String toString() {
+        if (getColor().isBlack()) {
+            return "R";
+        }
+        return "r";
+    }
+
 }
