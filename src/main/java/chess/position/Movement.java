@@ -1,7 +1,9 @@
 package chess.position;
 
 import java.util.Arrays;
+import java.util.Optional;
 
+// 단위 이동이 정의된 이넘
 public enum Movement {
     UP(0, 1),
     UP_UP(UP.x * 2, UP.y * 2),
@@ -48,4 +50,10 @@ public enum Movement {
         return x != 0 && y != 0 && Math.abs(x) == Math.abs(y);
     }
 
+    public static Optional<Movement> find(final Offset offset) {
+        return Arrays.stream(Movement.values())
+                .filter(movement -> movement.x == offset.x())
+                .filter(movement -> movement.y == offset.y())
+                .findAny();
+    }
 }
