@@ -83,8 +83,18 @@ public class ChessBoard {
         else {
             // 장애물 있는지 확인
             validateExistHurdle(movePiece, origin, destination);
-
         }
+
+        ChessPiece targetPiece = getPieceOfPosition(destination);
+        if (movePiece.getColor().opposite() == targetPiece.getColor()) {
+            targetPiece.capture();
+        }
+        else if (movePiece.getColor() == targetPiece.getColor()) {
+            throw new IllegalStateException("도착지에 같은 편의 기물이 존재하기 때문에 움직일 수 없습니다.");
+        }
+
+        board.put(origin, new None());
+        board.put(destination, movePiece);
     }
 
     private void validateExistHurdle(ChessPiece piece, Position origin, Position destination) {

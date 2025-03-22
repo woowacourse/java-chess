@@ -9,10 +9,12 @@ public abstract class LimitedMovingChessPiece implements ChessPiece {
 
     protected final List<Movement> movements;
     protected final Color side;
+    protected boolean isCaptured;
 
     public LimitedMovingChessPiece(List<Movement> movements, Color side) {
         this.movements = movements;
         this.side = side;
+        this.isCaptured = false;
     }
 
     @Override
@@ -42,5 +44,15 @@ public abstract class LimitedMovingChessPiece implements ChessPiece {
     @Override
     public void move() {
 
+    }
+
+    @Override
+    public Color getColor() {
+        return side;
+    }
+
+    @Override
+    public void capture() {
+        this.isCaptured = true;
     }
 }

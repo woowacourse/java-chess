@@ -10,10 +10,12 @@ public abstract class LinearMovingChessPiece implements ChessPiece {
 
     protected final List<Movement> directions;
     protected final Color side;
+    protected boolean isCaptured;
 
     public LinearMovingChessPiece(List<Movement> directions, Color side) {
         this.directions = directions;
         this.side = side;
+        this.isCaptured = false;
     }
 
     @Override
@@ -53,5 +55,15 @@ public abstract class LinearMovingChessPiece implements ChessPiece {
     @Override
     public void move() {
 
+    }
+
+    @Override
+    public Color getColor() {
+        return side;
+    }
+
+    @Override
+    public void capture() {
+        this.isCaptured = true;
     }
 }
