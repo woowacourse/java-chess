@@ -11,6 +11,20 @@ public enum Row {
     TWO,
     ONE;
 
+    public static Row from(String s) {
+        return switch (s) {
+            case "1" -> ONE;
+            case "2" -> TWO;
+            case "3" -> THREE;
+            case "4" -> FOUR;
+            case "5" -> FIVE;
+            case "6" -> SIX;
+            case "7" -> SEVEN;
+            case "8" -> EIGHT;
+            default -> throw new IllegalArgumentException("없는 Row입니다. 1부터 8까지의 숫자만 입력하세요.");
+        };
+    }
+
     public boolean isTop() {
         return ordinal() == 0;
     }

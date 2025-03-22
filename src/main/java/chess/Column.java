@@ -11,6 +11,16 @@ public enum Column {
     G,
     H;
 
+    public static Column from(String s) {
+        for (Column value : Column.values()) {
+            if (value.toString().toLowerCase().equals(s.toLowerCase())) {
+                return value;
+            }
+        }
+
+        throw new IllegalArgumentException("입력이 잘못되었습니다. ABCDEFGH 사이의 값만 입력해주세요");
+    }
+
     public boolean isFarLeft() {
         return ordinal() == 0;
     }

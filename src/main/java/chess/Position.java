@@ -1,11 +1,26 @@
 package chess;
 
+import javax.swing.JColorChooser;
+
 public record Position(
         Column column,
         Row row
 ) {
     public Position(final Row row, final Column column) {
         this(column, row);
+    }
+
+    public static Position from(String rawPosition) {
+        if (rawPosition.length() != 2) {
+            throw new IllegalArgumentException("입력이 잘못되었습니다.");
+        }
+        try {
+            Column column = Column.from(String.valueOf(rawPosition.charAt(0)));
+            Row row = Row.from(String.valueOf(rawPosition.charAt(1)));
+            return new Position(column, row);
+        } catch (RuntimeException exception) {
+            throw new IllegalArgumentException("입력이 잘못되었습니다.");
+        }
     }
 
     public boolean canMoveUp() {
