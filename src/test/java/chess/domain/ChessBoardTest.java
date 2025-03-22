@@ -1,9 +1,8 @@
-package chess;
+package chess.domain;
 
-import static chess.Fixtures.*;
+import static chess.domain.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.ChessBoard;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;

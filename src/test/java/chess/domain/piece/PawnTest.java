@@ -1,12 +1,9 @@
-package chess.piece;
+package chess.domain.piece;
 
-import static chess.Fixtures.*;
+import static chess.domain.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.TeamColor;
-import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
