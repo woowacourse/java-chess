@@ -12,5 +12,9 @@ public class LivePiece {
         this.position = position;
     }
 
+    public LivePiece(Position position, Piece piece) {
+        this.piece = piece;
+        this.position = position;
+    }
 
 }
