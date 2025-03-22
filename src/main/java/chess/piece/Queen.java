@@ -60,4 +60,9 @@ public class Queen implements DiagonalMove, PerpendicularMove {
     public PieceMoveType getMoveType() {
         return PieceMoveType.QUEEN;
     }
+
+    @Override
+    public Team getTeam() {
+        return team;
+    }
 }

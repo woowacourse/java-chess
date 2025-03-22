@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.Position;
 import chess.Route;
+import chess.Team;
 
 public interface PerpendicularMove {
 
@@ -14,4 +15,6 @@ public interface PerpendicularMove {
     Route moveLeft(Position position);
 
     PieceMoveType getMoveType();
+
+    Team getTeam();
 }

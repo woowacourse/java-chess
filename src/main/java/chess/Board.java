@@ -28,8 +28,8 @@ public class Board {
         pieces.put(arrivalPosition, piece);
     }
 
-    private void catchPiece(final Position arrivalPosition){
-        if (pieces.containsKey(arrivalPosition)){
+    private void catchPiece(final Position arrivalPosition) {
+        if (pieces.containsKey(arrivalPosition)) {
             pieces.remove(arrivalPosition);
         }
     }
@@ -95,5 +95,15 @@ public class Board {
 
     public Map<Position, Piece> getPieces() {
         return Collections.unmodifiableMap(pieces);
+    }
+
+    public boolean isFinished() {
+        int count = 0;
+        for (Piece piece : pieces.values()) {
+            if (piece.getMoveType() == PieceMoveType.KING) {
+                count++;
+            }
+        }
+        return count != 2;
     }
 }

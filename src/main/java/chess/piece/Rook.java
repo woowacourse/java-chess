@@ -52,4 +52,9 @@ public class Rook implements PerpendicularMove {
     public PieceMoveType getMoveType() {
         return PieceMoveType.ROOK;
     }
+
+    @Override
+    public Team getTeam() {
+        return team;
+    }
 }

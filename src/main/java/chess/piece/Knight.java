@@ -130,4 +130,9 @@ public class Knight implements LMove {
         return PieceMoveType.KNIGHT;
     }
 
+    @Override
+    public Team getTeam() {
+        return team;
+    }
+
 }

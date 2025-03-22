@@ -2,8 +2,9 @@ package chess.piece;
 
 import chess.Position;
 import chess.Route;
+import chess.Team;
 
-public class Piece implements LMove {
+public class Piece {
 
     private final DiagonalMove diagonalMove;
     private final PerpendicularMove perpendicularMove;
@@ -59,42 +60,34 @@ public class Piece implements LMove {
         return perpendicularMove.moveLeft(position);
     }
 
-    @Override
     public Route moveUpRightUp(final Position position) {
         return lMove.moveUpRightUp(position);
     }
 
-    @Override
     public Route moveUpLeftUp(final Position position) {
         return lMove.moveUpLeftUp(position);
     }
 
-    @Override
     public Route moveRightUpRight(final Position position) {
         return lMove.moveRightUpRight(position);
     }
 
-    @Override
     public Route moveRightDownRight(final Position position) {
         return lMove.moveRightDownRight(position);
     }
 
-    @Override
     public Route moveDownRightDown(final Position position) {
         return lMove.moveDownRightDown(position);
     }
 
-    @Override
     public Route moveDownLeftDown(final Position position) {
         return lMove.moveDownLeftDown(position);
     }
 
-    @Override
     public Route moveLeftUpLeft(final Position position) {
         return lMove.moveLeftUpLeft(position);
     }
 
-    @Override
     public Route moveLeftDownLeft(final Position position) {
         return lMove.moveLeftDownLeft(position);
     }
@@ -107,5 +100,15 @@ public class Piece implements LMove {
             return perpendicularMove.getMoveType();
         }
         return lMove.getMoveType();
+    }
+
+    public Team getTeam() {
+        if (diagonalMove != null) {
+            return diagonalMove.getTeam();
+        }
+        if (perpendicularMove != null) {
+            return perpendicularMove.getTeam();
+        }
+        return lMove.getTeam();
     }
 }

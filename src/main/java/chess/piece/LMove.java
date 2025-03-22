@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.Position;
 import chess.Route;
+import chess.Team;
 
 public interface LMove {
 
@@ -22,4 +23,6 @@ public interface LMove {
     Route moveLeftDownLeft(Position position);
 
     PieceMoveType getMoveType();
+
+    Team getTeam();
 }

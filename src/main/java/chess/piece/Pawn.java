@@ -55,4 +55,9 @@ public class Pawn implements PerpendicularMove {
     public PieceMoveType getMoveType() {
         return PieceMoveType.PAWN;
     }
+
+    @Override
+    public Team getTeam() {
+        return team;
+    }
 }

@@ -62,6 +62,11 @@ public class King implements DiagonalMove, PerpendicularMove {
     }
 
     @Override
+    public Team getTeam() {
+        return team;
+    }
+
+    @Override
     public Route moveUp(Position position) {
         Route route = new Route();
         if (position.canMoveUp()) {

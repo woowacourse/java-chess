@@ -10,9 +10,13 @@ public class ChessConsole {
         InputView inputView = new InputView();
         ResultView resultView = new ResultView();
         Board board = BoardFactory.makeBoard();
-        resultView.showBoard(board);
-        List<Position> positions = inputView.readPosition();
-        board.move(positions.getFirst(), positions.getLast());
-        resultView.showBoard(board);
+
+        while (!board.isFinished()){
+            resultView.showBoard(board);
+            List<Position> positions = inputView.readPosition();
+            board.move(positions.getFirst(), positions.getLast());
+            resultView.showBoard(board);
+        }
+
     }
 }

@@ -52,4 +52,9 @@ public class Bishop implements DiagonalMove {
     public PieceMoveType getMoveType() {
         return PieceMoveType.BISHOP;
     }
+
+    @Override
+    public Team getTeam() {
+        return team;
+    }
 }

@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.Position;
 import chess.Route;
+import chess.Team;
 
 public interface DiagonalMove {
 
@@ -14,4 +15,6 @@ public interface DiagonalMove {
     Route moveLeftDown(Position position);
 
     PieceMoveType getMoveType();
+
+    Team getTeam();
 }
