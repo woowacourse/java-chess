@@ -2,7 +2,7 @@ package chess;
 
 public enum Row {
 
-    EIGHT,
+    EIGHT, // 0
     SEVEN,
     SIX,
     FIVE,

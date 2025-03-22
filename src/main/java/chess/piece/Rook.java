@@ -1,5 +1,11 @@
 package chess.piece;
 
-public class Rook {
+import chess.Position;
 
+public class Rook implements Piece {
+    @Override
+    public boolean isPositionEquals(Position targetPosition) {
+        return false;
+    }
 }
+

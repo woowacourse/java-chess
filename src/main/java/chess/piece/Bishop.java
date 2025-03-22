@@ -1,5 +1,10 @@
 package chess.piece;
 
-public class Bishop {
+import chess.Position;
 
+public class Bishop implements Piece{
+    @Override
+    public boolean isPositionEquals(Position targetPosition) {
+        return false;
+    }
 }
