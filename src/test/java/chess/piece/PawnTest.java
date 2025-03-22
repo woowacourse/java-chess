@@ -196,4 +196,46 @@ class PawnTest {
         // then
         assertThat(destinations).containsExactlyInAnyOrderElementsOf(expect);
     }
+
+    @DisplayName("처음 움직일 때 두 칸 앞에 적 기물이 존재하는 경우 두 칸 이동이 불가능하다.")
+    @Test
+    void firstMoveExistEnemy() {
+        // given
+        Position pawnPosition = new Position(Row.TWO, Column.D);
+        Pawn pawn = new Pawn(Color.WHITE);
+        Map<Position, ChessPiece> positions = Map.of(
+                pawnPosition, pawn,
+                new Position(Row.FOUR, Column.D), new Knight(Color.BLACK)
+        );
+        List<Position> expected = List.of(
+                new Position(Row.THREE, Column.D)
+        );
+
+        // when
+        List<Position> destinations = pawn.getAvailableDestinations(pawnPosition, positions);
+
+        // then
+        assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
+    }
+
+    @DisplayName("처음 움직일 때 두 칸 앞에 같은 팀 기물이 존재하는 경우 두 칸 이동이 불가능하다.")
+    @Test
+    void firstMoveExistSameTeam() {
+        // given
+        Position pawnPosition = new Position(Row.TWO, Column.D);
+        Pawn pawn = new Pawn(Color.WHITE);
+        Map<Position, ChessPiece> positions = Map.of(
+                pawnPosition, pawn,
+                new Position(Row.FOUR, Column.D), new Knight(Color.WHITE)
+        );
+        List<Position> expected = List.of(
+                new Position(Row.THREE, Column.D)
+        );
+
+        // when
+        List<Position> destinations = pawn.getAvailableDestinations(pawnPosition, positions);
+
+        // then
+        assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
+    }
 }
