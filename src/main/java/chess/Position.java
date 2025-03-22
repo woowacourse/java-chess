@@ -167,4 +167,20 @@ public record Position(
         }
         return this;
     }
+
+    public Position copyOf() {
+        return new Position(this.row, this.column);
+    }
+
+    public boolean isAvailableMovePosition() {
+        return this.row.isAvailableRow() && this.column.isAvailableColumn();
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "row=" + row +
+                ", column=" + column +
+                '}';
+    }
 }
