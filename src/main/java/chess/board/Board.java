@@ -6,6 +6,7 @@ import chess.piece.Bishop;
 import chess.piece.King;
 import chess.piece.Knight;
 import chess.piece.LivePiece;
+import chess.piece.Pawn;
 import chess.piece.Queen;
 import chess.piece.Rook;
 import java.util.ArrayList;
@@ -25,7 +26,6 @@ public class Board {
     }
 
     // NOTE: 하드코딩으로 말 위치 생성해서 넣어주기
-    // TODO: 아직 기물 구현 안 되어서 다 완성 안 됨
     public List<LivePiece> createPieces() {
         List<LivePiece> result = new ArrayList<>();
         result.addAll(createWhitePiece());
@@ -33,7 +33,7 @@ public class Board {
         return result;
     }
 
-    // TODO: 실제 기물 구현할 때 마다 하나씩 추가해야 함~
+    // NOTE: 초기 기물 위치 추가 다 함
     public List<LivePiece> createWhitePiece() {
         List<LivePiece> result = new ArrayList();
         // 룩 추가
@@ -54,10 +54,15 @@ public class Board {
         // 킹 추가
         result.add(new LivePiece(new Position(1, 5), new King(Color.WHITE)));
 
+        // 폰 추가
+        for (int j = 1; j <= 8; ++j) {
+            result.add(new LivePiece(new Position(2, j), new Pawn(Color.WHITE)));
+        }
+
         return result;
     }
 
-    // TODO: 실제 기물 구현할 때 마다 하나씩 추가해야 함~
+    // NOTE: 초기 기물 위치 추가 다 함
     public List<LivePiece> createBlackPiece() {
         List<LivePiece> result = new ArrayList();
         // 룩 추가
@@ -78,6 +83,10 @@ public class Board {
         // 킹 추가
         result.add(new LivePiece(new Position(8, 5), new King(Color.BLACK)));
 
+        // 폰 추가
+        for (int j = 1; j <= 8; ++j) {
+            result.add(new LivePiece(new Position(7, j), new Pawn(Color.BLACK)));
+        }
         return result;
     }
 

@@ -44,6 +44,9 @@ public class LivePiece {
         if (piece instanceof King) {
             candidate = 'K';
         }
+        if (piece instanceof Pawn) {
+            candidate = 'P';
+        }
 
         // 팀에 따라 검정말이면 소문자로 변환하기
         if (piece.isBlack()) {
