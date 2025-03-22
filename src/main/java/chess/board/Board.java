@@ -10,19 +10,18 @@ import chess.piece.Pawn;
 import chess.piece.Queen;
 import chess.piece.Rook;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Board {
-    private final List<LivePiece> pieces;
+    private final Pieces pieces;
 
     public Board(final List<LivePiece> pieces) {
-        this.pieces = new ArrayList<>(pieces);
+        this.pieces = new Pieces(pieces);
     }
 
     // NOTE: 생성자 매개변수 없으면 기본적으로 체스말 다 넣음
     public Board() {
-        this.pieces = createPieces();
+        this.pieces = new Pieces(createPieces());
     }
 
     // NOTE: 하드코딩으로 말 위치 생성해서 넣어주기
@@ -91,26 +90,21 @@ public class Board {
     }
 
     public List<LivePiece> getPieces() {
-        return Collections.unmodifiableList(pieces);
+        return pieces.getPieces();
     }
 
     public boolean move(String start, String end) {
         Position startPosition = Position.of(start);
         Position endPosition = Position.of(end);
 
-        LivePiece startPiece = getPiece(Position.of(start));
+        LivePiece startPiece = pieces.getPiece(Position.of(start));
         if (!startPiece.canMove(startPosition, endPosition)) {
             return false;
         }
 
         startPiece.setPosition(Position.of(end));
         return true;
-        
-        // 도착지에 적 고려 ㄴㄴ
-    }
 
-    private LivePiece getPiece(Position position) {
-        return pieces.stream().filter(lp -> lp.isSamePosition(position)).findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("시작점에 기물 없음"));
+        // 도착지에 적 고려 ㄴㄴ
     }
 }
