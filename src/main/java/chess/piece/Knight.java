@@ -37,7 +37,7 @@ public final class Knight extends Piece {
 
     @Override
     public boolean isPathAble(Position start, Position end, Pieces pieces) {
-        // TODO: 경로상에 기물 있으면 안됨,
+        // 나이트는 경로 위 말을 뛰어 넘을 수 있다.
         return true;
     }
 }

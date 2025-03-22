@@ -37,7 +37,7 @@ public final class King extends Piece {
 
     @Override
     public boolean isPathAble(Position start, Position end, Pieces pieces) {
-        // TODO: 경로상에 기물 있으면 안됨,
+        // 경로상에 기물 있으면 안됨
         return true;
     }
 }
