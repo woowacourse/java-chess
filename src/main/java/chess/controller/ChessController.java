@@ -1,8 +1,9 @@
 package chess.controller;
 
-import chess.domain.ChessBoard;
+import chess.domain.board.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
+import chess.domain.board.ChessBoardBasicInitializer;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -18,7 +19,7 @@ public class ChessController {
     }
 
     public void run() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardBasicInitializer());
         List<Color> colors = Color.getGameColors();
         Color nowTurn = colors.get(0);
 
