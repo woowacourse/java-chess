@@ -51,4 +51,9 @@ public class King extends Piece{
     public boolean isEmpty() {
         return false;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

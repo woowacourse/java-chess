@@ -44,4 +44,9 @@ public class Bishop extends Piece{
     public boolean isEmpty() {
         return false;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

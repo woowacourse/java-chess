@@ -72,5 +72,10 @@ public class Pawn extends Piece {
         return false;
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
 
 }

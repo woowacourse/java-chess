@@ -61,4 +61,9 @@ public class Queen extends Piece {
         return false;
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
 }

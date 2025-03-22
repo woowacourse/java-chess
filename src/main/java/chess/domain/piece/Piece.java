@@ -37,4 +37,10 @@ public abstract class Piece {
     public void incrementMoveCount() {
         moveCount++;
     }
+
+    public boolean isOtherTeamColor(TeamColor teamColor) {
+        return this.teamColor != teamColor;
+    }
+
+    public abstract boolean isKing();
 }

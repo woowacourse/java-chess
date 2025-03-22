@@ -25,6 +25,13 @@ public class ChessController {
         ChessGame game = new ChessGame(new WhiteTurn(board));
 
         while (!game.isFinished()) {
+            playTurn(game, board);
+        }
+
+    }
+
+    private void playTurn(ChessGame game, ChessBoard board) {
+        progressWithReturn(() -> {
             String[] command = inputView.readMoveCommand(game.getTurnColor().getTeamName());
             String startInput = command[0];
             String targetInput = command[1];
@@ -34,8 +41,17 @@ public class ChessController {
 
             game.move(start, target);
             outputView.displayBoard(board);
-        }
+        });
+    }
 
+    private void progressWithReturn(Runnable runnable) {
+        while(true) {
+            try {
+                runnable.run();
+            } catch (Exception e) {
+                System.out.println("[Error] " + e.getMessage());
+            }
+        }
     }
 
     private Position stringToPosition(String input) {
