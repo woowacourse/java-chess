@@ -62,7 +62,7 @@ public class Board {
     }
 
     public boolean isGameEnd() {
-        return !whitePieces.isKingAlive() || blackPieces.isKingAlive();
+        return !whitePieces.isKingAlive() || !blackPieces.isKingAlive();
     }
 
     public Color getWinnerColor() {
@@ -75,7 +75,11 @@ public class Board {
         return Color.BLACK;
     }
 
-    public List<ChessPiece> getPieces() {
-        return null;
+    public List<ChessPiece> getBlackPieces() {
+        return blackPieces.getChessPieces();
+    }
+
+    public List<ChessPiece> getWhitePieces() {
+        return whitePieces.getChessPieces();
     }
 }

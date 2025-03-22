@@ -71,4 +71,8 @@ public class ChessPieces {
         return chessPieces.stream()
                 .anyMatch(piece -> piece instanceof King);
     }
+
+    public List<ChessPiece> getChessPieces() {
+        return chessPieces;
+    }
 }

@@ -22,7 +22,7 @@ public class ChessController {
         final Board board = initializeBoard();
 
         while (!board.isGameEnd()) {
-            outputView.outputBoard(board.getPieces());
+            outputView.outputBoard(board.getBlackPieces(), board.getWhitePieces());
             MoveOrder order = inputView.getOrder();
             switch (order.orderOption()) {
                 case MOVE -> board.move(order.piecePosition(), order.newPosition());
@@ -33,6 +33,6 @@ public class ChessController {
     }
 
     private Board initializeBoard() {
-        return new Board(chessPieceInitializer.blackPieces(), chessPieceInitializer.whitePieces());
+        return new Board(chessPieceInitializer.whitePieces(), chessPieceInitializer.blackPieces());
     }
 }
