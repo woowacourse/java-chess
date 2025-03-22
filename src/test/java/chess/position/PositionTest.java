@@ -1,38 +1,37 @@
-package chess;
+package chess.position;
 
+import static chess.fixture.PositionFixture.A1;
+import static chess.fixture.PositionFixture.A2;
+import static chess.fixture.PositionFixture.A3;
+import static chess.fixture.PositionFixture.A6;
+import static chess.fixture.PositionFixture.A7;
+import static chess.fixture.PositionFixture.A8;
+import static chess.fixture.PositionFixture.B1;
+import static chess.fixture.PositionFixture.B2;
+import static chess.fixture.PositionFixture.B3;
+import static chess.fixture.PositionFixture.B7;
+import static chess.fixture.PositionFixture.B8;
+import static chess.fixture.PositionFixture.C1;
+import static chess.fixture.PositionFixture.F1;
+import static chess.fixture.PositionFixture.F8;
+import static chess.fixture.PositionFixture.G1;
+import static chess.fixture.PositionFixture.G2;
+import static chess.fixture.PositionFixture.G6;
+import static chess.fixture.PositionFixture.G7;
+import static chess.fixture.PositionFixture.G8;
+import static chess.fixture.PositionFixture.H1;
+import static chess.fixture.PositionFixture.H2;
+import static chess.fixture.PositionFixture.H7;
+import static chess.fixture.PositionFixture.H8;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
-import static chess.Fixtures.A1;
-import static chess.Fixtures.A2;
-import static chess.Fixtures.A3;
-import static chess.Fixtures.A6;
-import static chess.Fixtures.A7;
-import static chess.Fixtures.A8;
-import static chess.Fixtures.B1;
-import static chess.Fixtures.B2;
-import static chess.Fixtures.B3;
-import static chess.Fixtures.B7;
-import static chess.Fixtures.B8;
-import static chess.Fixtures.C1;
-import static chess.Fixtures.F1;
-import static chess.Fixtures.F8;
-import static chess.Fixtures.G1;
-import static chess.Fixtures.G2;
-import static chess.Fixtures.G6;
-import static chess.Fixtures.G7;
-import static chess.Fixtures.G8;
-import static chess.Fixtures.H1;
-import static chess.Fixtures.H2;
-import static chess.Fixtures.H7;
-import static chess.Fixtures.H8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("위치")
 class PositionTest {
