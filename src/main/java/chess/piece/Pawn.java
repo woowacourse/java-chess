@@ -5,10 +5,12 @@ import chess.board.Color;
 import chess.board.Movement;
 import chess.board.Position;
 import java.util.List;
+import java.util.Objects;
 
 public class Pawn implements Piece {
 
     private boolean isFirstMove;
+    private final PieceType pieceType = PieceType.PAWN;
     private final Color color;
 
     public Pawn(Color color) {
@@ -58,8 +60,10 @@ public class Pawn implements Piece {
 
     private static boolean canMove(Position start, Position end, List<Movement> movements) {
         for (Movement movement : movements) {
-            if(start.move(movement).equals(end)) {
-                return true;
+            if(start.canMove(movement)) {
+                if(start.move(movement).equals(end)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -68,5 +72,26 @@ public class Pawn implements Piece {
     @Override
     public boolean isSameColor(Color color) {
         return this.color == color;
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Pawn pawn)) {
+            return false;
+        }
+        return pieceType == pawn.pieceType && color == pawn.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceType, color);
     }
 }

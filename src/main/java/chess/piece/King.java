@@ -5,6 +5,7 @@ import chess.board.Color;
 import chess.board.Movement;
 import chess.board.Position;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class King implements Piece {
@@ -20,6 +21,7 @@ public class King implements Piece {
             List.of(Movement.RIGHT_UP)
     );
 
+    private final PieceType pieceType = PieceType.KING;
     private final Color color;
 
     public King(Color color) {
@@ -46,5 +48,26 @@ public class King implements Piece {
     @Override
     public boolean isSameColor(Color color) {
         return this.color == color;
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof King king)) {
+            return false;
+        }
+        return pieceType == king.pieceType && color == king.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceType, color);
     }
 }

@@ -1,5 +1,9 @@
 package chess;
 
+import chess.board.Column;
+import chess.board.Position;
+import chess.board.Row;
+
 @SuppressWarnings("unused")
 public final class Fixtures {
 

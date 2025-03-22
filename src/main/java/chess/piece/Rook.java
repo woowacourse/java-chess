@@ -4,6 +4,7 @@ import chess.board.ChessBoard;
 import chess.board.Color;
 import chess.board.Movement;
 import chess.board.Position;
+import java.util.Objects;
 import java.util.Set;
 
 public class Rook implements Piece {
@@ -15,6 +16,7 @@ public class Rook implements Piece {
             Movement.LEFT
     );
 
+    private final PieceType pieceType = PieceType.ROOK;
     private final Color color;
 
     public Rook(Color color) {
@@ -41,5 +43,26 @@ public class Rook implements Piece {
     @Override
     public boolean isSameColor(Color color) {
         return this.color == color;
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Rook rook)) {
+            return false;
+        }
+        return pieceType == rook.pieceType && color == rook.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceType, color);
     }
 }

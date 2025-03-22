@@ -9,4 +9,6 @@ public interface Piece {
     boolean canMoveToDestination(ChessBoard chessBoard, Position start, Position end);
 
     boolean isSameColor(Color color);
+
+    boolean isGameOver();
 }

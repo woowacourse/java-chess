@@ -4,6 +4,7 @@ import chess.board.ChessBoard;
 import chess.board.Color;
 import chess.board.Movement;
 import chess.board.Position;
+import java.util.Objects;
 import java.util.Set;
 
 public class Bishop implements Piece {
@@ -15,6 +16,7 @@ public class Bishop implements Piece {
             Movement.RIGHT_UP
     );
 
+    private final PieceType pieceType = PieceType.BISHOP;
     private final Color color;
 
     public Bishop(Color color) {
@@ -40,6 +42,27 @@ public class Bishop implements Piece {
 
     @Override
     public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
+    @Override
+    public boolean isGameOver() {
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Bishop bishop)) {
+            return false;
+        }
+        return pieceType == bishop.pieceType && color == bishop.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceType, color);
     }
 }
