@@ -1,4 +1,4 @@
-package chess.position;
+package chess.pieces;
 
 public enum Color {
 

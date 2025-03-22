@@ -20,4 +20,8 @@ public abstract class ChessPiece {
     }
 
     protected abstract List<Position> calculateCanMovePositions();
+
+    public Position getPosition() {
+        return this.position;
+    }
 }
