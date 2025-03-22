@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.Position;
+import chess.board.Position;
 import java.util.Set;
 
 public final class Blank extends Piece {

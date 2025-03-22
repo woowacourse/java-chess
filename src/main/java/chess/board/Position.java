@@ -1,4 +1,4 @@
-package chess;
+package chess.board;
 
 import chess.piece.Direction;
 import java.util.Objects;

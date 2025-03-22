@@ -3,11 +3,14 @@ package chess.piece;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
-import chess.Position;
+import chess.board.Position;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class Pieces {
 
@@ -22,6 +25,9 @@ public final class Pieces {
     Pieces(final Color color, final Map<Position, Piece> value) {
         this.color = color;
         this.value = new HashMap<>(value);
+    }
+
+    public static Pieces generate() {
     }
 
     public Piece get(final Position position) {

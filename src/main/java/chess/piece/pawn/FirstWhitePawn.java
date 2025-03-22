@@ -1,6 +1,6 @@
 package chess.piece.pawn;
 
-import chess.Position;
+import chess.board.Position;
 import chess.piece.Color;
 import chess.piece.Direction;
 import chess.piece.Piece;

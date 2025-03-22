@@ -1,21 +1,23 @@
 package chess;
 
-import static chess.Column.A;
-import static chess.Column.B;
-import static chess.Column.C;
-import static chess.Column.D;
-import static chess.Column.E;
-import static chess.Column.F;
-import static chess.Column.G;
-import static chess.Column.H;
-import static chess.Row.EIGHT;
-import static chess.Row.FIVE;
-import static chess.Row.FOUR;
-import static chess.Row.ONE;
-import static chess.Row.SEVEN;
-import static chess.Row.SIX;
-import static chess.Row.THREE;
-import static chess.Row.TWO;
+import static chess.board.Column.A;
+import static chess.board.Column.B;
+import static chess.board.Column.C;
+import static chess.board.Column.D;
+import static chess.board.Column.E;
+import static chess.board.Column.F;
+import static chess.board.Column.G;
+import static chess.board.Column.H;
+import static chess.board.Row.EIGHT;
+import static chess.board.Row.FIVE;
+import static chess.board.Row.FOUR;
+import static chess.board.Row.ONE;
+import static chess.board.Row.SEVEN;
+import static chess.board.Row.SIX;
+import static chess.board.Row.THREE;
+import static chess.board.Row.TWO;
+
+import chess.board.Position;
 
 public final class PositionFixtures {
 
