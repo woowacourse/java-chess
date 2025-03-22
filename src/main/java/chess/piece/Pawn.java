@@ -19,7 +19,7 @@ public class Pawn implements Piece {
 
     public void move(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
-        int step = Math.abs(position.calculateRowGap(targetPosition));
+        int step =calculateStep(targetPosition);
         if (isMovingInitially()) {
             if (step > 2) {
                 throw new IllegalArgumentException("폰은 시작 시 3칸 이상 전진할 수 없습니다.");
@@ -31,6 +31,13 @@ public class Pawn implements Piece {
             throw new IllegalArgumentException("폰은 2칸 이상 전진할 수 없습니다.");
         }
         repeatMove(movement, board, step);
+    }
+
+    private int calculateStep(Position targetPosition) {
+        if (position.isRowEquals(targetPosition)) {
+            return Math.abs(position.calculateColumnGap(targetPosition));
+        }
+        return Math.abs(position.calculateRowGap(targetPosition));
     }
 
     private Movement findMovement(Position targetPosition) {
