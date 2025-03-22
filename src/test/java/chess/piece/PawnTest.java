@@ -14,48 +14,48 @@ import org.junit.jupiter.api.Test;
 public class PawnTest {
 
     @Test
-    void moveUpOnce() {
+    void moveToUpOnce() {
         Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.TWO));
         Board board = new Board(List.of(
                 pawn
         ));
 
-        pawn.move(new Position(Column.A, Row.THREE), board);
+        pawn.moveTo(new Position(Column.A, Row.THREE), board);
 
         assertThat(pawn).isEqualTo(new Pawn(Color.WHITE, new Position(Column.A, Row.THREE)));
     }
 
     @Test
-    void moveDownOnce() {
+    void moveToDownOnce() {
         Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.THREE));
         Board board = new Board(List.of(
                 pawn
         ));
 
-        pawn.move(new Position(Column.A, Row.TWO), board);
+        pawn.moveTo(new Position(Column.A, Row.TWO), board);
 
         assertThat(pawn).isEqualTo(new Pawn(Color.WHITE, new Position(Column.A, Row.TWO)));
     }
 
     @Test
-    void failToMoveUpMoreThanOnce() {
+    void failToMoveToUpMoreThanOnce() {
         Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.TWO));
         Board board = new Board(List.of(
                 pawn
         ));
 
-        assertThatThrownBy(() -> pawn.move(new Position(Column.A, Row.FIVE), board))
+        assertThatThrownBy(() -> pawn.moveTo(new Position(Column.A, Row.FIVE), board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void moveUpTwiceIfStartMoving() {
+    void moveToUpTwiceIfStartMoving() {
         Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.TWO));
         Board board = new Board(List.of(
                 pawn
         ));
 
-        pawn.move(new Position(Column.A, Row.FOUR), board);
+        pawn.moveTo(new Position(Column.A, Row.FOUR), board);
 
         assertThat(pawn).isEqualTo(new Pawn(Color.WHITE, new Position(Column.A, Row.FOUR)));
     }
@@ -68,29 +68,29 @@ public class PawnTest {
                 pawn
         ));
 
-        assertThatThrownBy(() -> pawn.move(new Position(Column.A, Row.FOUR), hurdleBoard))
+        assertThatThrownBy(() -> pawn.moveTo(new Position(Column.A, Row.FOUR), hurdleBoard))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void failIfMoveBackWhenColorBlack() {
+    void failIfMoveToBackWhenColorBlack() {
         Pawn pawn = new Pawn(Color.BLACK, new Position(Column.A, Row.SEVEN));
         Board hurdleBoard = new Board(List.of(
                 pawn
         ));
 
-        assertThatThrownBy(() -> pawn.move(new Position(Column.A, Row.EIGHT), hurdleBoard))
+        assertThatThrownBy(() -> pawn.moveTo(new Position(Column.A, Row.EIGHT), hurdleBoard))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void failIfMoveBackWhenColorWhite() {
+    void failIfMoveToBackWhenColorWhite() {
         Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.TWO));
         Board hurdleBoard = new Board(List.of(
                 pawn
         ));
 
-        assertThatThrownBy(() -> pawn.move(new Position(Column.A, Row.ONE), hurdleBoard))
+        assertThatThrownBy(() -> pawn.moveTo(new Position(Column.A, Row.ONE), hurdleBoard))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

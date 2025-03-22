@@ -10,5 +10,7 @@ public interface Piece {
 
     boolean isBlack();
 
-    void move(Position targetPosition, Board board);
+    void moveTo(Position targetPosition, Board board);
+
+    boolean isEnemyWith(Piece piece);
 }

@@ -56,6 +56,11 @@ public class Board {
     }
 
     public void move(Piece movingPiece, Position targetPosition) {
-        movingPiece.move(targetPosition, this);
+        movingPiece.moveTo(targetPosition, this);
+    }
+
+    public void remove(Position targetPosition) {
+        Piece piece = findByPositionOrThrow(targetPosition);
+        this.pieces.remove(piece);
     }
 }

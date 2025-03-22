@@ -13,40 +13,40 @@ import org.junit.jupiter.api.Test;
 
 class QueenTest {
     @Test
-    void moveUpTwice() {
+    void moveToUpTwice() {
         Queen queen = new Queen(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
                 queen
         ));
         Position newPosition = new Position(Column.E, Row.SEVEN);
 
-        queen.move(newPosition, board);
+        queen.moveTo(newPosition, board);
 
         assertThat(queen).isEqualTo(new Queen(Color.WHITE, newPosition));
     }
 
     @Test
-    void moveRightTwice() {
+    void moveToRightTwice() {
         Queen queen = new Queen(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
                 queen
         ));
         Position newPosition = new Position(Column.G, Row.FIVE);
 
-        queen.move(newPosition, board);
+        queen.moveTo(newPosition, board);
 
         assertThat(queen).isEqualTo(new Queen(Color.WHITE, newPosition));
     }
 
     @Test
-    void moveLeftUpTwice() {
+    void moveToLeftUpTwice() {
         Queen queen = new Queen(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
                 queen
         ));
         Position newPosition = new Position(Column.C, Row.SEVEN);
 
-        queen.move(newPosition, board);
+        queen.moveTo(newPosition, board);
 
         assertThat(queen).isEqualTo(new Queen(Color.WHITE, newPosition));
     }
@@ -60,7 +60,7 @@ class QueenTest {
         ));
         Position newPosition = new Position(Column.E, Row.SEVEN);
 
-        assertThatThrownBy(() -> queen.move(newPosition, board))
+        assertThatThrownBy(() -> queen.moveTo(newPosition, board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -72,7 +72,7 @@ class QueenTest {
         ));
         Position newPosition = new Position(Column.F, Row.SEVEN);
 
-        assertThatThrownBy(() -> queen.move(newPosition, board))
+        assertThatThrownBy(() -> queen.moveTo(newPosition, board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

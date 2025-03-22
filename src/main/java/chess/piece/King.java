@@ -19,7 +19,7 @@ public class King implements Piece {
     }
 
     @Override
-    public void move(Position targetPosition, Board board) {
+    public void moveTo(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
         int step = calculateStep(targetPosition);
         if (step != 1) {
@@ -80,6 +80,14 @@ public class King implements Piece {
             return List.of(new King(color, new Position(Column.E, Row.ONE)));
         }
         return List.of(new King(color, new Position(Column.E, Row.EIGHT)));
+    }
+
+    @Override
+    public boolean isEnemyWith(Piece piece) {
+        if (this.isBlack()) {
+            return !piece.isBlack();
+        }
+        return piece.isBlack();
     }
 
     @Override

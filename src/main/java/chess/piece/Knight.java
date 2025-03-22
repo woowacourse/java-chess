@@ -19,7 +19,7 @@ public class Knight implements Piece {
     }
 
     @Override
-    public void move(Position targetPosition, Board board) {
+    public void moveTo(Position targetPosition, Board board) {
         List<Movement> movements = findMovement(targetPosition);
         repeatMove(movements, board);
     }
@@ -85,6 +85,14 @@ public class Knight implements Piece {
         return List.of(new Knight(color, standard),
                 new Knight(color, standard.move(0, 5))
         );
+    }
+
+    @Override
+    public boolean isEnemyWith(Piece piece) {
+        if (this.isBlack()) {
+            return !piece.isBlack();
+        }
+        return piece.isBlack();
     }
 
     @Override

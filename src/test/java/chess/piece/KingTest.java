@@ -13,62 +13,62 @@ import org.junit.jupiter.api.Test;
 
 class KingTest {
     @Test
-    void moveUpOnce() {
+    void moveToUpOnce() {
         King king = new King(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
                 king
         ));
 
-        king.move(new Position(Column.E, Row.SIX), board);
+        king.moveTo(new Position(Column.E, Row.SIX), board);
 
         assertThat(king).isEqualTo(new King(Color.WHITE, new Position(Column.E, Row.SIX)));
     }
 
     @Test
-    void moveRightOnce() {
+    void moveToRightOnce() {
         King king = new King(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
                 king
         ));
         Position newPosition = new Position(Column.F, Row.FIVE);
 
-        king.move(newPosition, board);
+        king.moveTo(newPosition, board);
 
         assertThat(king).isEqualTo(new King(Color.WHITE, newPosition));
     }
 
     @Test
-    void moveLeftUpOnce() {
+    void moveToLeftUpOnce() {
         King king = new King(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
                 king
         ));
 
-        king.move(new Position(Column.D, Row.SIX), board);
+        king.moveTo(new Position(Column.D, Row.SIX), board);
 
         assertThat(king).isEqualTo(new King(Color.WHITE, new Position(Column.D, Row.SIX)));
     }
 
     @Test
-    void moveRightDownOnce() {
+    void moveToRightDownOnce() {
         King king = new King(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
                 king
         ));
 
-        king.move(new Position(Column.F, Row.FOUR), board);
+        king.moveTo(new Position(Column.F, Row.FOUR), board);
 
         assertThat(king).isEqualTo(new King(Color.WHITE, new Position(Column.F, Row.FOUR)));
     }
 
     @Test
-    void failToMoveTwice() {
+    void failToMoveToTwice() {
         King king = new King(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
                 king
         ));
 
-        assertThatThrownBy(() -> king.move(new Position(Column.E, Row.THREE), board))
+        assertThatThrownBy(() -> king.moveTo(new Position(Column.E, Row.THREE), board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -79,7 +79,7 @@ class KingTest {
                 king
         ));
 
-        assertThatThrownBy(() -> king.move(new Position(Column.D, Row.THREE), board))
+        assertThatThrownBy(() -> king.moveTo(new Position(Column.D, Row.THREE), board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

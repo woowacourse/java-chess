@@ -14,27 +14,27 @@ import org.junit.jupiter.api.Test;
 class BishopTest {
 
     @Test
-    void moveLeftUpTwice() {
+    void moveToLeftUpTwice() {
         Bishop bishop = new Bishop(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
                 bishop
         ));
         Position newPosition = new Position(Column.C, Row.SEVEN);
 
-        bishop.move(newPosition, board);
+        bishop.moveTo(newPosition, board);
 
         assertThat(bishop).isEqualTo(new Bishop(Color.WHITE, newPosition));
     }
 
     @Test
-    void failIfCardinalMove() {
+    void failIfCardinalMoveTo() {
         Bishop bishop = new Bishop(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
                 bishop
         ));
         Position newPosition = new Position(Column.C, Row.FIVE);
 
-        assertThatThrownBy(() -> bishop.move(newPosition, board))
+        assertThatThrownBy(() -> bishop.moveTo(newPosition, board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -46,7 +46,7 @@ class BishopTest {
         ));
         Position newPosition = new Position(Column.G, Row.SIX);
 
-        assertThatThrownBy(() -> bishop.move(newPosition, board))
+        assertThatThrownBy(() -> bishop.moveTo(newPosition, board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -59,7 +59,7 @@ class BishopTest {
         ));
         Position newPosition = new Position(Column.C, Row.SEVEN);
 
-        assertThatThrownBy(() -> bishop.move(newPosition, board))
+        assertThatThrownBy(() -> bishop.moveTo(newPosition, board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

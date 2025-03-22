@@ -19,7 +19,7 @@ public class Queen implements Piece {
     }
 
     @Override
-    public void move(Position targetPosition, Board board) {
+    public void moveTo(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
         int step = calculateStep(targetPosition);
         repeatMove(movement, board, step);
@@ -87,6 +87,14 @@ public class Queen implements Piece {
             return List.of(new Queen(color, new Position(Column.D, Row.ONE)));
         }
         return List.of(new Queen(color, new Position(Column.D, Row.EIGHT)));
+    }
+
+    @Override
+    public boolean isEnemyWith(Piece piece) {
+        if (this.isBlack()) {
+            return !piece.isBlack();
+        }
+        return piece.isBlack();
     }
 
     @Override

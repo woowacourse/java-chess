@@ -13,20 +13,20 @@ import org.junit.jupiter.api.Test;
 
 class KnightTest {
     @Test
-    void moveUpUpLeftOnce() {
+    void moveToUpUpLeftOnce() {
         Knight knight = new Knight(Color.WHITE, new Position(Column.D, Row.FIVE));
         Board board = new Board(List.of(
                 knight
         ));
         Position newPosition = new Position(Column.C, Row.SEVEN);
 
-        knight.move(newPosition, board);
+        knight.moveTo(newPosition, board);
 
         assertThat(knight).isEqualTo(new Knight(Color.WHITE, newPosition));
     }
 
     @Test
-    void moveRightRightDownOnce() {
+    void moveToRightRightDownOnce() {
         Knight knight = new Knight(Color.WHITE, new Position(Column.D, Row.FIVE));
         Board board = new Board(List.of(
                 knight
@@ -34,20 +34,20 @@ class KnightTest {
         Position newPosition = new Position(Column.F, Row.FOUR);
 
 
-        knight.move(newPosition, board);
+        knight.moveTo(newPosition, board);
 
         assertThat(knight).isEqualTo(new Knight(Color.WHITE, newPosition));
     }
 
     @Test
-    void failToMoveOther() {
+    void failToMoveToOther() {
         King king = new King(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
                 king
         ));
         Position newPosition = new Position(Column.F, Row.THREE);
 
-        assertThatThrownBy(() -> king.move(newPosition, board))
+        assertThatThrownBy(() -> king.moveTo(newPosition, board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

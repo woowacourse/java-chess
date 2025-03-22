@@ -19,7 +19,7 @@ public class Bishop implements Piece{
     }
 
     @Override
-    public void move(Position targetPosition, Board board) {
+    public void moveTo(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
         int step = calculateStep(targetPosition);
         repeatMove(movement, board, step);
@@ -79,6 +79,14 @@ public class Bishop implements Piece{
         return List.of(new Bishop(color, standard),
                 new Bishop(color, standard.move(0, 3))
         );
+    }
+
+    @Override
+    public boolean isEnemyWith(Piece piece) {
+        if (this.isBlack()) {
+            return !piece.isBlack();
+        }
+        return piece.isBlack();
     }
 
     @Override

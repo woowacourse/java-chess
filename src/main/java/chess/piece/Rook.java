@@ -19,7 +19,7 @@ public class Rook implements Piece {
     }
 
     @Override
-    public void move(Position targetPosition, Board board) {
+    public void moveTo(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
         int step = calculateStep(targetPosition);
         repeatMove(movement, board, step);
@@ -71,6 +71,14 @@ public class Rook implements Piece {
         return List.of(new Rook(color, standard),
                 new Rook(color, standard.move(0, 7))
         );
+    }
+
+    @Override
+    public boolean isEnemyWith(Piece piece) {
+        if (this.isBlack()) {
+            return !piece.isBlack();
+        }
+        return piece.isBlack();
     }
 
     @Override
