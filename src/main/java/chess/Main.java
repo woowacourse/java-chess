@@ -18,43 +18,52 @@ public class Main {
 
         while (true) {
             Output.printBoard();
+            try {
+                process();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println("재입력 ㄱㄱ");
+                process();
+            }
+        }
+    }
 
-            Position before = inputPosition();
-            Position after = inputPosition();
-            Offset offset = Offset.calculate(after, before);
-            if (offset.is00()) {
-                throw new IllegalArgumentException("안움직였어");
-            }
-            Piece selectPiece = pieceBoard[before.getI()][before.getJ()];
-            if (selectPiece == null) {
-                throw new IllegalArgumentException("아니 없는걸 선택하면 어떡행..");
-            }
+    private static void process() {
+        Position before = inputPosition();
+        Position after = inputPosition();
+        Offset offset = Offset.calculate(after, before);
+        if (offset.is00()) {
+            throw new IllegalArgumentException("안움직였어");
+        }
+        Piece selectPiece = pieceBoard[before.getI()][before.getJ()];
+        if (selectPiece == null) {
+            throw new IllegalArgumentException("아니 없는걸 선택하면 어떡행..");
+        }
 
-            boolean killFlag = false;
-            Piece targetPiece = pieceBoard[after.getI()][after.getJ()];
-            if (targetPiece != null) {
-                if (targetPiece.getColor() == selectPiece.getColor()) {
-                    throw new IllegalArgumentException("같은 팀이 있는 곳으로 이동할 수 없어. 팀킬이라도 하게?");
-                }
-                killFlag = true;
+        boolean killFlag = false;
+        Piece targetPiece = pieceBoard[after.getI()][after.getJ()];
+        if (targetPiece != null) {
+            if (targetPiece.getColor() == selectPiece.getColor()) {
+                throw new IllegalArgumentException("같은 팀이 있는 곳으로 이동할 수 없어. 팀킬이라도 하게?");
             }
+            killFlag = true;
+        }
 
-            if (!selectPiece.canMove(offset, killFlag)) {
-                throw new IllegalArgumentException("거기로 못가는 기물임");
-            }
+        if (!selectPiece.canMove(offset, killFlag)) {
+            throw new IllegalArgumentException("거기로 못가는 기물임");
+        }
 
-            if (selectPiece instanceof 퀸비숍룩) {
-                퀸비숍룩 piece = (퀸비숍룩) selectPiece;
-                if (piece.경로상_장애물_확인(before, after)) {
-                    throw new IllegalArgumentException("경로상 장애물 발견 !!");
-                }
+        if (selectPiece instanceof 퀸비숍룩) {
+            퀸비숍룩 piece = (퀸비숍룩) selectPiece;
+            if (piece.경로상_장애물_확인(before, after)) {
+                throw new IllegalArgumentException("경로상 장애물 발견 !!");
             }
-            pieceBoard[before.getI()][before.getJ()] = null;
-            pieceBoard[after.getI()][after.getJ()] = selectPiece;
+        }
+        pieceBoard[before.getI()][before.getJ()] = null;
+        pieceBoard[after.getI()][after.getJ()] = selectPiece;
 
-            if (selectPiece.getClass() == 쭈.class) {
-                ((쭈) selectPiece).moveCount++;
-            }
+        if (selectPiece.getClass() == 쭈.class) {
+            ((쭈) selectPiece).moveCount++;
         }
     }
 
