@@ -22,6 +22,14 @@ public class King extends Piece {
     }
 
     @Override
+    public String getDisplay() {
+        if (team == Team.A) {
+            return "k";
+        }
+        return "K";
+    }
+
+    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;

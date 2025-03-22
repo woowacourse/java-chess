@@ -26,40 +26,36 @@ class RookTest {
 
     @MethodSource
     @ParameterizedTest
-    void 룩은_원하는_만큼_직선으로_이동할_수_있다(Movement movement, int moveCount, Position position) {
+    void 룩은_원하는_만큼_직선으로_이동할_수_있다(Movement movement, Position position) {
         Rook rook = new Rook(Team.A, new Position(Row.THREE, Column.D));
 
-        assertThat(rook.move(movement, moveCount)).isEqualTo(new Rook(Team.A, position));
+        assertThat(rook.move(movement)).isEqualTo(new Rook(Team.A, position));
     }
 
     private static Stream<Arguments> 룩은_원하는_만큼_직선으로_이동할_수_있다() {
         return Stream.of(
-                Arguments.of(UP, 2, new Position(Row.FIVE, Column.D)),
-                Arguments.of(LEFT, 2, new Position(Row.THREE, Column.B)),
-                Arguments.of(RIGHT, 2, new Position(Row.THREE, Column.F)),
-                Arguments.of(DOWN, 2, new Position(Row.ONE, Column.D))
+                Arguments.of(UP, new Position(Row.FOUR, Column.D)),
+                Arguments.of(LEFT, new Position(Row.THREE, Column.C)),
+                Arguments.of(RIGHT, new Position(Row.THREE, Column.E)),
+                Arguments.of(DOWN, new Position(Row.TWO, Column.D))
         );
     }
 
     @MethodSource
     @ParameterizedTest
-    void 룩이_이동할_수_없다(Movement movement, int moveCount) {
+    void 룩이_이동할_수_없다(Movement movement) {
         Rook rook = new Rook(Team.A, new Position(Row.ONE, Column.A));
 
-        assertThatThrownBy(() -> rook.move(movement, moveCount))
+        assertThatThrownBy(() -> rook.move(movement))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> 룩이_이동할_수_없다() {
         return Stream.of(
-                Arguments.of(LEFT_UP, 2),
-                Arguments.of(RIGHT_UP, 2),
-                Arguments.of(LEFT_DOWN, 2),
-                Arguments.of(RIGHT_DOWN, 2),
-                Arguments.of(UP, 8),
-                Arguments.of(LEFT, 1),
-                Arguments.of(RIGHT, 8),
-                Arguments.of(DOWN, 1)
+                Arguments.of(LEFT_UP),
+                Arguments.of(RIGHT_UP),
+                Arguments.of(LEFT_DOWN),
+                Arguments.of(RIGHT_DOWN)
         );
     }
 

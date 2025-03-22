@@ -14,22 +14,27 @@ public class Bishop extends Piece {
         this.position = position;
     }
 
-    public Bishop move(final Movement movement, final int moveCount) {
+    @Override
+    public Piece move(final Movement movement) {
         if (!movement.isDiagonal()) {
             throw new IllegalArgumentException("움직일 수 없습니다.");
         }
-        Position movedPosition = new Position(position.row(), position.column());
-        for (int count = 0; count < moveCount; count++) {
-            if (!position.canMove(movement)) {
-                throw new IllegalArgumentException("움직일 수 없습니다.");
-            }
-            try {
-                movedPosition = movedPosition.move(movement);
-            } catch (IllegalStateException e) {
-                throw new IllegalArgumentException("움직일 수 없습니다.");
-            }
+        if (!position.canMove(movement)) {
+            throw new IllegalArgumentException("움직일 수 없습니다.");
         }
-        return new Bishop(team, movedPosition);
+        try {
+            return new Bishop(team, position.move(movement));
+        } catch (IllegalStateException e) {
+            throw new IllegalArgumentException("움직일 수 없습니다.");
+        }
+    }
+
+    @Override
+    public String getDisplay() {
+        if (team == Team.A) {
+            return "b";
+        }
+        return "B";
     }
 
     @Override

@@ -39,6 +39,14 @@ public class Knight extends Piece {
         throw new IllegalArgumentException("움직일 수 없습니다.");
     }
 
+    @Override
+    public String getDisplay() {
+        if (team == Team.A) {
+            return "n";
+        }
+        return "N";
+    }
+
     private boolean canMove(final Movement movement) {
         return position.canMoveHorizontal(movement.x()) && position.canMoveVertical(movement.y());
     }

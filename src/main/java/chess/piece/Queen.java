@@ -14,18 +14,23 @@ public class Queen extends Piece {
         this.position = position;
     }
 
-    public Queen move(final Movement movement, final int moveCount) {
+    @Override
+    public Piece move(final Movement movement) {
         if (!movement.isHorizontal() && !movement.isVertical() && !movement.isDiagonal()) {
             throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
         }
-        Position movedPosition = new Position(position.row(), position.column());
-        for (int count = 0; count < moveCount; count++) {
-            if (!movedPosition.canMove(movement)) {
-                throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
-            }
-            movedPosition = movedPosition.move(movement);
+        if (!position.canMove(movement)) {
+            throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
         }
-        return new Queen(team, movedPosition);
+        return new Queen(team, position.move(movement));
+    }
+
+    @Override
+    public String getDisplay() {
+        if (team == Team.A) {
+            return "q";
+        }
+        return "Q";
     }
 
     @Override

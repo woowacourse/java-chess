@@ -2,6 +2,7 @@ package chess;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import chess.piece.Bishop;
 import chess.piece.King;
@@ -71,6 +72,37 @@ public class Board {
             return board.get(position);
         }
         throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
+    }
+
+    public void move(final Position start, final Position destination) {
+        if (!board.containsKey(start)) {
+            throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
+        }
+        int rowDiff = Row.calculateDiff(start.row(), destination.row());
+        int columnDiff = Column.calculateDiff(start.column(), destination.column());
+
+        Map<Movement, Integer> movements = Movement.calculate(rowDiff, columnDiff);
+        if (movements.isEmpty()) {
+            throw new IllegalArgumentException("움직일 수 없습니다.");
+        }
+
+        Piece piece = board.get(start);
+        if (board.containsKey(destination)) {
+            Piece otherPiece = board.get(destination);
+            if (piece.isSameTeam(otherPiece)) {
+                throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
+            }
+        }
+        for (Entry<Movement, Integer> entry : movements.entrySet()) {
+            for (int i = 0; i < entry.getValue(); i++) {
+                piece.move(entry.getKey());
+            }
+        }
+
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
     }
 
 }

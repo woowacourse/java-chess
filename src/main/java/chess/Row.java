@@ -11,6 +11,10 @@ public enum Row {
     TWO,
     ONE;
 
+    public static int calculateDiff(Row row, Row otherRow) {
+        return row.ordinal() - otherRow.ordinal();
+    }
+
     public boolean isTop() {
         return ordinal() == 0;
     }

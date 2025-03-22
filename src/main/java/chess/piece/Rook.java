@@ -14,18 +14,23 @@ public class Rook extends Piece {
         this.position = position;
     }
 
-    public Rook move(final Movement movement, final int moveCount) {
+    @Override
+    public Rook move(final Movement movement) {
         if (!movement.isHorizontal() && !movement.isVertical()) {
             throw new IllegalArgumentException("움직일 수 없습니다.");
         }
-        Position movedPosition = new Position(position.row(), position.column());
-        for (int count = 0; count < moveCount; count++) {
-            if (!movedPosition.canMove(movement)) {
-                throw new IllegalArgumentException("움직일 수 없습니다.");
-            }
-            movedPosition = movedPosition.move(movement);
+        if (!position.canMove(movement)) {
+            throw new IllegalArgumentException("움직일 수 없습니다.");
         }
-        return new Rook(team, movedPosition);
+        return new Rook(team, position.move(movement));
+    }
+
+    @Override
+    public String getDisplay() {
+        if (team == Team.A) {
+            return "r";
+        }
+        return "R";
     }
 
     @Override

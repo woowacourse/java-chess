@@ -27,58 +27,55 @@ class QueenTest {
 
     @MethodSource
     @ParameterizedTest
-    void 퀸은_일직선으로_원하는_만큼_이동한다(Movement movement, int moveCount, Position position) {
+    void 퀸은_일직선으로_원하는_만큼_이동한다(Movement movement, Position position) {
         Queen queen = new Queen(Team.A, new Position(Row.THREE, Column.D));
 
-        assertThat(queen.move(movement, moveCount)).isEqualTo(new Queen(Team.A, position));
+        assertThat(queen.move(movement)).isEqualTo(new Queen(Team.A, position));
     }
 
     private static Stream<Arguments> 퀸은_일직선으로_원하는_만큼_이동한다() {
         return Stream.of(
-                Arguments.of(LEFT, 2, new Position(Row.THREE, Column.B)),
-                Arguments.of(RIGHT, 2, new Position(Row.THREE, Column.F)),
-                Arguments.of(UP, 2, new Position(Row.FIVE, Column.D)),
-                Arguments.of(DOWN, 2, new Position(Row.ONE, Column.D))
+                Arguments.of(LEFT, new Position(Row.THREE, Column.C)),
+                Arguments.of(RIGHT, new Position(Row.THREE, Column.E)),
+                Arguments.of(UP, new Position(Row.FOUR, Column.D)),
+                Arguments.of(DOWN, new Position(Row.TWO, Column.D))
         );
     }
 
     @MethodSource
     @ParameterizedTest
-    void 퀸은_대각선으로_원하는_만큼_이동한다(Movement movement, int moveCount, Position position) {
+    void 퀸은_대각선으로_원하는_만큼_이동한다(Movement movement, Position position) {
         Queen queen = new Queen(Team.A, new Position(Row.THREE, Column.D));
 
-        assertThat(queen.move(movement, moveCount)).isEqualTo(new Queen(Team.A, position));
+        assertThat(queen.move(movement)).isEqualTo(new Queen(Team.A, position));
     }
 
     private static Stream<Arguments> 퀸은_대각선으로_원하는_만큼_이동한다() {
         return Stream.of(
-                Arguments.of(LEFT_UP, 2, new Position(Row.FIVE, Column.B)),
-                Arguments.of(RIGHT_UP, 2, new Position(Row.FIVE, Column.F)),
-                Arguments.of(LEFT_DOWN, 2, new Position(Row.ONE, Column.B)),
-                Arguments.of(RIGHT_DOWN, 2, new Position(Row.ONE, Column.F))
+                Arguments.of(LEFT_UP, new Position(Row.FOUR, Column.C)),
+                Arguments.of(RIGHT_UP, new Position(Row.FOUR, Column.E)),
+                Arguments.of(LEFT_DOWN, new Position(Row.TWO, Column.C)),
+                Arguments.of(RIGHT_DOWN, new Position(Row.TWO, Column.E))
         );
     }
 
     @MethodSource
     @ParameterizedTest
-    void 퀸이_움직일_수_없다(Movement movement, int moveCount) {
+    void 퀸이_움직일_수_없다(Movement movement) {
         Queen queen = new Queen(Team.A, new Position(Row.ONE, Column.A));
 
-        assertThatThrownBy(() -> queen.move(movement, moveCount))
+        assertThatThrownBy(() -> queen.move(movement))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> 퀸이_움직일_수_없다() {
         return Stream.of(
-                Arguments.of(LEFT_LEFT_DOWN, 1),
-                Arguments.of(LEFT, 1),
-                Arguments.of(DOWN, 1),
-                Arguments.of(LEFT_DOWN, 1),
-                Arguments.of(LEFT_UP, 1),
-                Arguments.of(RIGHT_DOWN, 1),
-                Arguments.of(UP, 9),
-                Arguments.of(RIGHT, 9),
-                Arguments.of(RIGHT_UP, 9)
+                Arguments.of(LEFT_LEFT_DOWN),
+                Arguments.of(LEFT),
+                Arguments.of(DOWN),
+                Arguments.of(LEFT_DOWN),
+                Arguments.of(LEFT_UP),
+                Arguments.of(RIGHT_DOWN)
         );
     }
 

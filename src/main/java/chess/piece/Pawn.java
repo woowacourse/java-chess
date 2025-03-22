@@ -36,6 +36,14 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public String getDisplay() {
+        if (team == Team.A) {
+            return "p";
+        }
+        return "P";
+    }
+
+    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
