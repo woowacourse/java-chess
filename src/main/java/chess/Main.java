@@ -28,20 +28,22 @@ public class Main {
                 throw new IllegalArgumentException("아니 없는걸 선택하면 어떡행..");
             }
 
-            상대기물죽이는기능(after);
+            boolean killFlag = false;
+            Piece targetPiece = pieceBoard[after.getI()][after.getJ()];
+            if (targetPiece != null) {
+                if (targetPiece.getColor() == selectPiece.getColor()) {
+                    throw new IllegalArgumentException("같은 팀이 있는 곳으로 이동할 수 없어. 팀킬이라도 하게?");
+                }
+                killFlag = true;
+            }
 
-            if (!selectPiece.canMove(offset)) {
+            if (!selectPiece.canMove(offset, killFlag)) {
                 throw new IllegalArgumentException("거기로 못가는 기물임");
             }
 
             pieceBoard[before.getI()][before.getJ()] = null;
             pieceBoard[after.getI()][after.getJ()] = selectPiece;
         }
-    }
-
-    private static void 상대기물죽이는기능(final Position after) {
-        Piece destinationPiece = pieceBoard[after.getI()][after.getJ()];
-        // TODO
     }
 
     public static Position inputPosition() {
