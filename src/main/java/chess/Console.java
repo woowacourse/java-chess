@@ -23,4 +23,13 @@ public class Console {
             System.out.println();
         }
     }
+
+    public void printSide(Color currentTurn) {
+        if (currentTurn.isBlack()) {
+            System.out.println("블랙의 차례입니다.");
+        }
+        if (currentTurn.isWhite()) {
+            System.out.println("화이트의 차례입니다.");
+        }
+    }
 }

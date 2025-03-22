@@ -9,7 +9,7 @@ public class Application {
 
     private static final Console console = new Console();
     private static final Board board = new Board();
-    private static final Color currentTurn = Color.BLACK;
+    private static Color currentTurn = Color.BLACK;
 
     public static void main(String[] args) {
         board.setup();
@@ -23,6 +23,7 @@ public class Application {
         Map<Position, Piece> pieces = board.getPieces();
 
         console.printPieces(pieces);
+        console.printSide(currentTurn);
 
         String positions = console.readPositions();
         String startInput = positions.split(",")[0];
@@ -34,11 +35,26 @@ public class Application {
         if (!pieces.containsKey(start)) throw new IllegalArgumentException();
 
         Piece startPiece = pieces.get(start);
+
+        validateTurn(startPiece);
+
         Piece endPiece = pieces.getOrDefault(end, new BlankPiece(Color.EMPTY));
 
         if (!startPiece.canMove(start, end, endPiece, pieces)) throw new IllegalArgumentException();
 
         pieces.remove(start);
         pieces.put(end, startPiece);
+
+        currentTurn = currentTurn.opposite();
+    }
+
+    private static void validateTurn(Piece piece) {
+        if (currentTurn.isBlack() && piece.isBlack()) {
+            return;
+        }
+        if (currentTurn.isWhite() && piece.isWhite()) {
+            return;
+        }
+        throw new IllegalArgumentException();
     }
 }
