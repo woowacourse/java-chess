@@ -29,6 +29,7 @@ public class King implements ChessPiece {
         return movements.stream()
                 .filter(startPosition::canMove)
                 .map(startPosition::move)
+                .filter(position -> !positions.containsKey(position))
                 .toList();
     }
 
