@@ -28,6 +28,7 @@ public class King extends Piece {
     @Override
     public void validateMovable(Board board, Position start, Position goal) {
         findRoot(start, goal);
+        validateSameTeamOnGoal(board, goal);
     }
 
     private List<Movement> findRoot(Position start, Position goal) {
@@ -44,5 +45,11 @@ public class King extends Piece {
             }
         }
         throw new IllegalArgumentException("경로가 존재하지 않습니다.");
+    }
+
+    private void validateSameTeamOnGoal(Board board, Position goal) {
+        if (board.sameColorPieceExists(goal, color)) {
+            throw new IllegalArgumentException("상대편의 말만 잡을 수 있습니다.");
+        }
     }
 }

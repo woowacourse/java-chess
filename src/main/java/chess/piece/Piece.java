@@ -5,7 +5,7 @@ import chess.Position;
 import chess.board.Board;
 
 public abstract class Piece {
-    private final Color color;
+    protected final Color color;
 
     protected Piece(final Color color) {
         this.color = color;
