@@ -134,6 +134,14 @@ public record Position(
         return true;
     }
 
+    public boolean canMoveDiagonal(final int horizontalStep, final int verticalStep) {
+        return canMoveHorizontal(horizontalStep) && canMoveVertical(verticalStep);
+    }
+
+    public Position moveDiagonal(final int horizontalStep, final int verticalStep) {
+        return moveHorizontal(horizontalStep).moveVertical(verticalStep);
+    }
+
     public boolean canMoveHorizontal(final int step) {
         if (step > 0) {
             return canMoveRight(step);
