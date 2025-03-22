@@ -26,7 +26,7 @@ public class Pawn extends Piece {
         super(color, position);
         hasMoved = false;
     }
-
+    @Override
     public boolean canMove(Position position, List<Piece> pieces) {
         List<Movement> movements = movementForColor.get(this.color);
 
@@ -58,7 +58,7 @@ public class Pawn extends Piece {
             return newPosition.isSamePosition(position);
         }).findAny();
     }
-
+    @Override
     public void moveTo(Position position, List<Piece> pieces) {
         if (!canMove(position,pieces)) {
             throw new IllegalArgumentException("해당 자리에 이동할 수 없습니다.");

@@ -19,7 +19,7 @@ public class Queen extends Piece  {
     protected Queen(Color color, Position position) {
         super(color, position);
     }
-
+    @Override
     public boolean canMove(Position position, List<Piece> pieces) {
         Optional<Movement> findMovement = getFindMovement(position, movements);
 
@@ -77,7 +77,7 @@ public class Queen extends Piece  {
         }
         return path;
     }
-
+    @Override
     public void moveTo(Position position, List<Piece> pieces) {
         if (!canMove(position,pieces)) {
             throw new IllegalArgumentException("해당 자리에 이동할 수 없습니다.");

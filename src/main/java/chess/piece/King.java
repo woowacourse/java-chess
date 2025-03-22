@@ -18,7 +18,7 @@ public class King extends Piece {
     protected King(Color color, Position position) {
         super(color, position);
     }
-
+    @Override
     public boolean canMove(Position position, List<Piece> pieces) {
         Optional<Movement> findMovement = getFindMovement(position, movements);
 
@@ -44,7 +44,7 @@ public class King extends Piece {
             return newPosition.isSamePosition(position);
         }).findAny();
     }
-
+    @Override
     public void moveTo(Position position, List<Piece> pieces) {
         if (!canMove(position,pieces)) {
             throw new IllegalArgumentException("해당 자리에 이동할 수 없습니다.");
