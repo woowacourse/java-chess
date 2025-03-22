@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.limited_moving_chess_piece;
 
 import chess.domain.Color;
 import chess.domain.Movement;
@@ -17,15 +17,6 @@ public abstract class Pawn extends LimitedMovingChessPiece {
     @Override
     public String name() {
         return "P";
-    }
-
-    public boolean isFirstMove() {
-        return isFirstMove;
-    }
-
-    @Override
-    public void move() {
-
     }
 
     public List<Movement> findRoute(Position origin, Position destination) {

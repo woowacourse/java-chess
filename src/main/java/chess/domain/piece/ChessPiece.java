@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface ChessPiece {
 
-    void move();
     String name();
     void validateCanMove(Position origin, Position destination);
     List<Movement> findRoute(Position origin, Position destination);

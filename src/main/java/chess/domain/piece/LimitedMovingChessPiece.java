@@ -42,11 +42,6 @@ public abstract class LimitedMovingChessPiece implements ChessPiece {
     }
 
     @Override
-    public void move() {
-
-    }
-
-    @Override
     public Color getColor() {
         return side;
     }

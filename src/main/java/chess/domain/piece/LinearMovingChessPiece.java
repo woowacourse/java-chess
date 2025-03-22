@@ -53,11 +53,6 @@ public abstract class LinearMovingChessPiece implements ChessPiece {
     }
 
     @Override
-    public void move() {
-
-    }
-
-    @Override
     public Color getColor() {
         return side;
     }
