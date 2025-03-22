@@ -1,7 +1,5 @@
 package chess.position;
 
-import chess.piece.Rook;
-
 public record Position(
         Column column,
         Row row

@@ -11,14 +11,13 @@ import chess.position.Row;
 import java.util.Scanner;
 
 public class Main {
+
     private static Scanner scanner = new Scanner(System.in);
 
     public static Piece[][] pieceBoard = Initializer.initializePieceBoard();
-
     public static Color turn = Color.WHITE;
 
     public static void main(String[] args) {
-
         while (true) {
             try {
                 System.out.println("----------------------------");

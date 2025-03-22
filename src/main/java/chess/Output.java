@@ -8,8 +8,7 @@ public class Output {
             for (int j = 0; j < 8; j++) {
                 if (Main.pieceBoard[i][j] == null) {
                     System.out.print("--- ");
-                }
-                else {
+                } else {
                     System.out.print(Main.pieceBoard[i][j] + " ");
                 }
             }
