@@ -21,7 +21,7 @@ public enum PieceType {
             List.of(new Position(B, EIGHT), new Position(G, EIGHT)),
             new Knight()),
     PAWN(List.of(new Position(A, TWO), new Position(B, TWO), new Position(C, TWO), new Position(D, TWO), new Position(E, TWO), new Position(F, TWO), new Position(G, TWO), new Position(H, TWO)),
-            List.of(new Position(A, EIGHT), new Position(B, EIGHT), new Position(C, EIGHT), new Position(D, EIGHT), new Position(E, EIGHT), new Position(F, EIGHT), new Position(G, EIGHT), new Position(H, EIGHT)),
+            List.of(new Position(A, SEVEN), new Position(B, SEVEN), new Position(C, SEVEN), new Position(D, SEVEN), new Position(E, SEVEN), new Position(F, SEVEN), new Position(G, SEVEN), new Position(H, SEVEN)),
             new Pawn()),
     QUEEN(new Position(E, ONE),
             new Position(E, EIGHT),

@@ -16,7 +16,7 @@ public class ChessBoard {
         this.positionByPieceData = boardData;
     }
 
-    public ChessBoard createInitBoard() {
+    public static ChessBoard createInitBoard() {
         Map<Position, Piece> positionByPieceData = new HashMap<>();
         for (PieceType pieceType : PieceType.values()) {
             List<Position> blackInitPositions = pieceType.getBlackInitPositions();
@@ -29,5 +29,9 @@ public class ChessBoard {
             }
         }
         return new ChessBoard(positionByPieceData);
+    }
+
+    public Map<Position, Piece> getPositionByPieceData() {
+        return positionByPieceData;
     }
 }
