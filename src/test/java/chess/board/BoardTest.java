@@ -505,9 +505,11 @@ class BoardTest {
         @Test
         void test3() {
             // given
-            Board board = BoardFixture.createBoardWithOneWhitePiece(start, whitePawn);
+            Board board = BoardFixture.createBoardWithTwoOppositePiece(start, PositionFixture.A8, Pawn.white(),
+                    Pawn.black());
             // when
             board.move(start, PositionFixture.C3);
+            board.move(PositionFixture.A8, PositionFixture.A6);
             // then
             assertThatThrownBy(() -> board.move(PositionFixture.C3, PositionFixture.C5))
                     .isInstanceOf(IllegalArgumentException.class)
