@@ -4,7 +4,6 @@ import chess.Color;
 import chess.Movement;
 import chess.Position;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,13 +26,10 @@ public class King implements ChessPiece {
 
     @Override
     public List<Position> getAvailableDestinations(Position startPosition, Map<Position, ChessPiece> positions) {
-        List<Position> destinations = new ArrayList<>();
-        for (Movement movement : movements) {
-            if (startPosition.canMove(movement)) {
-                destinations.add(startPosition.move(movement));
-            }
-        }
-        return destinations;
+        return movements.stream()
+                .filter(startPosition::canMove)
+                .map(startPosition::move)
+                .toList();
     }
 
     @Override
