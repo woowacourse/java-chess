@@ -16,6 +16,8 @@ public class Board {
     public void move(Position start, Position goal) {
         Piece piece = board.get(start);
         piece.validateMovable(this, start, goal);
+        board.put(goal, piece);
+        board.remove(start);
     }
 
     public boolean isSameColorPieceExists(Position goal, Color color) {
