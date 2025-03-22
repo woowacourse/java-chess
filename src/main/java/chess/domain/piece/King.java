@@ -62,11 +62,11 @@ public class King extends ChessPiece {
         }
 
         if (isLeftThenRook(chessPiece)) {
-            move(position.moveRight(2));
-            chessPiece.move(position.moveLeft());
+            position = position.moveRight(2);
+            chessPiece.position = position.moveLeft();
         } else {
-            move(position.moveLeft(2));
-            chessPiece.move(position.moveRight());
+            position = position.moveLeft(2);
+            chessPiece.position = position.moveRight();
         }
 
     }
