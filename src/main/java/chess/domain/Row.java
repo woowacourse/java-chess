@@ -1,15 +1,30 @@
-package chess;
+package chess.domain;
+
+import java.util.Arrays;
 
 public enum Row {
 
-    EIGHT,
-    SEVEN,
-    SIX,
-    FIVE,
-    FOUR,
-    THREE,
-    TWO,
-    ONE;
+    EIGHT(8),
+    SEVEN(7),
+    SIX(6),
+    FIVE(5),
+    FOUR(4),
+    THREE(3),
+    TWO(2),
+    ONE(1);
+
+    private final int value;
+
+    Row(int value) {
+        this.value = value;
+    }
+
+    public static Row from(int value) {
+        return Arrays.stream(Row.values())
+                .filter(row -> row.value == value)
+                .findAny()
+                .orElseThrow();
+    }
 
     public boolean isTop() {
         return ordinal() == 0;
@@ -50,4 +65,8 @@ public enum Row {
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
     }
+
+    public int intValue() {
+        return value;
+    };
 }

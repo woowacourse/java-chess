@@ -1,0 +1,52 @@
+package chess.domain.piece;
+
+import chess.domain.Position;
+import chess.domain.TeamColor;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Bishop extends Piece{
+
+    public Bishop(TeamColor teamColor) {
+        super(teamColor, PieceType.BISHOP);
+    }
+
+    @Override
+    public boolean availablePath(Position start, Position target) {
+        return start.onDiagonal(target);
+    }
+
+    @Override
+    public List<Position> findAllRouteToTarget(Position start, Position target) {
+        List<Position> positions = new ArrayList<>();
+
+        Position current = start;
+        int rowStep = (target.rowValue() - start.rowValue()) / Math.abs(target.rowValue() - start.rowValue());
+        int colStep = (target.colValue() - start.colValue()) / Math.abs(target.colValue() - start.colValue());
+
+        while (!current.equals(target)) {
+            current = current.moveVertical(rowStep).moveHorizontal(colStep);
+            positions.add(current);
+        }
+
+        return positions;
+    }
+
+    @Override
+    public boolean canMove(List<Piece> piecesOnRoute, Position start, Position target) {
+        if(countPieceOnRoute(piecesOnRoute) != 0){
+            return false;
+        }
+        return piecesOnRoute.getLast().isEmptyPiece() || this.isOtherTeam(piecesOnRoute.getLast());
+    }
+
+    @Override
+    public boolean isEmptyPiece() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+}

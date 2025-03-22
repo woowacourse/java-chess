@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 public record Position(
         Column column,
@@ -166,5 +166,32 @@ public record Position(
             return moveLeft(-step);
         }
         return this;
+    }
+
+    public boolean onStraight(Position other) {
+        return this.row() == other.row() || this.column == other.column;
+    }
+
+    public boolean onSameRow(Position other) {
+        return this.row == other.row();
+    }
+
+    public boolean onSameColumn(Position other) {
+        return this.column == other.column;
+    }
+
+    public boolean onDiagonal(Position other) {
+        int rowDiff = Math.abs(this.row().intValue() - other.row().intValue());
+        int colDiff = Math.abs(this.column.intValue() - other.column.intValue());
+
+        return rowDiff == colDiff;
+    }
+
+    public int rowValue() {
+        return this.row().intValue();
+    }
+
+    public int colValue() {
+        return this.column.intValue();
     }
 }
