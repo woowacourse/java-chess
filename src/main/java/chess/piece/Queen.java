@@ -40,6 +40,6 @@ public class Queen implements ChessPiece {
 
     @Override
     public Color getColor() {
-        return null;
+        return color;
     }
 }
