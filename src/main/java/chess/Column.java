@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum Column {
 
     A,
@@ -49,5 +51,12 @@ public enum Column {
         }
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
+    }
+
+    public static Column getColumn(String text) {
+        return Arrays.stream(Column.values())
+                .filter(value -> value.toString().equals(text))
+                .findFirst()
+                .orElseThrow();
     }
 }

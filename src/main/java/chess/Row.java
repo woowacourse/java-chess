@@ -1,15 +1,23 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum Row {
 
-    EIGHT,
-    SEVEN,
-    SIX,
-    FIVE,
-    FOUR,
-    THREE,
-    TWO,
-    ONE;
+    EIGHT(8),
+    SEVEN(7),
+    SIX(6),
+    FIVE(5),
+    FOUR(4),
+    THREE(3),
+    TWO(2),
+    ONE(1);
+
+    private final int number;
+
+    Row(int number) {
+        this.number = number;
+    }
 
     public boolean isTop() {
         return ordinal() == 0;
@@ -49,5 +57,12 @@ public enum Row {
         }
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
+    }
+
+    public static Row getRow(String text) {
+        return Arrays.stream(Row.values())
+                .filter(value -> value.number == Integer.parseInt(text))
+                .findFirst()
+                .orElseThrow();
     }
 }
