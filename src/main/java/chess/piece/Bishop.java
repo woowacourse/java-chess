@@ -58,6 +58,11 @@ public class Bishop extends Piece {
                 return root;
             }
         }
-        throw new IllegalArgumentException("경로가 존재하지 않습니다.");
+        throw new IllegalArgumentException("해당 기물은 해당 위치로 이동할 수 없습니다.");
+    }
+
+    @Override
+    public String toString() {
+        return "숍";
     }
 }

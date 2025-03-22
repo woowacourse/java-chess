@@ -37,6 +37,10 @@ public enum Row {
         throw new IllegalArgumentException("유효하지 않은 Row입니다.");
     }
 
+    public int getValue() {
+        return value;
+    }
+
     public boolean isTop() {
         return ordinal() == 0;
     }

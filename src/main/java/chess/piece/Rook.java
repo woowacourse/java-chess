@@ -47,7 +47,7 @@ public class Rook extends Piece {
                 return root;
             }
         }
-        throw new IllegalArgumentException("경로가 존재하지 않습니다.");
+        throw new IllegalArgumentException("해당 기물은 해당 위치로 이동할 수 없습니다.");
     }
 
     @Override
@@ -59,5 +59,10 @@ public class Rook extends Piece {
                 throw new IllegalArgumentException("중간에 다른 기물을 뛰어넘을 수 없습니다.");
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "룩";
     }
 }

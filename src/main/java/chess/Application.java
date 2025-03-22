@@ -23,17 +23,48 @@ public class Application {
         Board board = new Board(makeInitialBoard());
         System.out.println("체스 게임을 시작합니다.");
         Color currentColor = WHITE;
+        printCurrentBoard(board);
         while(true) {
-            System.out.printf("%s 차례입니다.\n움직이려는 말의 좌표와 도착 좌표를 입력하세요.\n", currentColor);
-            String input = scanner.nextLine();
-            String[] split = input.split(" ");
-            String[] startString = split[0].split("");
-            String[] goalString = split[1].split("");
-            Position start = createPosition(startString);
-            Position goal = createPosition(goalString);
-            board.move(start, goal);
+            System.out.printf("\n%s 차례입니다.\n움직이려는 기물의 좌표와 도착 좌표를 입력하세요.\n", currentColor);
+            playTurn(board, currentColor);
+            printCurrentBoard(board);
             currentColor = currentColor.opposite();
         }
+    }
+
+    private static void playTurn(Board board, Color currentColor) {
+        String input = scanner.nextLine();
+        String[] split = input.split(" ");
+        String[] startString = split[0].split("");
+        String[] goalString = split[1].split("");
+        Position start = createPosition(startString);
+        Position goal = createPosition(goalString);
+        try {
+            board.move(currentColor, start, goal);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("다시 입력하세요");
+            playTurn(board, currentColor);
+        }
+    }
+
+    private static void printCurrentBoard(Board currentBoard) {
+        Map<Position, Piece> board = currentBoard.getBoard();
+        System.out.println();
+        for (Row row : Row.values()) {
+            System.out.print(row.getValue());
+            for (Column column : Column.values()) {
+                Position position = new Position(row, column);
+                Piece piece = board.get(position);
+                if (piece == null) {
+                    System.out.print("ㅁ");
+                    continue;
+                }
+                System.out.print(piece);
+            }
+            System.out.println();
+        }
+        System.out.println(" A");
     }
 
     public static Position createPosition(String[] positionString) {

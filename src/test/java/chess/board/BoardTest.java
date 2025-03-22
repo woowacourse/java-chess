@@ -23,7 +23,7 @@ class BoardTest {
                 .hasMessage("중간에 다른 기물을 뛰어넘을 수 없습니다.");
     }
 
-    @DisplayName("도착지에_같은_색깔의_말이_존재하면_예외를_발생한다")
+    @DisplayName("도착지에_같은_색깔의_기이_존재하면_예외를_발생한다")
     @Test
     void move2() {
         // given
@@ -33,6 +33,6 @@ class BoardTest {
         // then
         Assertions.assertThatThrownBy(() -> generalBoard.move(A1, A2))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("상대편의 말만 잡을 수 있습니다.");
+                .hasMessage("상대편의 기물만 잡을 수 있습니다.");
     }
 }
