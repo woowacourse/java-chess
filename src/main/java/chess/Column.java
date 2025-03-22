@@ -11,6 +11,26 @@ public enum Column {
     G,
     H;
 
+    // 문자열 이상한 거 주면 터짐
+    public static Column getColumn(String col) {
+        return getColumn(col.toUpperCase().charAt(0));
+    }
+
+    // 정확한 범위 내 문자를 주지 않으면 예외 발생
+    public static Column getColumn(char col) {
+        int index = col - 'A';
+        validateIndexIsInColumnRange(index);
+        Column result = Column.values()[index];
+        return result;
+    }
+
+    private static void validateIndexIsInColumnRange(int index) {
+        if (index < 0 || index >= 8) {
+            throw new IllegalArgumentException("Column index should be in range 0 to 7");
+        }
+    }
+
+
     public boolean isFarLeft() {
         return ordinal() == 0;
     }
