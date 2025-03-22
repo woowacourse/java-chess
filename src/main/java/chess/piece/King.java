@@ -5,12 +5,13 @@ import chess.Movement;
 import chess.Position;
 import chess.exception.InvalidMoveException;
 import java.util.List;
+import java.util.Objects;
 
 public class King implements Piece{
 
     private Position position;
     private final Color color;
-    private final List<Movement> movements = List.of(Movement.UP,Movement.DOWN,Movement.LEFT,Movement.RIGHT);
+    private static final List<Movement> movements = List.of(Movement.UP,Movement.DOWN,Movement.LEFT,Movement.RIGHT);
 
     public King(Position position, Color color) {
         this.position = position;
@@ -23,7 +24,6 @@ public class King implements Piece{
 
         if(!isWantedPositionExistSameColor){
             throw new InvalidMoveException();
-
         }
         for(Movement movement : movements){
             var temporalPosition = moveWhenPossible(movement);
@@ -66,5 +66,27 @@ public class King implements Piece{
     @Override
     public Color getColor() {
         return color;
+    }
+
+    @Override
+    public boolean isSamePosition(Piece otherPiece) {
+        return otherPiece.getPosition().equals(position);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        King king = (King) o;
+        return Objects.equals(position, king.position) && color == king.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, color);
     }
 }

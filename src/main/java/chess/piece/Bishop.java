@@ -5,13 +5,14 @@ import chess.Movement;
 import chess.Position;
 import chess.exception.InvalidMoveException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Bishop implements Piece{
 
     private Position position;
     private final Color color;
-    private final List<Movement> movements = List.of(Movement.RIGHT_UP,Movement.LEFT_UP,Movement.RIGHT_DOWN,Movement.LEFT_DOWN);
+    private static final List<Movement> movements = List.of(Movement.RIGHT_UP,Movement.LEFT_UP,Movement.RIGHT_DOWN,Movement.LEFT_DOWN);
 
     public Bishop(Position position, Color color) {
         this.position = position;
@@ -84,5 +85,27 @@ public class Bishop implements Piece{
     @Override
     public Color getColor() {
         return color;
+    }
+
+    @Override
+    public boolean isSamePosition(Piece otherPiece) {
+        return otherPiece.getPosition().equals(position);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Bishop bishop = (Bishop) o;
+        return Objects.equals(position, bishop.position) && color == bishop.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, color);
     }
 }

@@ -6,6 +6,7 @@ import chess.Position;
 import chess.Row;
 import chess.exception.InvalidMoveException;
 import java.util.List;
+import java.util.Objects;
 
 public class Pawn implements Piece{
 
@@ -91,5 +92,29 @@ public class Pawn implements Piece{
 
     public Position getPosition() {
         return position;
+    }
+
+    @Override
+    public boolean isSamePosition(Piece otherPiece) {
+        return otherPiece.getPosition().equals(position);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Pawn pawn = (Pawn) o;
+        return startRow == pawn.startRow && onlyMoveMovement == pawn.onlyMoveMovement && Objects.equals(
+                attackMovement, pawn.attackMovement) && color == pawn.color && Objects.equals(position,
+                pawn.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startRow, onlyMoveMovement, attackMovement, color, position);
     }
 }

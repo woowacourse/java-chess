@@ -18,6 +18,15 @@ public class BishopTest {
     }
 
     @Test
+    void 비숍은_이동할려는위치_이전에_다른_기물이_있으면_이동할수_없다(){
+        Bishop bishop = new Bishop(Fixtures.C1,Color.WHITE);
+        Bishop enemy = new Bishop(Fixtures.D2,Color.WHITE);
+        Bishop enemy2 = new Bishop(Fixtures.E3,Color.BLACK);
+
+        Assertions.assertThatThrownBy(() -> bishop.move(Fixtures.E3,List.of(enemy,enemy2))).isInstanceOf(InvalidMoveException.class);
+    }
+
+    @Test
     void 비숍은_직선으로_이동할수_없다(){
         Bishop bishop = new Bishop(Fixtures.C1,Color.WHITE);
         Assertions.assertThatThrownBy(() -> bishop.move(Fixtures.C2,List.of()))

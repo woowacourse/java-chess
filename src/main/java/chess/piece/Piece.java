@@ -10,4 +10,6 @@ public interface Piece {
     Position getPosition();
     boolean isOpposite(Piece piece);
     Color getColor();
+
+    boolean isSamePosition(Piece otherPiece);
 }
