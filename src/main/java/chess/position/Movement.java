@@ -48,17 +48,4 @@ public enum Movement {
         return x != 0 && y != 0 && Math.abs(x) == Math.abs(y);
     }
 
-    public static Movement getMovement(
-            final Position before,
-            final Position after
-    ) {
-        int x = before.column().offset(after.column());
-        int y = before.row().offset(after.row());
-
-        return Arrays.stream(Movement.values())
-                .filter(movement -> movement.x == x)
-                .filter(movement -> movement.y == y)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("이상한 좌표야"));
-    }
 }

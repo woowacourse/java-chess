@@ -2,7 +2,7 @@ package chess;
 
 import chess.piece.Piece;
 import chess.position.Column;
-import chess.position.Movement;
+import chess.position.Offset;
 import chess.position.Position;
 import chess.position.Row;
 import java.util.Scanner;
@@ -19,7 +19,9 @@ public class Main {
         while (true) {
             Position before = inputPosition();
             Position after = inputPosition();
-            Movement movement = Movement.getMovement(before, after);
+            Offset offset = Offset.calculate(before, after);
+
+
         }
     }
 
