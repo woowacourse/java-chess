@@ -4,12 +4,14 @@ import chess.Column;
 import chess.Position;
 import chess.Row;
 import java.util.Scanner;
-import java.util.function.Supplier;
 
 public class InputView {
 
     private static final int ROW_INDEX = 0;
     private static final int COLUMN_INDEX = 1;
+
+    private InputView() {
+    }
 
     public static Position readStartPosition() {
         System.out.println("시작 위치를 입력해주세요");
@@ -29,7 +31,7 @@ public class InputView {
         return new Position(row, column);
     }
 
-    public static int parseToNumber(String input) {
+    private static int parseToNumber(String input) {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {

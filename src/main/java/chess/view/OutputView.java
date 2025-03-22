@@ -9,6 +9,9 @@ import java.util.Objects;
 
 public class OutputView {
 
+    private OutputView() {
+    }
+
     public static void printEndPiece(final Piece piece) {
         if (!Objects.equals(piece, null)) {
             System.out.println(String.format("%s를 잡았습니다!", piece.getType().getName()));
