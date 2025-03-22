@@ -4,8 +4,9 @@ import chess.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class King {
+public class King extends Piece{
 
+    @Override
     public List<Position> calculateCanMovePosition(Position departure, Position arrival) {
         List<Position> tmpPosition = new ArrayList<>();
         if (departure.canMoveUp()) {

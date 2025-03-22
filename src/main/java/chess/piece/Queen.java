@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Queen {
+public class Queen extends Piece{
 
+    @Override
     public List<Position> calculateCanMovePosition(Position departure, Position arrival) {
 
         List<Position> upResult = calculateUp(departure, arrival);

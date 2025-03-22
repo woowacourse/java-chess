@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Bishop {
+public class Bishop extends Piece{
 
+    @Override
     public List<Position> calculateCanMovePosition(Position departure, Position arrival) {
 
         List<Position> rightUpResult = calculateRightUp(departure, arrival);

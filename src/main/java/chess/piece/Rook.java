@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Rook {
+public class Rook extends Piece{
 
+    @Override
     public List<Position> calculateCanMovePosition(Position departure, Position arrival) {
         List<Position> upResult = calculateUp(departure, arrival);
         List<Position> downResult = calculateDown(departure, arrival);
