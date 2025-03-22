@@ -1,6 +1,7 @@
 package chess;
 
-public enum Column {
+public enum
+Column {
 
     A,
     B,
