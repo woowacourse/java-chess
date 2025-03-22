@@ -1,5 +1,9 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public record Position(
         Column column,
         Row row
@@ -166,5 +170,32 @@ public record Position(
             return moveLeft(-step);
         }
         return this;
+    }
+
+    public Position moveSimul(Movement movement) {
+        Position position = new Position(this.row, this.column);
+        return position.move(movement);
+    }
+
+    public List<Position> moveSimulRoute(List<Movement> movements) {
+        List<Position> positions = new ArrayList<>();
+        for (Movement movement : movements) {
+            positions.add(this.moveSimul(movement));
+        }
+        return positions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Position position = (Position) o;
+        return row == position.row && column == position.column;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(column, row);
     }
 }
