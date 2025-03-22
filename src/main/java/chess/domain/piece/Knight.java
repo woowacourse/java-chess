@@ -52,4 +52,9 @@ public class Knight extends ChessPiece {
     public boolean isPromotionable() {
         return false;
     }
+
+    @Override
+    public void castling(final ChessPiece chessPiece) {
+        throw new IllegalStateException("나이트는 캐슬링 불가능합니다.");
+    }
 }

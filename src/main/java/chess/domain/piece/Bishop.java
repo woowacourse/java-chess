@@ -42,4 +42,9 @@ public class Bishop extends ChessPiece {
     public boolean isPromotionable() {
         return false;
     }
+
+    @Override
+    public void castling(final ChessPiece chessPiece) {
+        throw new IllegalStateException("비숍은 캐슬링 불가능합니다.");
+    }
 }

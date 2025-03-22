@@ -55,4 +55,9 @@ public class Queen extends ChessPiece {
     public boolean isPromotionable() {
         return false;
     }
+
+    @Override
+    public void castling(final ChessPiece chessPiece) {
+        throw new IllegalStateException("퀸은 캐슬링 불가능합니다.");
+    }
 }

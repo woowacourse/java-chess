@@ -34,6 +34,7 @@ public class ChessController {
             switch (order.orderOption()) {
                 case MOVE -> board.move(order.piecePosition(), order.newPosition());
                 case TAKE -> board.take(order.piecePosition(), order.newPosition());
+                case CASTLING -> board.castling(order.piecePosition(), order.newPosition());
             }
         }
         outputView.outputWinner(board.getWinnerColor());

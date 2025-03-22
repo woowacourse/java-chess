@@ -8,7 +8,9 @@ import java.util.List;
 public abstract class ChessPiece {
 
     protected final Color color;
+
     protected Position position;
+    protected int moveCount = 0;
 
     public ChessPiece(final Color color, final Position position) {
         this.color = color;
@@ -16,6 +18,7 @@ public abstract class ChessPiece {
     }
 
     public void move(final Position newPosition) {
+        moveCount++;
         if (!calculateCanMovePositions().contains(newPosition)) {
             throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
         }
@@ -23,6 +26,7 @@ public abstract class ChessPiece {
     }
 
     public void take(final Position newPosition) {
+        moveCount++;
         if (!canTake(newPosition)) {
             throw new IllegalArgumentException("잡을 수 없는 위치입니다.");
         }
@@ -40,6 +44,8 @@ public abstract class ChessPiece {
     public Color getColor() {
         return this.color;
     }
+
+    public abstract void castling(final ChessPiece other);
 
     public abstract boolean isPromotionable();
 

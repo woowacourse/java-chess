@@ -43,4 +43,9 @@ public class Rook extends ChessPiece {
     public boolean isPromotionable() {
         return false;
     }
+
+    @Override
+    public void castling(final ChessPiece chessPiece) {
+        chessPiece.castling(this);
+    }
 }

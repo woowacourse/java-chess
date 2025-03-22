@@ -62,4 +62,9 @@ public class Pawn extends ChessPiece {
     public boolean isPromotionable() {
         return color.isWhite() && position.isTop() || color.isBlack() && position.isBottom();
     }
+
+    @Override
+    public void castling(final ChessPiece chessPiece) {
+        throw new IllegalStateException("폰은 캐슬링 불가능합니다.");
+    }
 }

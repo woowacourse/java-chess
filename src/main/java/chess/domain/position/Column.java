@@ -15,6 +15,10 @@ public enum Column {
         return ordinal() == 0;
     }
 
+    public boolean isLeftThen(Column other) {
+        return this.ordinal() < other.ordinal();
+    }
+
     public boolean isFarRight() {
         return ordinal() + 1 == values().length;
     }

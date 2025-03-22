@@ -22,7 +22,7 @@ public class ChessPieces {
             final ChessPieces otherChessPieces
     ) {
 
-        final ChessPiece chessPiece = getTargetPiece(piecePosition);
+        final ChessPiece chessPiece = getPieceOf(piecePosition);
         if (isIsMyChessPieceExistInNewPosition(newPosition)) {
             throw new IllegalArgumentException("우리팀 기물이 존재합니다.");
         }
@@ -37,7 +37,7 @@ public class ChessPieces {
             final Position newPosition,
             final ChessPieces otherChessPieces
     ) {
-        final ChessPiece chessPiece = getTargetPiece(piecePosition);
+        final ChessPiece chessPiece = getPieceOf(piecePosition);
 
         if (isIsMyChessPieceExistInNewPosition(newPosition)) {
             throw new IllegalArgumentException("우리팀 기물이 존재합니다.");
@@ -54,7 +54,7 @@ public class ChessPieces {
     }
 
     private void remove(final Position position) {
-        chessPieces.remove(getTargetPiece(position));
+        chessPieces.remove(getPieceOf(position));
     }
 
     private static boolean isOtherChessPieceExistInNewPosition(final Position newPosition, final ChessPieces otherChessPieces) {
@@ -67,7 +67,7 @@ public class ChessPieces {
                 .anyMatch(piece -> piece.getPosition().equals(newPosition));
     }
 
-    private ChessPiece getTargetPiece(final Position piecePosition) {
+    private ChessPiece getPieceOf(final Position piecePosition) {
         return chessPieces.stream()
                 .filter(piece -> piece.getPosition().equals(piecePosition))
                 .findFirst()
@@ -108,5 +108,11 @@ public class ChessPieces {
                 .filter(piece -> piece instanceof Pawn)
                 .filter(ChessPiece::isPromotionable)
                 .findFirst();
+    }
+
+    public void castling(final Position piecePosition, final Position newPosition) {
+        final ChessPiece piece1 = getPieceOf(piecePosition);
+        final ChessPiece piece2 = getPieceOf(newPosition);
+        piece1.castling(piece2);
     }
 }

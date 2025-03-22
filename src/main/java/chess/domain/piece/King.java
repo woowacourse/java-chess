@@ -54,4 +54,30 @@ public class King extends ChessPiece {
     public boolean isPromotionable() {
         return false;
     }
+
+    @Override
+    public void castling(final ChessPiece chessPiece) {
+        if (!canCastling(chessPiece)) {
+            throw new IllegalStateException("한번도 움직이지 않아야 캐슬링 가능합니다.");
+        }
+
+        if (isLeftThenRook(chessPiece)) {
+            move(position.moveRight(2));
+            chessPiece.move(position.moveLeft());
+        } else {
+            move(position.moveLeft(2));
+            chessPiece.move(position.moveRight());
+        }
+
+    }
+
+    private boolean canCastling(final ChessPiece chessPiece) {
+        return this.moveCount == 0
+                && chessPiece.moveCount == 0
+                && chessPiece instanceof Rook;
+    }
+
+    private boolean isLeftThenRook(final ChessPiece chessPiece) {
+        return this.position.column().isLeftThen(chessPiece.position.column());
+    }
 }

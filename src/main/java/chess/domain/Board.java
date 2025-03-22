@@ -22,24 +22,23 @@ public class Board {
         this.blackPieces = pieces2;
     }
 
-    public void move(
-            final Position piecePosition,
-            final Position newPosition
-    ) {
+    public void move(final Position piecePosition, final Position newPosition) {
         nextTurn();
         getCurrentTurnPieces().move(piecePosition, newPosition, getEnemyPieces());
     }
 
-    public void take(
-            final Position piecePosition,
-            final Position newPosition
-    ) {
+    public void take(final Position piecePosition, final Position newPosition) {
         nextTurn();
         getCurrentTurnPieces().take(piecePosition, newPosition, getEnemyPieces());
     }
 
     public void promotion(final PromotionOrder order) {
         getCurrentTurnPieces().promotion(order);
+    }
+
+    public void castling(final Position piecePosition, final Position newPosition) {
+        nextTurn();
+        getCurrentTurnPieces().castling(piecePosition, newPosition);
     }
 
     private void nextTurn() {

@@ -74,6 +74,7 @@ public class InputView {
         return switch (orderType) {
             case "M", "m" -> OrderOption.MOVE;
             case "T", "t" -> OrderOption.TAKE;
+            case "C", "c" -> OrderOption.CASTLING;
             default -> throw new IllegalArgumentException("잘못된 입력: " + orderType);
         };
     }
@@ -83,7 +84,7 @@ public class InputView {
         sb.append("다음 동작을 입력하세요.").append("\n");
         sb.append("입력 방법 : [기물위치][행동][대상위치]").append("\n");
         sb.append("기물위치 / 대상위치 예시 : F6, D5, C3").append("\n");
-        sb.append("행동 : 이동 = M, 공격 = T").append("\n");
+        sb.append("행동 : 이동 = M, 공격 = T, 캐슬링 = C").append("\n");
         return sb.toString();
     }
 
