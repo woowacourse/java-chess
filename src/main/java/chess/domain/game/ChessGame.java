@@ -2,7 +2,7 @@ package chess.domain.game;
 
 import chess.domain.Position;
 import chess.domain.TeamColor;
-import chess.domain.piece.PieceType;
+
 
 public class ChessGame {
     public ChessGame(Turn turn) {
