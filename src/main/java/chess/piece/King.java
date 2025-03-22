@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
+
     public static List<List<Movement>> allMovements = new ArrayList<>();
 
     static {
@@ -25,31 +26,26 @@ public class King extends Piece {
         super(color);
     }
 
-    @Override
-    public void validateMovable(Board board, Position start, Position goal) {
-        findRoot(start, goal);
-        validateSameTeamOnGoal(board, goal);
-    }
-
-    private List<Movement> findRoot(Position start, Position goal) {
+    protected List<Position> findRoot(Position start, Position goal) {
         for (List<Movement> movements : allMovements) {
+            List<Position> root = new ArrayList<>();
             Position now = start;
+            root.add(now);
             for (Movement movement : movements) {
                 if (now.canNotMove(movement)) {
                     break;
                 }
                 now = now.move(movement);
+                root.add(now);
             }
             if (now.equals(goal)) {
-                return movements;
+                return root;
             }
         }
         throw new IllegalArgumentException("경로가 존재하지 않습니다.");
     }
 
-    private void validateSameTeamOnGoal(Board board, Position goal) {
-        if (board.sameColorPieceExists(goal, color)) {
-            throw new IllegalArgumentException("상대편의 말만 잡을 수 있습니다.");
-        }
+    @Override
+    protected void validateMiddlePath(Board board, List<Position> root) {
     }
 }

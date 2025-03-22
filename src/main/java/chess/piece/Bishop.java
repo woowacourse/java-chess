@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Piece {
+
     public static List<List<Movement>> allMovements = new ArrayList<>();
 
     static {
@@ -31,14 +32,7 @@ public class Bishop extends Piece {
         super(color);
     }
 
-    @Override
-    public void validateMovable(Board board, Position start, Position goal) {
-        List<Position> root = findRoot(start, goal);
-        validateMiddlePath(board, root);
-        validateSameColorPieceOnGoal(board, goal);
-    }
-
-    private static void validateMiddlePath(Board board, List<Position> root) {
+    protected void validateMiddlePath(Board board, List<Position> root) {
         root.removeFirst();
         root.removeLast();
         for (Position position : root) {
@@ -48,10 +42,7 @@ public class Bishop extends Piece {
         }
     }
 
-    /**
-     * 제자리로 움직이는 경우 TODO
-     */
-    private List<Position> findRoot(Position start, Position goal) {
+    protected List<Position> findRoot(Position start, Position goal) {
         for (List<Movement> movements : allMovements) {
             List<Position> root = new ArrayList<>();
             Position now = start;
@@ -68,11 +59,5 @@ public class Bishop extends Piece {
             }
         }
         throw new IllegalArgumentException("경로가 존재하지 않습니다.");
-    }
-
-    private void validateSameColorPieceOnGoal(Board board, Position goal) {
-        if (board.sameColorPieceExists(goal, color)) {
-            throw new IllegalArgumentException("상대편의 말만 잡을 수 있습니다.");
-        }
     }
 }
