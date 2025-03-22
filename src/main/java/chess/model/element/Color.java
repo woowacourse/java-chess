@@ -1,10 +1,11 @@
-package chess;
+package chess.model.element;
 
 public enum Color {
 
     BLACK,
     WHITE,
-    EMPTY;
+    ;
+//    EMPTY;
 
     public boolean isWhite() {
         return this == WHITE;
@@ -14,15 +15,14 @@ public enum Color {
         return this == BLACK;
     }
 
-    public boolean isEmpty() {
-        return this == EMPTY;
-    }
+//    public boolean isEmpty() {
+//        return this == EMPTY;
+//    }
 
     public Color opposite() {
         return switch (this) {
             case BLACK -> WHITE;
             case WHITE -> BLACK;
-            default -> EMPTY;
         };
     }
 }

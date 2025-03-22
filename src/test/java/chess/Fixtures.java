@@ -1,5 +1,10 @@
 package chess;
 
+
+import chess.model.position.Column;
+import chess.model.position.Position;
+import chess.model.position.Row;
+
 @SuppressWarnings("unused")
 public final class Fixtures {
 

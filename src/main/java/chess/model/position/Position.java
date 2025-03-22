@@ -1,4 +1,6 @@
-package chess;
+package chess.model.position;
+
+import chess.model.element.Movement;
 
 public record Position(
         Column column,
@@ -166,5 +168,15 @@ public record Position(
             return moveLeft(-step);
         }
         return this;
+    }
+
+    @Override
+    public Column column() {
+        return column;
+    }
+
+    @Override
+    public Row row() {
+        return row;
     }
 }

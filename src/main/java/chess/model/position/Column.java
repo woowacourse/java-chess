@@ -1,4 +1,6 @@
-package chess;
+package chess.model.position;
+
+import java.util.Arrays;
 
 public enum Column {
 
@@ -49,5 +51,12 @@ public enum Column {
         }
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
+    }
+
+    public static Column findByNumber(int number) {
+        return Arrays.stream(Column.values())
+                .filter(o -> o.ordinal() == 8 - number)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 number로 Column를 찾으려 하고 있습니다"));
     }
 }
