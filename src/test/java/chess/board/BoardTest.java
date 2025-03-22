@@ -5,6 +5,7 @@ import static chess.Fixtures.A2;
 import static chess.Fixtures.A3;
 import static chess.Fixtures.makeGeneralBoard;
 
+import chess.Color;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ class BoardTest {
 
         // when
         // then
-        Assertions.assertThatThrownBy(() -> generalBoard.move(A1, A3))
+        Assertions.assertThatThrownBy(() -> generalBoard.move(Color.WHITE, A1, A3))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중간에 다른 기물을 뛰어넘을 수 없습니다.");
     }
@@ -31,7 +32,7 @@ class BoardTest {
 
         // when
         // then
-        Assertions.assertThatThrownBy(() -> generalBoard.move(A1, A2))
+        Assertions.assertThatThrownBy(() -> generalBoard.move(Color.WHITE, A1, A2))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상대편의 기물만 잡을 수 있습니다.");
     }

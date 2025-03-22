@@ -6,6 +6,7 @@ import static chess.Fixtures.A5;
 import static chess.Fixtures.makeGeneralBoard;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.Color;
 import chess.board.Board;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,12 +17,11 @@ class PawnTest {
     void move1() {
         // given
         Board generalBoard = makeGeneralBoard();
+        generalBoard.move(Color.WHITE, A2, A3);
 
         // when
-        generalBoard.move(A2, A3);
-
         // then
-        assertThatThrownBy(() -> generalBoard.move(A3, A5))
+        assertThatThrownBy(() -> generalBoard.move(Color.WHITE, A3, A5))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("처음 움직이는 폰만 앞으로 두 칸을 이동할 수 있습니다.");
     }

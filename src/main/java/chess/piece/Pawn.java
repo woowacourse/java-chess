@@ -1,10 +1,12 @@
 package chess.piece;
 
 import static chess.Movement.DOWN;
+import static chess.Movement.DOWN_DOWN;
 import static chess.Movement.LEFT;
 import static chess.Movement.RIGHT;
 import static chess.Movement.UP;
 import static chess.Movement.UP_UP;
+import static chess.Row.SEVEN;
 import static chess.Row.TWO;
 
 import chess.Color;
@@ -19,9 +21,9 @@ public class Pawn extends Piece {
 
     static {
         allMovements.add(List.of(UP));
-        allMovements.add(List.of(UP, UP));
+        allMovements.add(List.of(UP_UP));
         allMovements.add(List.of(DOWN));
-        allMovements.add(List.of(DOWN, DOWN));
+        allMovements.add(List.of(DOWN_DOWN));
         allMovements.add(List.of(LEFT, UP));
         allMovements.add(List.of(RIGHT, UP));
         allMovements.add(List.of(LEFT, DOWN));
@@ -46,13 +48,14 @@ public class Pawn extends Piece {
                 root.add(now);
             }
             if (now.equals(goal)) {
-                if (color.isWhite() && movements.contains(DOWN)) {
+                if (color.isWhite() && (movements.contains(DOWN) || movements.contains(DOWN_DOWN))) {
                     break;
                 }
-                if (color.isBlack() && movements.contains(UP) || movements.contains(UP_UP)) {
+                if (color.isBlack() && (movements.contains(UP) || movements.contains(UP_UP))) {
                     break;
                 }
-                if (start.row() != TWO && movements.contains(UP_UP)) {
+                if ((start.row() != TWO) && movements.contains(UP_UP) ||
+                        (start.row() != SEVEN) && movements.contains(DOWN_DOWN)) {
                     throw new IllegalArgumentException("처음 움직이는 폰만 앞으로 두 칸을 이동할 수 있습니다.");
                 }
                 return root;

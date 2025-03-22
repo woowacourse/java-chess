@@ -27,7 +27,7 @@ class KnightTest {
     void move1() {
         //when
         //then
-        assertThatCode(() -> makeGeneralBoard().move(B1, A3))
+        assertThatCode(() -> makeGeneralBoard().move(Color.WHITE, B1, A3))
                 .doesNotThrowAnyException();
     }
 
@@ -44,7 +44,7 @@ class KnightTest {
         Position goal = new Position(column, row);
 
         //when
-        board.move(D4, goal);
+        board.move(Color.WHITE, D4, goal);
 
         //then
         assertThat(board).extracting("board", as(MAP))
