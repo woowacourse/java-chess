@@ -14,12 +14,18 @@ public class Bishop extends ChessPiece {
     @Override
     protected List<Position> calculateCanMovePositions() {
         final List<Position> positions = new ArrayList<>();
-        for (int i = -7; i <= 7; i++) {
+        for (int i = 1; i <= 7; i++) {
             if (position.canMoveDiagonal(i, i)) {
                 positions.add(position.moveDiagonal(i, i));
             }
             if (position.canMoveDiagonal(i, -i)) {
                 positions.add(position.moveDiagonal(i, -i));
+            }
+            if (position.canMoveDiagonal(-i, i)) {
+                positions.add(position.moveDiagonal(-i, i));
+            }
+            if (position.canMoveDiagonal(-i, -i)) {
+                positions.add(position.moveDiagonal(-i, -i));
             }
         }
 
