@@ -32,4 +32,29 @@ class PawnTest {
         // then
         assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
     }
+
+    @DisplayName("BLACK - 전진 방향의 대각선에 상대편 기물이 있는 경우 해당 위치로 이동할 수 있다.")
+    @Test
+    void existEnemyAtDiagonal() {
+        // given
+        Position pawnPosition = new Position(Row.SEVEN, Column.D);
+        Pawn pawn = new Pawn(Color.BLACK);
+        Map<Position, ChessPiece> positions = Map.of(
+                pawnPosition, pawn,
+                new Position(Row.SIX, Column.C), new Knight(Color.WHITE)
+        );
+        List<Position> expected = List.of(
+                new Position(Row.SIX, Column.C),
+                new Position(Row.SIX, Column.D),
+                new Position(Row.FIVE, Column.D)
+        );
+
+        // when
+        List<Position> destinations = pawn.getAvailableDestinations(
+                pawnPosition, positions
+        );
+
+        // then
+        assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
+    }
 }
