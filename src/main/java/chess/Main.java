@@ -1,6 +1,7 @@
 package chess;
 
 import chess.piece.Piece;
+import chess.piece.쭈;
 import chess.piece.퀸비숍룩;
 import chess.position.Column;
 import chess.position.Offset;
@@ -50,6 +51,10 @@ public class Main {
             }
             pieceBoard[before.getI()][before.getJ()] = null;
             pieceBoard[after.getI()][after.getJ()] = selectPiece;
+
+            if (selectPiece.getClass() == 쭈.class) {
+                ((쭈) selectPiece).moveCount++;
+            }
         }
     }
 

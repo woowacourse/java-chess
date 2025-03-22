@@ -8,7 +8,12 @@ import java.util.Set;
 
 public class 쭈 implements Piece {
 
+    public int moveCount = 0;
+
     private final Color color;
+
+    private static final Set<Movement> BLACK_INITIAL_MOVEMENTS = Set.of(Movement.DOWN, Movement.DOWN_DOWN, Movement.LEFT, Movement.RIGHT);
+    private static final Set<Movement> WHITE_INITIAL_MOVEMENTS = Set.of(Movement.UP, Movement.UP_UP, Movement.LEFT, Movement.RIGHT);
 
     private static final Set<Movement> BLACK_MOVEMENTS = Set.of(Movement.DOWN, Movement.LEFT, Movement.RIGHT);
     private static final Set<Movement> WHITE_MOVEMENTS = Set.of(Movement.UP, Movement.LEFT, Movement.RIGHT);
@@ -38,12 +43,18 @@ public class 쭈 implements Piece {
         if (killFlag) {
             return BLACK_KILL_MOVEMENTS.contains(movement);
         }
+        if (moveCount == 0) {
+            return BLACK_INITIAL_MOVEMENTS.contains(movement);
+        }
         return BLACK_MOVEMENTS.contains(movement);
     }
 
     private boolean canMoveWhite(final Movement movement, final boolean killFlag) {
         if (killFlag) {
             return WHITE_KILL_MOVEMENTS.contains(movement);
+        }
+        if (moveCount == 0) {
+            return WHITE_INITIAL_MOVEMENTS.contains(movement);
         }
         return WHITE_MOVEMENTS.contains(movement);
     }
