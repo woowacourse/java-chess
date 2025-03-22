@@ -35,18 +35,33 @@ public class Pawn implements ChessPiece {
     }
 
     private List<Movement> getMovements() {
-        if (isFirstMove) {
+        if (color.isBlack()) {
+            if (isFirstMove) {
+                return List.of(
+                        Movement.DOWN,
+                        Movement.DOWN_DOWN,
+                        Movement.LEFT_DOWN,
+                        Movement.RIGHT_DOWN
+                );
+            }
             return List.of(
                     Movement.DOWN,
-                    Movement.DOWN_DOWN,
                     Movement.LEFT_DOWN,
                     Movement.RIGHT_DOWN
             );
         }
+        if (isFirstMove) {
+            return List.of(
+                    Movement.UP,
+                    Movement.UP_UP,
+                    Movement.LEFT_UP,
+                    Movement.RIGHT_UP
+            );
+        }
         return List.of(
-                Movement.DOWN,
-                Movement.LEFT_DOWN,
-                Movement.RIGHT_DOWN
+                Movement.UP,
+                Movement.LEFT_UP,
+                Movement.RIGHT_UP
         );
     }
 
