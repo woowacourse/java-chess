@@ -2,6 +2,7 @@ package chess.board;
 
 import chess.Color;
 import chess.Position;
+import chess.piece.Bishop;
 import chess.piece.LivePiece;
 import chess.piece.Rook;
 import java.util.ArrayList;
@@ -32,7 +33,13 @@ public class Board {
     // TODO: 실제 기물 구현할 때 마다 하나씩 추가해야 함~
     public List<LivePiece> createWhitePiece() {
         List<LivePiece> result = new ArrayList();
+        // 룩 추가
         result.add(new LivePiece(new Position(1, 1), new Rook(Color.WHITE)));
+        result.add(new LivePiece(new Position(1, 8), new Rook(Color.WHITE)));
+
+        // 비숍 추가
+        result.add(new LivePiece(new Position(1, 3), new Bishop(Color.WHITE)));
+        result.add(new LivePiece(new Position(1, 6), new Bishop(Color.WHITE)));
 
         return result;
     }
@@ -40,7 +47,13 @@ public class Board {
     // TODO: 실제 기물 구현할 때 마다 하나씩 추가해야 함~
     public List<LivePiece> createBlackPiece() {
         List<LivePiece> result = new ArrayList();
+        // 룩 추가
         result.add(new LivePiece(new Position(8, 1), new Rook(Color.BLACK)));
+        result.add(new LivePiece(new Position(8, 8), new Rook(Color.BLACK)));
+
+        // 비숍 추가
+        result.add(new LivePiece(new Position(8, 3), new Bishop(Color.BLACK)));
+        result.add(new LivePiece(new Position(8, 6), new Bishop(Color.BLACK)));
 
         return result;
     }
