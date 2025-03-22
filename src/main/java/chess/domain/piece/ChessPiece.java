@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-public abstract class ChessPiece {
+public interface ChessPiece {
 
-
+    void move();
 }

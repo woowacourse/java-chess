@@ -1,12 +1,13 @@
 package chess.domain;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.WhitePawn;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,14 +31,14 @@ public class ChessBoard {
         board.put(new Position(Row.EIGHT, Column.G), new Knight());
         board.put(new Position(Row.EIGHT, Column.H), new Rook());
 
-        board.put(new Position(Row.SEVEN, Column.A), new Pawn());
-        board.put(new Position(Row.SEVEN, Column.B), new Pawn());
-        board.put(new Position(Row.SEVEN, Column.C), new Pawn());
-        board.put(new Position(Row.SEVEN, Column.D), new Pawn());
-        board.put(new Position(Row.SEVEN, Column.E), new Pawn());
-        board.put(new Position(Row.SEVEN, Column.F), new Pawn());
-        board.put(new Position(Row.SEVEN, Column.G), new Pawn());
-        board.put(new Position(Row.SEVEN, Column.H), new Pawn());
+        board.put(new Position(Row.SEVEN, Column.A), new BlackPawn());
+        board.put(new Position(Row.SEVEN, Column.B), new BlackPawn());
+        board.put(new Position(Row.SEVEN, Column.C), new BlackPawn());
+        board.put(new Position(Row.SEVEN, Column.D), new BlackPawn());
+        board.put(new Position(Row.SEVEN, Column.E), new BlackPawn());
+        board.put(new Position(Row.SEVEN, Column.F), new BlackPawn());
+        board.put(new Position(Row.SEVEN, Column.G), new BlackPawn());
+        board.put(new Position(Row.SEVEN, Column.H), new BlackPawn());
 
         board.put(new Position(Row.ONE, Column.A), new Rook());
         board.put(new Position(Row.ONE, Column.B), new Knight());
@@ -48,14 +49,14 @@ public class ChessBoard {
         board.put(new Position(Row.ONE, Column.G), new Knight());
         board.put(new Position(Row.ONE, Column.H), new Rook());
 
-        board.put(new Position(Row.TWO, Column.A), new Pawn());
-        board.put(new Position(Row.TWO, Column.B), new Pawn());
-        board.put(new Position(Row.TWO, Column.C), new Pawn());
-        board.put(new Position(Row.TWO, Column.D), new Pawn());
-        board.put(new Position(Row.TWO, Column.E), new Pawn());
-        board.put(new Position(Row.TWO, Column.F), new Pawn());
-        board.put(new Position(Row.TWO, Column.G), new Pawn());
-        board.put(new Position(Row.TWO, Column.H), new Pawn());
+        board.put(new Position(Row.TWO, Column.A), new WhitePawn());
+        board.put(new Position(Row.TWO, Column.B), new WhitePawn());
+        board.put(new Position(Row.TWO, Column.C), new WhitePawn());
+        board.put(new Position(Row.TWO, Column.D), new WhitePawn());
+        board.put(new Position(Row.TWO, Column.E), new WhitePawn());
+        board.put(new Position(Row.TWO, Column.F), new WhitePawn());
+        board.put(new Position(Row.TWO, Column.G), new WhitePawn());
+        board.put(new Position(Row.TWO, Column.H), new WhitePawn());
     }
 
 
