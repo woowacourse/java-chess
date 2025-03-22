@@ -24,14 +24,14 @@ public class ChessBoard {
             }
         }
 
-        board.put(new Position(Row.EIGHT, Column.A), new Rook());
-        board.put(new Position(Row.EIGHT, Column.B), new Knight());
-        board.put(new Position(Row.EIGHT, Column.C), new Bishop());
-        board.put(new Position(Row.EIGHT, Column.D), new Queen());
-        board.put(new Position(Row.EIGHT, Column.E), new King());
-        board.put(new Position(Row.EIGHT, Column.F), new Bishop());
-        board.put(new Position(Row.EIGHT, Column.G), new Knight());
-        board.put(new Position(Row.EIGHT, Column.H), new Rook());
+        board.put(new Position(Row.EIGHT, Column.A), new Rook(Color.BLACK));
+        board.put(new Position(Row.EIGHT, Column.B), new Knight(Color.BLACK));
+        board.put(new Position(Row.EIGHT, Column.C), new Bishop(Color.BLACK));
+        board.put(new Position(Row.EIGHT, Column.D), new Queen(Color.BLACK));
+        board.put(new Position(Row.EIGHT, Column.E), new King(Color.BLACK));
+        board.put(new Position(Row.EIGHT, Column.F), new Bishop(Color.BLACK));
+        board.put(new Position(Row.EIGHT, Column.G), new Knight(Color.BLACK));
+        board.put(new Position(Row.EIGHT, Column.H), new Rook(Color.BLACK));
 
         board.put(new Position(Row.SEVEN, Column.A), new BlackPawn());
         board.put(new Position(Row.SEVEN, Column.B), new BlackPawn());
@@ -42,14 +42,14 @@ public class ChessBoard {
         board.put(new Position(Row.SEVEN, Column.G), new BlackPawn());
         board.put(new Position(Row.SEVEN, Column.H), new BlackPawn());
 
-        board.put(new Position(Row.ONE, Column.A), new Rook());
-        board.put(new Position(Row.ONE, Column.B), new Knight());
-        board.put(new Position(Row.ONE, Column.C), new Bishop());
-        board.put(new Position(Row.ONE, Column.D), new Queen());
-        board.put(new Position(Row.ONE, Column.E), new King());
-        board.put(new Position(Row.ONE, Column.F), new Bishop());
-        board.put(new Position(Row.ONE, Column.G), new Knight());
-        board.put(new Position(Row.ONE, Column.H), new Rook());
+        board.put(new Position(Row.ONE, Column.A), new Rook(Color.WHITE));
+        board.put(new Position(Row.ONE, Column.B), new Knight(Color.WHITE));
+        board.put(new Position(Row.ONE, Column.C), new Bishop(Color.WHITE));
+        board.put(new Position(Row.ONE, Column.D), new Queen(Color.WHITE));
+        board.put(new Position(Row.ONE, Column.E), new King(Color.WHITE));
+        board.put(new Position(Row.ONE, Column.F), new Bishop(Color.WHITE));
+        board.put(new Position(Row.ONE, Column.G), new Knight(Color.WHITE));
+        board.put(new Position(Row.ONE, Column.H), new Rook(Color.WHITE));
 
         board.put(new Position(Row.TWO, Column.A), new WhitePawn());
         board.put(new Position(Row.TWO, Column.B), new WhitePawn());

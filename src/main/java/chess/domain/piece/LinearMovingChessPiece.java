@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.Position;
 import java.util.Collections;
@@ -8,9 +9,11 @@ import java.util.List;
 public abstract class LinearMovingChessPiece implements ChessPiece {
 
     protected final List<Movement> directions;
+    protected final Color side;
 
-    public LinearMovingChessPiece(List<Movement> directions) {
+    public LinearMovingChessPiece(List<Movement> directions, Color side) {
         this.directions = directions;
+        this.side = side;
     }
 
     @Override

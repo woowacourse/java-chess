@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.Position;
 import java.util.List;
@@ -7,9 +8,11 @@ import java.util.List;
 public abstract class LimitedMovingChessPiece implements ChessPiece {
 
     protected final List<Movement> movements;
+    protected final Color side;
 
-    public LimitedMovingChessPiece(List<Movement> movements) {
+    public LimitedMovingChessPiece(List<Movement> movements, Color side) {
         this.movements = movements;
+        this.side = side;
     }
 
     @Override
