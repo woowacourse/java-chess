@@ -1,5 +1,25 @@
 package chess.piece;
 
-public class Queen {
+import chess.Color;
+import chess.Position;
 
+import java.util.List;
+import java.util.Map;
+
+public class Queen implements ChessPiece {
+    private final Color color;
+
+    public Queen(Color color) {
+        this.color = color;
+    }
+
+    @Override
+    public List<Position> getAvailableDestinations(Position startPosition, Map<Position, ChessPiece> positions) {
+        return null;
+    }
+
+    @Override
+    public Color getColor() {
+        return null;
+    }
 }
