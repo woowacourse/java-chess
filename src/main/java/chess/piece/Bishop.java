@@ -33,6 +33,46 @@ public class Bishop extends Piece {
 
     @Override
     public void validateMovable(Board board, Position start, Position goal) {
+        List<Position> root = findRoot(start, goal);
+        validateMiddlePath(board, root);
+        validateSameColorPieceOnGoal(board, goal);
+    }
 
+    private static void validateMiddlePath(Board board, List<Position> root) {
+        root.removeFirst();
+        root.removeLast();
+        for (Position position : root) {
+            if (board.isPieceExists(position)) {
+                throw new IllegalArgumentException("중간에 다른 기물을 뛰어넘을 수 없습니다.");
+            }
+        }
+    }
+
+    /**
+     * 제자리로 움직이는 경우 TODO
+     */
+    private List<Position> findRoot(Position start, Position goal) {
+        for (List<Movement> movements : allMovements) {
+            List<Position> root = new ArrayList<>();
+            Position now = start;
+            root.add(now);
+            for (Movement movement : movements) {
+                if (now.canNotMove(movement)) {
+                    break;
+                }
+                now = now.move(movement);
+                root.add(now);
+            }
+            if (now.equals(goal)) {
+                return root;
+            }
+        }
+        throw new IllegalArgumentException("경로가 존재하지 않습니다.");
+    }
+
+    private void validateSameColorPieceOnGoal(Board board, Position goal) {
+        if (board.sameColorPieceExists(goal, color)) {
+            throw new IllegalArgumentException("상대편의 말만 잡을 수 있습니다.");
+        }
     }
 }

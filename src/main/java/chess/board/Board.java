@@ -8,4 +8,9 @@ public class Board {
         // TODO
         return false;
     }
+
+    public boolean isPieceExists(Position position) {
+        // TODO
+        return false;
+    }
 }
