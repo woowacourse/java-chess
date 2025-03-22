@@ -8,6 +8,7 @@ import chess.Position;
 import chess.Row;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class King implements Piece {
     private final Color color;
@@ -25,7 +26,7 @@ public class King implements Piece {
         if (step != 1) {
             throw new IllegalArgumentException("킹은 1칸만 전진할 수 있습니다.");
         }
-        repeatMove(movement, board);
+        repeatMove(movement, board, 1);
     }
 
     private Movement findMovement(Position targetPosition) {
@@ -64,11 +65,35 @@ public class King implements Piece {
         return Math.abs(rowGap);
     }
 
-    private void repeatMove(Movement movement, Board board) {
-        if (!this.position.canMove(movement)) {
-            throw new IllegalArgumentException("보드의 범위를 벗어난 위치입니다.");
+    private void repeatMove(Movement movement, Board board, int step) {
+        for (int pointer = 0; pointer < step; pointer++) {
+            if (!this.position.canMove(movement)) {
+                throw new IllegalArgumentException("보드의 범위를 벗어난 위치입니다.");
+            }
+            Position newPosition = this.position.move(movement);
+            if (canAttack(step, pointer, board, newPosition)) {
+                attack(board, newPosition);
+            } else {
+                simplyMove(board, newPosition);
+            }
         }
-        Position newPosition = this.position.move(movement);
+    }
+
+    private boolean canAttack(int step, int pointer, Board board, Position newPosition) {
+        if (pointer == step - 1) {
+            Optional<Piece> existingPiece = board.findByPosition(newPosition);
+            return existingPiece.isPresent()
+                    && existingPiece.get().isEnemyWith(this);
+        }
+        return false;
+    }
+
+    private void attack(Board board, Position newPosition) {
+        this.position = newPosition;
+        board.remove(newPosition);
+    }
+
+    private void simplyMove(Board board, Position newPosition) {
         if (board.findByPosition(newPosition).isPresent()) {
             throw new IllegalArgumentException("장애물이 존재합니다.");
         }
