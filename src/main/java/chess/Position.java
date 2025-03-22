@@ -148,6 +148,10 @@ public record Position(
         return moveVertical(movement.y()).moveHorizontal(movement.x());
     }
 
+    public Position move(final int x, final int y) {
+        return moveVertical(x).moveHorizontal(y);
+    }
+
     public Position moveVertical(final int step) {
         if (step > 0) {
             return moveUp(step);
@@ -166,5 +170,31 @@ public record Position(
             return moveLeft(-step);
         }
         return this;
+    }
+
+    /////
+
+    public boolean isRowEquals(Position targetPosition) {
+        return this.row == targetPosition.row;
+    }
+
+    public boolean isColumnEquals(Position targetPosition) {
+        return this.column == targetPosition.column;
+    }
+
+    public int calculateRowGap(Position targetPosition) {
+        return this.row.ordinal() - targetPosition.row.ordinal();
+    }
+
+    public int calculateColumnGap(Position targetPosition) {
+        return this.column.ordinal() - targetPosition.column.ordinal();
+    }
+
+    public int getRow() {
+        return row.ordinal();
+    }
+
+    public int getColumn() {
+        return column.ordinal();
     }
 }

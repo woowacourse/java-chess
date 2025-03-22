@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum Column {
 
     A,
@@ -10,6 +12,14 @@ public enum Column {
     F,
     G,
     H;
+
+    public static String ofOrdinal(int ordinal) {
+        return Arrays.stream(Column.values())
+                .filter(column -> column.ordinal() == ordinal)
+                .map(Enum::name)
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+    }
 
     public boolean isFarLeft() {
         return ordinal() == 0;
