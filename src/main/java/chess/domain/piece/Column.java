@@ -57,4 +57,8 @@ public enum Column {
     public static List<Column> getAllColumns() {
         return Arrays.stream(values()).toList();
     }
+
+    public int calculateDistance(Column column) {
+        return column.ordinal() - this.ordinal();
+    }
 }

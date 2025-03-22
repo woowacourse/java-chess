@@ -37,13 +37,13 @@ public class OutputVIew {
 
     private static Piece getPieceByRowAndColum(List<Piece> pieces, Row row, Column column) {
         return pieces.stream()
-            .filter(piece -> piece.isExist(row, column))
+            .filter(piece -> piece.isExist(column, row))
             .findFirst().get();
     }
 
     private static boolean hasPiece(List<Piece> allPieces, Row row, Column column) {
         return allPieces.stream()
-            .anyMatch(piece -> piece.isExist(row, column));
+            .anyMatch(piece -> piece.isExist(column, row));
     }
 
     private static String convertToString(Row row) {

@@ -57,4 +57,8 @@ public enum Row {
     public static List<Row> getAllRows() {
         return Arrays.stream(values()).toList();
     }
+
+    public int calculateDistance(Row row) {
+        return row.ordinal() - this.ordinal();
+    }
 }

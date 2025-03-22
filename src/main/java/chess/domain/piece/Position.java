@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import java.util.Map;
+import java.util.Objects;
+
 public record Position(
         Column column,
         Row row
@@ -168,7 +171,28 @@ public record Position(
         return this;
     }
 
-    public boolean hasSameRowAndColumn(Row row, Column column) {
+    public boolean hasSameRowAndColumn(Column column, Row row) {
         return this.row == row && this.column == column;
+    }
+
+    public boolean hasSameRow(Row row) {
+        return this.row == row;
+    }
+
+    public Map.Entry<Integer, Integer> calculateColumnAndRowDistance(Position destination) {
+        int columnDistance = this.column.calculateDistance(destination.column);
+        int rowDistance = this.row.calculateDistance(destination.row);
+        return Map.entry(columnDistance, rowDistance);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Position(Column column1, Row row1))) return false;
+        return row == row1 && column == column1;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(column, row);
     }
 }
