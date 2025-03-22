@@ -47,19 +47,35 @@ public class Pawn implements Piece {
         //TODO 앞으로만 갈수 있음
         int columnGap = position.calculateColumnGap(targetPosition);
         int rowGap = position.calculateRowGap(targetPosition);
+        Movement movement = null;
         if (rowGap == 0) {
-            if (position.calculateColumnGap(targetPosition) > 0) {
-                return Movement.LEFT;
+            if (columnGap > 0) {
+                movement = Movement.LEFT;
             }
-            return Movement.RIGHT;
+            if (columnGap < 0) {
+                movement = Movement.RIGHT;
+            }
         }
         if (columnGap == 0) {
-            if (position.calculateRowGap(targetPosition) > 0) {
-                return Movement.UP;
+            if (rowGap > 0) {
+                movement =  Movement.UP;
             }
-            return Movement.DOWN;
+            if (rowGap < 0) {
+                movement =  Movement.DOWN;
+            }
         }
-        throw new IllegalArgumentException("폰은 동서남북 방향으로만 이동 가능합니다.");
+        validateAvailableDirection(movement);
+        return movement;
+    }
+
+    private void validateAvailableDirection(Movement movement) {
+        if (movement == null) {
+            throw new IllegalArgumentException("폰은 동서남북 방향으로만 이동 가능합니다.");
+        }
+        if ((movement == Movement.DOWN && color.isWhite())
+                || (movement == Movement.UP && color.isBlack())) {
+            throw new IllegalArgumentException("폰은 뒤로 이동할 수 없습니다.");
+        }
     }
 
     private void repeatMove(Movement movement, Board board, int step) {

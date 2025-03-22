@@ -26,6 +26,18 @@ public class PawnTest {
     }
 
     @Test
+    void moveDownOnce() {
+        Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.THREE));
+        Board board = new Board(List.of(
+                pawn
+        ));
+
+        pawn.move(new Position(Column.A, Row.TWO), board);
+
+        assertThat(pawn).isEqualTo(new Pawn(Color.WHITE, new Position(Column.A, Row.TWO)));
+    }
+
+    @Test
     void failToMoveUpMoreThanOnce() {
         Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.TWO));
         Board board = new Board(List.of(
@@ -61,14 +73,24 @@ public class PawnTest {
     }
 
     @Test
-    void moveDownOnce() {
-        Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.THREE));
-        Board board = new Board(List.of(
+    void failIfMoveBackWhenColorBlack() {
+        Pawn pawn = new Pawn(Color.BLACK, new Position(Column.A, Row.SEVEN));
+        Board hurdleBoard = new Board(List.of(
                 pawn
         ));
 
-        pawn.move(new Position(Column.A, Row.TWO), board);
+        assertThatThrownBy(() -> pawn.move(new Position(Column.A, Row.EIGHT), hurdleBoard))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 
-        assertThat(pawn).isEqualTo(new Pawn(Color.WHITE, new Position(Column.A, Row.TWO)));
+    @Test
+    void failIfMoveBackWhenColorWhite() {
+        Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.TWO));
+        Board hurdleBoard = new Board(List.of(
+                pawn
+        ));
+
+        assertThatThrownBy(() -> pawn.move(new Position(Column.A, Row.ONE), hurdleBoard))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
