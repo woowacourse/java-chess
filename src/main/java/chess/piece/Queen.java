@@ -43,33 +43,10 @@ public class Queen extends Piece {
 
     private void moveDiagonal(final int x, final int y) {
         int step = Math.abs(x);
-        boolean canMove = false;
-        if (x < 0 && y < 0) {
-            canMove = position.canMoveLeftDown(step);
-        }
-        if (x < 0 && y > 0) {
-            canMove = position.canMoveLeftUp(step);
-        }
-        if (x > 0 && y < 0) {
-            canMove = position.canMoveRightDown(step);
-        }
-        if (x > 0 && y > 0) {
-            canMove = position.canMoveRightUp(step);
-        }
+        boolean canMove = position.canMoveDiagonal(x, y);
 
         if (canMove) {
-            if (x < 0 && y < 0) {
-                position = position.moveLeftUp(step);
-            }
-            if (x < 0 && y > 0) {
-                position = position.moveLeftUp(step);
-            }
-            if (x > 0 && y < 0) {
-                position = position.moveRightDown(step);
-            }
-            if (x > 0 && y > 0) {
-                position = position.moveRightUp(step);
-            }
+            position = position.moveDiagonal(x, y);
             return;
         }
         throw new IllegalArgumentException("이동할 수 없습니다");

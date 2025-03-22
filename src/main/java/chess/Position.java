@@ -199,4 +199,8 @@ public record Position(
         }
         return this;
     }
+
+    public Position moveDiagonal(final int horizontalStep, final int verticalStep) {
+        return moveHorizontal(horizontalStep).moveVertical(verticalStep);
+    }
 }

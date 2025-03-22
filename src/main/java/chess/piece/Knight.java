@@ -13,7 +13,7 @@ public class Knight extends Piece {
         boolean canMove = position.canMoveHorizontal(x) && position.canMoveVertical(y);
 
         if (isMovingRule(x, y) && canMove) {
-            position = position.moveHorizontal(x).moveVertical(y);
+            position = position.moveDiagonal(x, y);
             return;
         }
         throw new IllegalArgumentException("이동할 수 없습니다.");
