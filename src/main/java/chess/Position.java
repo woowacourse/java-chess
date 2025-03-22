@@ -2,6 +2,8 @@ package chess;
 
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -11,6 +13,10 @@ public record Position(
 ) {
     public Position(final Row row, final Column column) {
         this(column, row);
+    }
+
+    public static Position from(String column, String row) {
+        return new Position(Column.from(column), Row.from(row));
     }
 
     public boolean canMoveUp() {
@@ -174,9 +180,9 @@ public record Position(
     }
 
     //내 포지션으롭투 MoveMent들을 받아서 모든 곳으로 갈 수 있는가? 다시 말해서 이 기물 능력으로 거기 가는 거 가능?
-    // Is that true? 오키도키요! 정말로? Yes! 오키도키요! 세이, 나 나나 나나 오키도키요!
     public Set<Position> findMoveAblePositions(Set<Movement> movements) {
         return movements.stream()
+                .filter(this::canMove)
                 .map(this::move)
                 .collect(Collectors.toSet());
     }
@@ -187,7 +193,7 @@ public record Position(
         Set<Position> positions = new HashSet<>();
 
         for (Movement movement : movements) {
-            Position current = this; // ← 매 방향마다 원래 위치에서 시작
+            Position current = this;
             while (current.canMove(movement)) {
                 current = current.move(movement);
                 positions.add(current);
@@ -197,4 +203,63 @@ public record Position(
         return positions;
     }
 
+    public Set<Position> findBetweenSlidingAblePositions(Set<Movement> movements, Position toPosition) {
+        Set<Position> positions = new HashSet<>();
+
+        for (Movement movement : movements) {
+            Position current = this;
+            Set<Position> path = new LinkedHashSet<>();
+
+            while (current.canMove(movement)) {
+                current = current.move(movement);
+                if (current.equals(toPosition)) {
+                    path.remove(this);
+                    path.remove(toPosition);
+                    positions.addAll(path);
+                    break;
+                }
+                path.add(current);
+            }
+        }
+
+        return positions;
+    }
+
+
+    public Set<Position> rookBetweenPositions(Position toPosition) {
+        Set<Position> betweenPositions = new HashSet<>();
+        if (this.column == toPosition.column) {
+            List<Row> betweenRows = this.row.betweenRows(toPosition.row);
+            for (Row row : betweenRows) {
+                betweenPositions.add(new Position(this.column, row));
+            }
+        }
+        if (this.row == toPosition.row) {
+            List<Column> betweenColumns = this.column.betweenColumns(toPosition.column);
+            for (Column column : betweenColumns) {
+                betweenPositions.add(new Position(column, this.row));
+            }
+        }
+
+        return betweenPositions;
+    }
+
+
+    public boolean isStartWhitePawn() {
+        if (row.equals(Row.TWO)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isStartWithBlackPawn() {
+        if (row.equals(Row.SEVEN)) {
+            return true;
+        }
+        return false;
+    }
+
+    public Set<Position> findEatAblePositions(Set<Movement> movements) {
+        return null;
+    }
 }
