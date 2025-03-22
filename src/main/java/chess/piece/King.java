@@ -6,39 +6,62 @@ import java.util.List;
 
 public class King {
 
-
-    public List<Position> calculateCanMovePosition(Position position) {
+    public List<Position> calculateCanMovePosition(Position departure, Position arrival) {
         List<Position> tmpPosition = new ArrayList<>();
-        if (position.canMoveUp()) {
-            tmpPosition.add(position.moveUp());
+        if (departure.canMoveUp()) {
+            Position movedPosition = departure.moveUp();
+            if (arrival.equals(movedPosition)) {
+                return List.of(movedPosition);
+            }
         }
-        if (position.canMoveDown()) {
-            tmpPosition.add(position.moveDown());
-        }
-
-        if (position.canMoveLeft()) {
-            tmpPosition.add(position.moveLeft());
-        }
-
-        if (position.canMoveRight()) {
-            tmpPosition.add(position.moveRight());
+        if (departure.canMoveDown()) {
+            Position movedPosition = departure.moveDown();
+            if (arrival.equals(movedPosition)) {
+                return List.of(movedPosition);
+            }
         }
 
-        if (position.canMoveLeftUp()){
-            tmpPosition.add(position.moveLeftUp());
+        if (departure.canMoveLeft()) {
+            Position movedPosition = departure.moveLeft();
+            if (arrival.equals(movedPosition)) {
+                return List.of(movedPosition);
+            }
         }
 
-        if (position.canMoveLeftDown()){
-            tmpPosition.add(position.moveLeftDown());
+        if (departure.canMoveRight()) {
+            Position movedPosition = departure.moveRight();
+            if (arrival.equals(movedPosition)) {
+                return List.of(movedPosition);
+            }
         }
 
-        if (position.canMoveRightUp()) {
-            tmpPosition.add(position.moveRightUp());
+        if (departure.canMoveRightUp()) {
+            Position movedPosition = departure.moveRightUp();
+            if (arrival.equals(movedPosition)) {
+                return List.of(movedPosition);
+            }
         }
 
-        if (position.canMoveRightDown()) {
-            tmpPosition.add(position.moveRightDown());
+        if (departure.canMoveRightDown()) {
+            Position movedPosition = departure.moveRightDown();
+            if (arrival.equals(movedPosition)) {
+                return List.of(movedPosition);
+            }
         }
-        return tmpPosition;
+
+        if (departure.canMoveLeftUp()) {
+            Position movedPosition = departure.moveLeftUp();
+            if (arrival.equals(movedPosition)) {
+                return List.of(movedPosition);
+            }
+        }
+
+        if (departure.canMoveLeftDown()) {
+            Position movedPosition = departure.moveLeftDown();
+            if (arrival.equals(movedPosition)) {
+                return List.of(movedPosition);
+            }
+        }
+        throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
     }
 }
