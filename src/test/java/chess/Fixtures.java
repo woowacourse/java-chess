@@ -1,9 +1,9 @@
 package chess;
 
 
-import chess.position.Column;
-import chess.position.Position;
-import chess.position.Row;
+import chess.model.position.Column;
+import chess.model.position.Position;
+import chess.model.position.Row;
 
 @SuppressWarnings("unused")
 public final class Fixtures {

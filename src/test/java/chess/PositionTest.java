@@ -1,7 +1,7 @@
 package chess;
 
-import chess.element.Movement;
-import chess.position.Position;
+import chess.model.element.Movement;
+import chess.model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

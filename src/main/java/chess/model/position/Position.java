@@ -1,6 +1,6 @@
-package chess.position;
+package chess.model.position;
 
-import chess.element.Movement;
+import chess.model.element.Movement;
 
 public record Position(
         Column column,

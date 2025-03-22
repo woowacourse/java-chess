@@ -1,4 +1,4 @@
-package chess.position;
+package chess.model.position;
 
 public enum Row {
 

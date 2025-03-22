@@ -1,5 +1,6 @@
 package chess;
 
+import chess.model.ChessBoard;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,7 +22,7 @@ class ChessBoardTest {
             ChessBoard board = ChessBoard.createInitBoard();
 
             // then
-            Assertions.assertThat(board.getPositionByPieceData()).hasSize(initBoardSize);
+            Assertions.assertThat(board.getPositionByPieceBoard()).hasSize(initBoardSize);
         }
     }
 }
