@@ -1,8 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.ChessPiece;
-import chess.domain.pieces.ChessPieces;
-import chess.domain.pieces.Color;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.dto.PromotionOrder;
 

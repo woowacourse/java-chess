@@ -1,4 +1,4 @@
-package chess.domain.pieces;
+package chess.domain;
 
 import chess.domain.piece.*;
 import chess.domain.position.Position;

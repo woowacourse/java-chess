@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.domain.piece.*;
-import chess.domain.pieces.Color;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 

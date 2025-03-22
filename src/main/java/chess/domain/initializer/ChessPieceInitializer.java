@@ -1,6 +1,6 @@
 package chess.domain.initializer;
 
-import chess.domain.pieces.ChessPieces;
+import chess.domain.ChessPieces;
 
 public interface ChessPieceInitializer {
 
