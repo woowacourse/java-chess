@@ -3,6 +3,7 @@ package chess.board;
 import chess.Color;
 import chess.Position;
 import chess.piece.Bishop;
+import chess.piece.King;
 import chess.piece.LivePiece;
 import chess.piece.Queen;
 import chess.piece.Rook;
@@ -45,6 +46,9 @@ public class Board {
         // 퀸 추가
         result.add(new LivePiece(new Position(1, 4), new Queen(Color.WHITE)));
 
+        // 킹 추가
+        result.add(new LivePiece(new Position(1, 5), new King(Color.WHITE)));
+
         return result;
     }
 
@@ -61,6 +65,9 @@ public class Board {
 
         // 퀸 추가
         result.add(new LivePiece(new Position(8, 4), new Queen(Color.BLACK)));
+
+        // 킹 추가
+        result.add(new LivePiece(new Position(8, 5), new King(Color.BLACK)));
 
         return result;
     }
