@@ -29,7 +29,10 @@ public class Knight implements ChessPiece {
     public List<Position> getAvailableDestinations(Position startPosition, Map<Position, ChessPiece> positions) {
         List<Position> destinations = new ArrayList<>();
         for (Movement movement : movements) {
-            if (startPosition.canMove(movement)) {
+            if (startPosition.canMove(movement)
+                    && (!positions.containsKey(startPosition.move(movement))
+                    || positions.get(startPosition.move(movement)).getColor() != color
+            )) {
                 destinations.add(startPosition.move(movement));
             }
         }
