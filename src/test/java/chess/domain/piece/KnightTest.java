@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
+import chess.domain.Color;
 import chess.domain.Column;
 import chess.domain.Movement;
 import chess.domain.Position;
@@ -15,7 +16,7 @@ class KnightTest {
 
     @Test
     void 말이_움직일_수_있는_경로인지_확인할_수_있다() {
-        ChessPiece knight = new Knight();
+        ChessPiece knight = new Knight(Color.BLACK);
         Position origin = new Position(Row.FOUR, Column.D);
         Position destination = new Position(Row.FIVE, Column.F);
 
@@ -24,7 +25,7 @@ class KnightTest {
 
     @Test
     void 말이_움직일_수_없는_경로인지_확인할_수_있다() {
-        ChessPiece knight = new Knight();
+        ChessPiece knight = new Knight(Color.BLACK);
         Position origin = new Position(Row.FOUR, Column.D);
         Position destination = new Position(Row.SIX, Column.F);
 
@@ -33,7 +34,7 @@ class KnightTest {
 
     @Test
     void 경로를_찾을_수_있다() {
-        ChessPiece knight = new Knight();
+        ChessPiece knight = new Knight(Color.WHITE);
         Position origin = new Position(Row.FOUR, Column.D);
         Position destination = new Position(Row.FIVE, Column.F);
 
