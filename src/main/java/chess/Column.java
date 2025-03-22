@@ -1,5 +1,9 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public enum Column {
 
     A,
@@ -10,6 +14,13 @@ public enum Column {
     F,
     G,
     H;
+
+    public static Column from(String columnString) {
+        return Arrays.stream(Column.values())
+                .filter(column -> column.name().equals(columnString))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("column 없습니당"));
+    }
 
     public boolean isFarLeft() {
         return ordinal() == 0;
@@ -50,4 +61,24 @@ public enum Column {
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
     }
+
+    public Column move(final int step) {
+        return moveRight(step);
+
+
+    }
+
+    public List<Column> betweenColumns(Column column) {
+        List<Column> columnList = new ArrayList<>();
+
+        int start = Math.min(this.ordinal(), column.ordinal());
+        int end = Math.max(this.ordinal(), column.ordinal());
+
+        for (int i = start + 1; i < end; i++) {
+            columnList.add(Column.values()[i]);
+        }
+
+        return columnList;
+    }
+
 }
