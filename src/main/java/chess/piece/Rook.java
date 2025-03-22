@@ -1,5 +1,5 @@
 package chess.piece;
 
-public class Rook {
+public class Rook extends ChessPiece{
 
 }
