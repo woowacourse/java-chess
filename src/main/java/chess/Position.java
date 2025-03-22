@@ -167,4 +167,10 @@ public record Position(
         }
         return this;
     }
+
+    public boolean isSamePosition(Position position){
+        return row.equals(position.row) && column.equals(position.column);
+    }
+
+
 }
