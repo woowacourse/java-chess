@@ -23,7 +23,7 @@ public class Knight implements LMove {
             route.add(position);
             return route;
         }
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
 
@@ -38,7 +38,7 @@ public class Knight implements LMove {
             route.add(position);
             return route;
         }
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     public Route moveRightUpRight(Position position) {
@@ -52,7 +52,7 @@ public class Knight implements LMove {
             route.add(position);
             return route;
         }
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     public Route moveRightDownRight(Position position) {
@@ -66,7 +66,7 @@ public class Knight implements LMove {
             route.add(position);
             return route;
         }
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     public Route moveDownRightDown(Position position) {
@@ -80,7 +80,7 @@ public class Knight implements LMove {
             route.add(position);
             return route;
         }
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     public Route moveDownLeftDown(Position position) {
@@ -94,7 +94,7 @@ public class Knight implements LMove {
             route.add(position);
             return route;
         }
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     public Route moveLeftUpLeft(Position position) {
@@ -108,7 +108,7 @@ public class Knight implements LMove {
             route.add(position);
             return route;
         }
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     public Route moveLeftDownLeft(Position position) {
@@ -122,7 +122,7 @@ public class Knight implements LMove {
             route.add(position);
             return route;
         }
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     @Override

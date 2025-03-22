@@ -20,7 +20,7 @@ public class King implements DiagonalMove, PerpendicularMove {
             route.add(position);
             return route;
         }
-        throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class King implements DiagonalMove, PerpendicularMove {
             route.add(position);
             return route;
         }
-        throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class King implements DiagonalMove, PerpendicularMove {
             route.add(position);
             return route;
         }
-        throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class King implements DiagonalMove, PerpendicularMove {
             route.add(position);
             return route;
         }
-        throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class King implements DiagonalMove, PerpendicularMove {
             route.add(position);
             return route;
         }
-        throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class King implements DiagonalMove, PerpendicularMove {
             route.add(position);
             return route;
         }
-        throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class King implements DiagonalMove, PerpendicularMove {
             route.add(position);
             return route;
         }
-        throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
+        return null;
     }
 
     @Override
@@ -102,6 +102,6 @@ public class King implements DiagonalMove, PerpendicularMove {
             route.add(position);
             return route;
         }
-        throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
+        return null;
     }
 }

@@ -23,17 +23,13 @@ public class Board {
         if (piece.getMoveType() != PieceMoveType.KNIGHT && hasPiece(route)) {
             throw new IllegalArgumentException("중간에 장애물이 있습니다.");
         }
+        pieces.remove(startPosition);
+        pieces.put(arrivalPosition, piece);
     }
 
     private boolean hasPiece(final Route route) {
         return route.getPositions().stream()
                 .anyMatch(position -> pieces.containsKey(position));
-    }
-
-    private boolean canArrive(final Set<Route> routes, final Position arrivalPosition) {
-        return routes.stream()
-                .map(Route::getLast)
-                .anyMatch(position -> position.equals(arrivalPosition));
     }
 
     private Route getRoute(final Set<Route> routes, final Position arrivalPosition) {
@@ -46,34 +42,41 @@ public class Board {
     private Set<Route> makeTotalRoute(final Piece piece, final Position startPosition,
                                       final Position arrivalPosition) {
         Set<Route> routes = new HashSet<>();
-        if (piece.canMoveDiagonal()) {
-            routes.add(piece.moveUp(startPosition));
-            routes.add(piece.moveDown(startPosition));
-            routes.add(piece.moveRight(startPosition));
-            routes.add(piece.moveLeft(startPosition));
+        if (piece.canMovePerpendicular()) {
+            add(routes, piece.moveUp(startPosition));
+            add(routes, piece.moveDown(startPosition));
+            add(routes, piece.moveRight(startPosition));
+            add(routes, piece.moveLeft(startPosition));
         }
 
-        if (piece.canMovePerpendicular()) {
-            routes.add(piece.moveRightUp(startPosition));
-            routes.add(piece.moveRightDown(startPosition));
-            routes.add(piece.moveLeftUp(startPosition));
-            routes.add(piece.moveLeftDown(startPosition));
+        if (piece.canMoveDiagonal()) {
+            add(routes, piece.moveRightUp(startPosition));
+            add(routes, piece.moveRightDown(startPosition));
+            add(routes, piece.moveLeftUp(startPosition));
+            add(routes, piece.moveLeftDown(startPosition));
         }
 
         if (piece.canLMove()) {
-            routes.add(piece.moveUpRightUp(startPosition));
-            routes.add(piece.moveUpLeftUp(startPosition));
-            routes.add(piece.moveRightUpRight(startPosition));
-            routes.add(piece.moveUpRightUp(startPosition));
-            routes.add(piece.moveUpLeftUp(startPosition));
-            routes.add(piece.moveRightUpRight(startPosition));
-            routes.add(piece.moveRightDownRight(startPosition));
-            routes.add(piece.moveDownRightDown(startPosition));
-            routes.add(piece.moveDownLeftDown(startPosition));
-            routes.add(piece.moveLeftUpLeft(startPosition));
-            routes.add(piece.moveLeftDownLeft(startPosition));
+            add(routes, piece.moveUpRightUp(startPosition));
+            add(routes, piece.moveUpLeftUp(startPosition));
+            add(routes, piece.moveRightUpRight(startPosition));
+            add(routes, piece.moveUpRightUp(startPosition));
+            add(routes, piece.moveUpLeftUp(startPosition));
+            add(routes, piece.moveRightUpRight(startPosition));
+            add(routes, piece.moveRightDownRight(startPosition));
+            add(routes, piece.moveDownRightDown(startPosition));
+            add(routes, piece.moveDownLeftDown(startPosition));
+            add(routes, piece.moveLeftUpLeft(startPosition));
+            add(routes, piece.moveLeftDownLeft(startPosition));
         }
         return routes;
+    }
+
+    private void add(final Set<Route> routes, final Route route) {
+        if (route == null) {
+            return;
+        }
+        routes.add(route);
     }
 
     private Piece getPiece(final Position position) {

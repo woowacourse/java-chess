@@ -15,7 +15,7 @@ public class Pawn implements PerpendicularMove {
     @Override
     public Route moveUp(final Position position) {
         if (team == Team.BLACK) {
-            throw new IllegalArgumentException("움직일 수 없는 방향입니다.");
+            return null;
         }
         return Route.from(position.moveUp());
     }
@@ -23,20 +23,20 @@ public class Pawn implements PerpendicularMove {
     @Override
     public Route moveDown(final Position position) {
         if (team == Team.WHITE) {
-            throw new IllegalArgumentException("움직일 수 없는 방향입니다.");
+            return null;
         }
         return Route.from(position.moveDown());
     }
 
     @Override
     public Route moveRight(final Position position) {
-        throw new IllegalArgumentException("움직일 수 없는 방향입니다.");
+        return null;
 
     }
 
     @Override
     public Route moveLeft(final Position position) {
-        throw new IllegalArgumentException("움직일 수 없는 방향입니다.");
+        return null;
     }
 
     public Route moveUpUp(final Position position) {
