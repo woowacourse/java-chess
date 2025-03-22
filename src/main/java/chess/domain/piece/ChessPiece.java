@@ -19,9 +19,17 @@ public abstract class ChessPiece {
         this.position = newPosition;
     }
 
-    protected abstract List<Position> calculateCanMovePositions();
+    public void take(final Position newPosition) {
+        if (!calculateCanTakePositions().contains(newPosition)) {
+            throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
+        }
+        this.position = newPosition;
+    }
 
     public Position getPosition() {
         return this.position;
     }
+
+    protected abstract List<Position> calculateCanMovePositions();
+    protected abstract List<Position> calculateCanTakePositions();
 }

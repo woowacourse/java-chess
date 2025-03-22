@@ -19,4 +19,16 @@ public class Pawn extends ChessPiece {
         }
         return positions;
     }
+
+    @Override
+    protected List<Position> calculateCanTakePositions() {
+        final List<Position> positions = new ArrayList<>();
+        if (position.canMoveRightUp()) {
+            positions.add(position.moveRightUp());
+        }
+        if (position.canMoveLeftUp()) {
+            positions.add(position.moveLeftUp());
+        }
+        return positions;
+    }
 }

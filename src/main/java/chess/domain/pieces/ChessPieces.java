@@ -46,8 +46,8 @@ public class ChessPieces {
             throw new IllegalArgumentException("상대방 기물이 존재하지 않습니다. 이동 명령을 사용하세요.");
         }
 
+        chessPiece.take(newPosition);
         chessPieces.remove(getTargetPiece(newPosition));
-        chessPiece.move(newPosition);
     }
 
     private static boolean isOtherChessPieceExistInNewPosition(final Position newPosition, final ChessPieces otherChessPieces) {

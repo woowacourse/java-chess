@@ -32,4 +32,9 @@ public class Rook extends ChessPiece {
 
         return positions;
     }
+
+    @Override
+    protected List<Position> calculateCanTakePositions() {
+        return calculateCanMovePositions();
+    }
 }
