@@ -28,18 +28,25 @@ public class Bishop implements ChessPiece {
             Position currentPosition = startPosition;
             while (currentPosition.canMove(movement)) {
                 currentPosition = currentPosition.move(movement);
-                if (!positions.containsKey(currentPosition) || positions.get(currentPosition).getColor() != color) {
-                    destinations.add(currentPosition);
-                    if (positions.containsKey(currentPosition) && positions.get(currentPosition).getColor() != color) {
-                        break;
-                    }
-                } else {
+                if (!canMove(currentPosition, positions)) {
+                    break;
+                }
+                destinations.add(currentPosition);
+                if (positions.containsKey(currentPosition)) {
                     break;
                 }
             }
         }
 
         return destinations;
+    }
+
+    private boolean canMove(Position targetPosition, Map<Position, ChessPiece> positions) {
+        return !positions.containsKey(targetPosition) || canCatch(targetPosition, positions);
+    }
+
+    private boolean canCatch(Position targetPosition, Map<Position, ChessPiece> positions) {
+        return positions.containsKey(targetPosition) && positions.get(targetPosition).getColor() != color;
     }
 
     @Override
