@@ -2,9 +2,15 @@ package chess;
 
 public enum Color {
 
-    BLACK,
-    WHITE,
-    EMPTY;
+    BLACK("검"),
+    WHITE("백"),
+    EMPTY("X");
+
+    private final String title;
+
+    Color(final String title) {
+        this.title = title;
+    }
 
     public boolean isWhite() {
         return this == WHITE;
@@ -24,5 +30,10 @@ public enum Color {
             case WHITE -> BLACK;
             default -> EMPTY;
         };
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

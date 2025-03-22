@@ -1,4 +1,4 @@
-package chess;
+package chess.position;
 
 public record Position(
         Column column,
@@ -166,5 +166,50 @@ public record Position(
             return moveLeft(-step);
         }
         return this;
+    }
+
+    public int getI() {
+        return row.y;
+    }
+
+    public int getJ() {
+        return column.x;
+    }
+
+    public Position plus(final Movement movement) {
+        if (movement == Movement.RIGHT) {
+            return moveRight();
+        }
+        if (movement == Movement.LEFT) {
+            return moveLeft();
+        }
+        if (movement == Movement.UP) {
+            return moveUp();
+        }
+        if (movement == Movement.DOWN) {
+            return moveDown();
+        }
+        if (movement == Movement.RIGHT_UP) {
+            return moveRightUp();
+        }
+        if (movement == Movement.LEFT_UP) {
+            return moveLeftUp();
+        }
+        if (movement == Movement.RIGHT_DOWN) {
+            return moveRightDown();
+        }
+        if (movement == Movement.LEFT_DOWN) {
+            return moveLeftDown();
+        }
+        return this;
+    }
+
+    public static Position of(final int i, final int j) {
+        return new Position(Column.from(j), Row.from(i));
+    }
+
+    @Override
+    public String toString() {
+        return "(" + column + " , " + row + ")";
     }
 }

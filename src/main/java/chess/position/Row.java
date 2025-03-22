@@ -1,15 +1,25 @@
-package chess;
+package chess.position;
+
+import java.util.Arrays;
 
 public enum Row {
 
-    EIGHT,
-    SEVEN,
-    SIX,
-    FIVE,
-    FOUR,
-    THREE,
-    TWO,
-    ONE;
+    EIGHT("8", 0),
+    SEVEN("7", 1),
+    SIX("6", 2),
+    FIVE("5", 3),
+    FOUR("4", 4),
+    THREE("3", 5),
+    TWO("2", 6),
+    ONE("1", 7);
+
+    public final String realY;
+    public final int y;
+
+    Row(final String realY, final int y) {
+        this.realY = realY;
+        this.y = y;
+    }
 
     public boolean isTop() {
         return ordinal() == 0;
@@ -49,5 +59,23 @@ public enum Row {
         }
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
+    }
+
+    public static Row from(final String s) {
+        return Arrays.stream(values())
+                .filter(value -> value.realY.equals(s))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("입력이상해"));
+    }
+
+    public static Row from(final int i) {
+        return Arrays.stream(values())
+                .filter(value -> value.y == i)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("입력이상해"));
+    }
+
+    public int offset(final Row row) {
+        return row.y - this.y;
     }
 }
