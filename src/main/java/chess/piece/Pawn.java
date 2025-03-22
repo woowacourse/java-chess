@@ -26,6 +26,12 @@ public class Pawn extends Piece {
         super(color, position);
         hasMoved = false;
     }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.PAWN;
+    }
+
     @Override
     public boolean canMove(Position position, List<Piece> pieces) {
         List<Movement> movements = movementForColor.get(this.color);

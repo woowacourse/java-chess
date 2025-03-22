@@ -18,6 +18,12 @@ public class King extends Piece {
     protected King(Color color, Position position) {
         super(color, position);
     }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.KING;
+    }
+
     @Override
     public boolean canMove(Position position, List<Piece> pieces) {
         Optional<Movement> findMovement = getFindMovement(position, movements);

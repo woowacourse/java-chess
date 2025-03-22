@@ -18,6 +18,12 @@ public class Rook extends Piece {
     protected Rook(Color color, Position position) {
         super(color, position);
     }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.ROCK;
+    }
+
     @Override
     public boolean canMove(Position position, List<Piece> pieces) {
         Optional<Movement> findMovement = getFindMovement(position, movements);

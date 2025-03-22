@@ -18,6 +18,12 @@ public class Knight extends Piece {
     protected Knight(Color color, Position position) {
         super(color, position);
     }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.KNIGHT;
+    }
+
     @Override
     public boolean canMove(Position position, List<Piece> pieces) {
         Optional<Movement> findMovement = getFindMovement(position, movements);

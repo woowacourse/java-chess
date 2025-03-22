@@ -20,6 +20,11 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public PieceType getPieceType() {
+        return PieceType.BISHOP;
+    }
+
+    @Override
     public boolean canMove(Position position, List<Piece> pieces) {
         Optional<Movement> findMovement = getFindMovement(position, movements);
 

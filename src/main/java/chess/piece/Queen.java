@@ -19,6 +19,12 @@ public class Queen extends Piece  {
     protected Queen(Color color, Position position) {
         super(color, position);
     }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.QUEEN;
+    }
+
     @Override
     public boolean canMove(Position position, List<Piece> pieces) {
         Optional<Movement> findMovement = getFindMovement(position, movements);
