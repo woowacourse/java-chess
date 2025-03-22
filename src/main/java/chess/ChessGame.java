@@ -16,6 +16,11 @@ public class ChessGame {
         this.pieces = new ArrayList<>(pieces);
     }
 
+    public ChessGame() {
+
+        this.pieces = new ArrayList<>(pieces);
+    }
+
     public boolean isSomeBodyKingDoesntExist(){
         Map<Color,Boolean> colorKingDead = getKingSurviveStatus();
         for(Color color : colorKingDead.keySet()){

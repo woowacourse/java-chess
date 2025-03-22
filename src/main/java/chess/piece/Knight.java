@@ -17,10 +17,12 @@ public class Knight implements Piece{
             Movement.UP_UP_LEFT, Movement.UP_UP_RIGHT
     );
     private final Color color;
+    private final PieceType pieceType;
 
     public Knight(Position position, Color color) {
         this.position = position;
         this.color = color;
+        this.pieceType = PieceType.KNIGHT;
     }
 
     @Override
@@ -74,6 +76,11 @@ public class Knight implements Piece{
     @Override
     public boolean isSamePosition(Piece otherPiece) {
         return otherPiece.getPosition().equals(position);
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return pieceType;
     }
 
     @Override

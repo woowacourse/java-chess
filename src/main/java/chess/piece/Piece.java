@@ -12,4 +12,6 @@ public interface Piece {
     Color getColor();
 
     boolean isSamePosition(Piece otherPiece);
+
+    PieceType pieceType();
 }

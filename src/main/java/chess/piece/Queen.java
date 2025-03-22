@@ -14,10 +14,12 @@ public class Queen implements Piece{
     private final Color color;
     private static final List<Movement> movements = List.of(Movement.UP,Movement.DOWN,Movement.LEFT,Movement.RIGHT,
             Movement.RIGHT_UP,Movement.RIGHT_DOWN,Movement.LEFT_UP,Movement.LEFT_DOWN);
+    private final PieceType pieceType;
 
     public Queen(Position position, Color color) {
         this.position = position;
         this.color = color;
+        pieceType = PieceType.QUEEN;
     }
 
     public void move(Position wantedPosition, List<Piece> wantedPositionExistPieces) {
@@ -91,6 +93,11 @@ public class Queen implements Piece{
     @Override
     public boolean isSamePosition(Piece otherPiece) {
         return otherPiece.getPosition().equals(position);
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return pieceType;
     }
 
     @Override

@@ -12,11 +12,14 @@ public class Bishop implements Piece{
 
     private Position position;
     private final Color color;
+    private final PieceType pieceType;
     private static final List<Movement> movements = List.of(Movement.RIGHT_UP,Movement.LEFT_UP,Movement.RIGHT_DOWN,Movement.LEFT_DOWN);
+
 
     public Bishop(Position position, Color color) {
         this.position = position;
         this.color = color;
+        pieceType = PieceType.BISHOP;
     }
 
     public void move(Position wantedPosition, List<Piece> wantedPositionExistPieces) {
@@ -90,6 +93,11 @@ public class Bishop implements Piece{
     @Override
     public boolean isSamePosition(Piece otherPiece) {
         return otherPiece.getPosition().equals(position);
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return pieceType;
     }
 
     @Override

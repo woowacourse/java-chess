@@ -11,11 +11,13 @@ public class King implements Piece{
 
     private Position position;
     private final Color color;
+    private final PieceType pieceType;
     private static final List<Movement> movements = List.of(Movement.UP,Movement.DOWN,Movement.LEFT,Movement.RIGHT);
 
     public King(Position position, Color color) {
         this.position = position;
         this.color = color;
+        this.pieceType = PieceType.KING;
     }
 
     @Override
@@ -71,6 +73,10 @@ public class King implements Piece{
     @Override
     public boolean isSamePosition(Piece otherPiece) {
         return otherPiece.getPosition().equals(position);
+    }
+
+    public PieceType pieceType() {
+        return pieceType;
     }
 
     @Override

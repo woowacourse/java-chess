@@ -21,6 +21,7 @@ public class Pawn implements Piece{
     private final Movement onlyMoveMovement;
     private final List<Movement> attackMovement;
     private final Color color;
+    private final PieceType pieceType;
     private Position position;
 
 
@@ -28,6 +29,7 @@ public class Pawn implements Piece{
         this.color = color;
         this.position = position;
         startRow = position.row();
+        pieceType = PieceType.PAWN;
         if(color == Color.BLACK){
             onlyMoveMovement = BLACK_MOVEMENT;
             attackMovement = BLACK_ATTACK_MOVEMENTS;
@@ -97,6 +99,11 @@ public class Pawn implements Piece{
     @Override
     public boolean isSamePosition(Piece otherPiece) {
         return otherPiece.getPosition().equals(position);
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return pieceType;
     }
 
     @Override

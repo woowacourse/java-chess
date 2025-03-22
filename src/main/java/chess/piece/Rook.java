@@ -13,10 +13,12 @@ public class Rook implements Piece{
     private Position position;
     private final Color color;
     private static final List<Movement> movements = List.of(Movement.UP,Movement.DOWN,Movement.LEFT,Movement.RIGHT);
+    private final PieceType pieceType;
 
     public Rook(Position position, Color color) {
         this.position = position;
         this.color = color;
+        pieceType = PieceType.ROOK;
     }
 
     public void move(Position wantedPosition, List<Piece> wantedPositionExistPieces) {
@@ -89,6 +91,11 @@ public class Rook implements Piece{
     @Override
     public boolean isSamePosition(Piece otherPiece) {
         return otherPiece.getPosition().equals(position);
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return pieceType;
     }
 
     @Override
