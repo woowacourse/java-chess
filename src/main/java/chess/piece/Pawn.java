@@ -45,7 +45,7 @@ public class Pawn extends Piece {
         if(!(movement.equals(Movement.UP) || movement.equals(Movement.DOWN))){
             return pieces.stream().anyMatch(piece -> piece.isSamePosition(position) && piece.isAnotherTeam(this));
         }
-        return hasFriendlyPiece;
+        return !hasFriendlyPiece;
     }
 
     private Optional<Movement> getFindMovement(Position position, List<Movement> movements) {
