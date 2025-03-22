@@ -13,39 +13,62 @@ import org.junit.jupiter.api.Test;
 
 public class PawnTest {
 
-    private Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.TWO));
-    private Board board = new Board(List.of(
-            pawn
-    ));
-
     @Test
     void moveUpOnce() {
-        pawn.moveUp(new Position(Column.A, Row.THREE), board);
+        Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.TWO));
+        Board board = new Board(List.of(
+                pawn
+        ));
+
+        pawn.move(new Position(Column.A, Row.THREE), board);
 
         assertThat(pawn).isEqualTo(new Pawn(Color.WHITE, new Position(Column.A, Row.THREE)));
     }
 
     @Test
     void failToMoveUpMoreThanOnce() {
-        assertThatThrownBy(() -> pawn.moveUp(new Position(Column.A, Row.FIVE), board))
+        Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.TWO));
+        Board board = new Board(List.of(
+                pawn
+        ));
+
+        assertThatThrownBy(() -> pawn.move(new Position(Column.A, Row.FIVE), board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void moveUpTwiceIfStartMoving() {
-        pawn.moveUp(new Position(Column.A, Row.FOUR), board);
+        Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.TWO));
+        Board board = new Board(List.of(
+                pawn
+        ));
+
+        pawn.move(new Position(Column.A, Row.FOUR), board);
 
         assertThat(pawn).isEqualTo(new Pawn(Color.WHITE, new Position(Column.A, Row.FOUR)));
     }
 
     @Test
     void failIfHurdleExists() {
+        Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.TWO));
         Board hurdleBoard = new Board(List.of(
                 new Pawn(Color.BLACK, new Position(Column.A, Row.THREE)),
                 pawn
         ));
 
-        assertThatThrownBy(() -> pawn.moveUp(new Position(Column.A, Row.FOUR), hurdleBoard))
+        assertThatThrownBy(() -> pawn.move(new Position(Column.A, Row.FOUR), hurdleBoard))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void moveDownOnce() {
+        Pawn pawn = new Pawn(Color.WHITE, new Position(Column.A, Row.THREE));
+        Board board = new Board(List.of(
+                pawn
+        ));
+
+        pawn.move(new Position(Column.A, Row.TWO), board);
+
+        assertThat(pawn).isEqualTo(new Pawn(Color.WHITE, new Position(Column.A, Row.TWO)));
     }
 }

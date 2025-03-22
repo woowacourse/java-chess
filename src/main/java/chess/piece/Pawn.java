@@ -2,6 +2,8 @@ package chess.piece;
 
 import chess.Board;
 import chess.Color;
+import chess.Column;
+import chess.Movement;
 import chess.Position;
 import chess.Row;
 import java.util.Objects;
@@ -15,21 +17,38 @@ public class Pawn implements Piece {
         this.position = position;
     }
 
-    public void moveUp(Position targetPosition, Board board) {
-        int step = position.calculateRowGap(targetPosition);
+    public void move(Position targetPosition, Board board) {
+        Movement movement = findMovement(targetPosition);
+        int step = Math.abs(position.calculateRowGap(targetPosition));
         if (isMovingInitially() && step <= 2) { //초기 움직임
-            repeateMoveUp(board, step);
+            repeatMove(movement, board, step);
             return;
         }
         if (step >= 2) {
             throw new IllegalArgumentException("폰은 2칸 이상 전진할 수 없습니다.");
         }
-        repeateMoveUp(board, step);
+        repeatMove(movement, board, step);
     }
 
-    private void repeateMoveUp(Board board, int step) {
+    private Movement findMovement(Position targetPosition) {
+        if (position.isRowEquals(targetPosition)) {
+            if (position.calculateColumnGap(targetPosition) > 0) {
+                return Movement.LEFT;
+            }
+            return Movement.RIGHT;
+        }
+        if (position.isColumnEquals(targetPosition)) {
+            if (position.calculateRowGap(targetPosition) > 0) {
+                return Movement.UP;
+            }
+            return Movement.DOWN;
+        }
+        throw new IllegalArgumentException("폰은 동서남북 방향으로만 이동 가능합니다.");
+    }
+
+    private void repeatMove(Movement movement, Board board, int step) {
         for (int s = 0; s < step; s++) {
-            Position newPosition = this.position.moveUp();
+            Position newPosition = this.position.move(movement);
             if (board.findByPosition(newPosition).isPresent()) {
                 throw new IllegalArgumentException("장애물이 존재합니다.");
             }
@@ -39,9 +58,9 @@ public class Pawn implements Piece {
 
     private boolean isMovingInitially() {
         if (color.isWhite()) {
-            return position.isRowEquals(Row.TWO);
+            return position.isRowEquals(new Position(Column.A, Row.TWO));
         }
-        return position.isRowEquals(Row.SEVEN);
+        return position.isRowEquals(new Position(Column.A, Row.SEVEN));
     }
 
     @Override

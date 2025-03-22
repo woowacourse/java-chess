@@ -169,15 +169,22 @@ public record Position(
     }
 
     /////
-    public boolean isRowOrdinalBiggerThan(Position targetPostion, int upperBoundGap) {
-        return this.row.ordinal() >= (targetPostion.row.ordinal() + upperBoundGap);
+
+    public boolean isRowEquals(Position targetPosition) {
+        return this.row == targetPosition.row;
     }
 
-    public boolean isRowEquals(Row row) {
-        return this.row == row;
+    public boolean isColumnEquals(Position targetPosition) {
+        return this.column == targetPosition.column;
     }
 
     public int calculateRowGap(Position targetPosition) {
         return this.row.ordinal() - targetPosition.row.ordinal();
     }
+
+    public int calculateColumnGap(Position targetPosition) {
+        return this.column.ordinal() - targetPosition.column.ordinal();
+    }
+
+
 }
