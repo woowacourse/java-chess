@@ -1,5 +1,7 @@
 package chess.position;
 
+import java.util.Arrays;
+
 public enum Row {
 
     EIGHT,
@@ -49,5 +51,12 @@ public enum Row {
         }
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
+    }
+
+    public static Row from(final String s) {
+        return Arrays.stream(values())
+                .filter(value -> value.name().equals(s))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("입력이상해"));
     }
 }
