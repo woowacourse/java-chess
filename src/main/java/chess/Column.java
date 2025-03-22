@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum Column {
 
     A,
@@ -11,6 +13,13 @@ public enum Column {
     G,
     H;
 
+    public static Column parseChar(final char target) {
+        return Arrays.stream(Column.values())
+                .filter(column -> column.name().charAt(0) == target)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("맞지 않은 문자입니다"));
+    }
+
     public boolean isFarLeft() {
         return ordinal() == 0;
     }
@@ -21,6 +30,13 @@ public enum Column {
 
     public boolean canMoveLeft(final int step) {
         return ordinal() - step >= 0;
+    }
+
+    public Column move(final int step) {
+        if (step < 0) {
+            return moveLeft(step);
+        }
+        return moveRight(step);
     }
 
     public Column moveLeft() {
@@ -49,5 +65,9 @@ public enum Column {
         }
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
+    }
+
+    public int calculateColumnDistance(Column column) {
+        return ordinal() - column.ordinal();
     }
 }
