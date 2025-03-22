@@ -20,7 +20,7 @@ public abstract class Piece {
     }
 
     private void validateSameColorPieceOnGoal(Board board, Position goal) {
-        if (board.sameColorPieceExists(goal, color)) {
+        if (board.isSameColorPieceExists(goal, color)) {
             throw new IllegalArgumentException("상대편의 말만 잡을 수 있습니다.");
         }
     }
