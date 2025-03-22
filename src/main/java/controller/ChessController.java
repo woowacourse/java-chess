@@ -19,7 +19,10 @@ public class ChessController {
             outputView.printBoard(board);
             String start = inputView.inputStart();
             String end = inputView.inputEnd();
-            board.move(start, end);
+            boolean isMoved = board.move(start, end);
+            if (!isMoved) {
+                outputView.printPieceNotMoved();
+            }
         }
     }
 

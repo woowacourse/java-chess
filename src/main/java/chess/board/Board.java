@@ -94,9 +94,18 @@ public class Board {
         return Collections.unmodifiableList(pieces);
     }
 
-    public void move(String start, String end) {
+    public boolean move(String start, String end) {
+        Position startPosition = Position.of(start);
+        Position endPosition = Position.of(end);
+
         LivePiece startPiece = getPiece(Position.of(start));
+        if (!startPiece.canMove(startPosition, endPosition)) {
+            return false;
+        }
+
         startPiece.setPosition(Position.of(end));
+        return true;
+        
         // 도착지에 적 고려 ㄴㄴ
     }
 

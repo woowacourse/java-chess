@@ -53,4 +53,8 @@ public class OutputView {
         }
         return arr;
     }
+
+    public void printPieceNotMoved() {
+        System.out.println("기물 이동 규칙에 맞지 않아 움직일 수 없습니다.");
+    }
 }

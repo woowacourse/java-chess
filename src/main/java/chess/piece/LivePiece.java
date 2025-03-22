@@ -62,4 +62,8 @@ public class LivePiece {
     public boolean isSamePosition(Position other) {
         return position.equals(other);
     }
+
+    public boolean canMove(Position start, Position end) {
+        return piece.canMove(start, end);
+    }
 }
