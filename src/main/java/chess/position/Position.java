@@ -168,6 +168,14 @@ public record Position(
         return this;
     }
 
+    public int getI() {
+        return row.y;
+    }
+
+    public int getJ() {
+        return column.x;
+    }
+
     @Override
     public String toString() {
         return "(" + column + " , " + row + ")";

@@ -13,7 +13,7 @@ public enum Column {
     G(6),
     H(7);
 
-    private final int x;
+    public final int x;
 
     Column(final int x) {
         this.x = x;

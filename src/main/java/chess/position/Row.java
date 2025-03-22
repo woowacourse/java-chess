@@ -4,18 +4,20 @@ import java.util.Arrays;
 
 public enum Row {
 
-    EIGHT(8),
-    SEVEN(7),
-    SIX(6),
-    FIVE(5),
-    FOUR(4),
-    THREE(3),
-    TWO(2),
-    ONE(1);
+    EIGHT("8", 0),
+    SEVEN("7", 1),
+    SIX("6", 2),
+    FIVE("5", 3),
+    FOUR("4", 4),
+    THREE("3", 5),
+    TWO("2", 6),
+    ONE("1", 7);
 
-    private final int y;
+    public final String realY;
+    public final int y;
 
-    Row(final int y) {
+    Row(final String realY, final int y) {
+        this.realY = realY;
         this.y = y;
     }
 
@@ -61,7 +63,7 @@ public enum Row {
 
     public static Row from(final String s) {
         return Arrays.stream(values())
-                .filter(value -> value.name().equals(s))
+                .filter(value -> value.realY.equals(s))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("입력이상해"));
     }

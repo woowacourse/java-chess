@@ -3,14 +3,6 @@ package chess;
 public class Output {
 
     public static void printBoard() {
-        System.out.println("좌표");
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                System.out.print(Main.positionBoard[i][j] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("----------------------");
         System.out.println("기물");
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {

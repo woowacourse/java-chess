@@ -8,8 +8,10 @@ import java.util.Set;
 public class Knight implements Piece {
 
     private static final Set<Movement> MOVEMENTS = Set.of(
-            Movement.LEFT_UP, Movement.RIGHT_UP,
-            Movement.LEFT_DOWN, Movement.RIGHT_DOWN
+            Movement.LEFT_LEFT_UP, Movement.LEFT_LEFT_DOWN,
+            Movement.UP_UP_LEFT, Movement.UP_UP_RIGHT,
+            Movement.RIGHT_RIGHT_UP, Movement.RIGHT_RIGHT_DOWN,
+            Movement.DOWN_DOWN_LEFT, Movement.DOWN_DOWN_RIGHT
     );
 
     @Override
