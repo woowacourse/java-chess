@@ -42,7 +42,7 @@ public class Bishop extends Piece {
         }
     }
 
-    protected List<Position> findRoot(Position start, Position goal) {
+    protected List<Position> findRoot(Board board, Position start, Position goal) {
         for (List<Movement> movements : allMovements) {
             List<Position> root = new ArrayList<>();
             Position now = start;

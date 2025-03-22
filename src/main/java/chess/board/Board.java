@@ -36,6 +36,15 @@ public class Board {
         return piece.isSameColor(color);
     }
 
+    public boolean isDifferentColorPieceNotExists(Position start, Position goal) {
+        Piece startPiece = board.get(start);
+        Piece goalPiece = board.get(goal);
+        if (startPiece == null || goalPiece == null) {
+            return true;
+        }
+        return startPiece.isSameColor(goalPiece);
+    }
+
     public boolean isPieceExists(Position position) {
         Piece piece = board.get(position);
         return piece != null;

@@ -14,7 +14,7 @@ public abstract class Piece {
     }
 
     public void validateMovable(Board board, Position start, Position goal) {
-        List<Position> root = findRoot(start, goal);
+        List<Position> root = findRoot(board, start, goal);
         validateMiddlePath(board, root);
 
         validateSameColorPieceOnGoal(board, goal);
@@ -29,11 +29,15 @@ public abstract class Piece {
     /**
      * 제자리로 움직이는 경우 TODO
      */
-    protected abstract List<Position> findRoot(Position start, Position goal);
+    protected abstract List<Position> findRoot(Board board, Position start, Position goal);
     protected abstract void validateMiddlePath(Board board, List<Position> root);
 
     public boolean isSameColor(Color other) {
         return color == other;
+    }
+
+    public boolean isSameColor(Piece other) {
+        return color == other.color;
     }
 
     public boolean isDifferentColor(Color other) {

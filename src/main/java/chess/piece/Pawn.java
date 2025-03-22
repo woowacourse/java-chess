@@ -35,7 +35,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected List<Position> findRoot(Position start, Position goal) {
+    protected List<Position> findRoot(Board board, Position start, Position goal) {
         for (List<Movement> movements : allMovements) {
             List<Position> root = new ArrayList<>();
             Position now = start;
@@ -57,6 +57,9 @@ public class Pawn extends Piece {
                 if ((start.row() != TWO) && movements.contains(UP_UP) ||
                         (start.row() != SEVEN) && movements.contains(DOWN_DOWN)) {
                     throw new IllegalArgumentException("처음 움직이는 폰만 앞으로 두 칸을 이동할 수 있습니다.");
+                }
+                if ((movements.contains(LEFT) || movements.contains(RIGHT)) && board.isDifferentColorPieceNotExists(start, goal)) {
+                    throw new IllegalArgumentException("상대 기물이 있는 경우에만 대각선으로 이동할 수 있습니다.");
                 }
                 return root;
             }
