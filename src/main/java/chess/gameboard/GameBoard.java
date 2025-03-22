@@ -95,6 +95,9 @@ public class GameBoard {
     }
 
     private void capturePosition(Piece killerPiece, Position positionBeforeMove, Position destination) {
+        if (positionBeforeMove.equals(destination)) {
+            throw new IllegalArgumentException("제자리로는 이동할 수 없습니다.");
+        }
         if (!killerPiece.isAbleToMove(positionBeforeMove, destination, board)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
