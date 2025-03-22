@@ -78,4 +78,8 @@ public abstract class Piece {
                 ", position=" + position +
                 '}';
     }
+
+    public boolean isDiffernetColor(Color color) {
+        return this.color != color;
+    }
 }

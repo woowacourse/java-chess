@@ -35,21 +35,25 @@ public class Application {
         Position source = new ConvertPosition().convert(movePosition[0]);
         Position destination = new ConvertPosition().convert(movePosition[1]);
 
-        if(!pieces.isSameColor(source)){
-            throw new IllegalArgumentException("[ERROR] 같은 팀 말만 움직이기!");
-        }
+        validateColor(pieces, source);
 
         Piece piece = pieces.get(source);
         Set<Piece> piecesSet = pieces.toSet();
         piecesSet.remove(piece);
 
-        if(piece.color()!=pieces.get(destination).color()){
+        if(piece.isDiffernetColor(pieces.get(destination).color())){
             piecesSet.remove(pieces.get(destination));
         }
 
         piecesSet.add(piece.move(destination, piecesSet));
 
         return new Pieces(pieces.color().opposite(), piecesSet);
+    }
+
+    private static void validateColor(Pieces pieces, Position source) {
+        if(!pieces.isSameColor(source)){
+            throw new IllegalArgumentException("[ERROR] 같은 팀 말만 움직이기!");
+        }
     }
 
     public Pieces process(Supplier<Pieces> action) {
