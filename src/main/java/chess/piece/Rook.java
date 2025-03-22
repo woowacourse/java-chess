@@ -6,7 +6,7 @@ import chess.position.Movement;
 import chess.position.Offset;
 import chess.position.Position;
 
-public class Rook implements Piece, 퀸비숍룩 {
+public class Rook implements 장애물체크해야하는Piece {
 
     private final Color color;
 

@@ -3,7 +3,7 @@ package chess;
 import chess.piece.King;
 import chess.piece.Piece;
 import chess.piece.쭈;
-import chess.piece.퀸비숍룩;
+import chess.piece.장애물체크해야하는Piece;
 import chess.position.Column;
 import chess.position.Offset;
 import chess.position.Position;
@@ -103,8 +103,8 @@ public class Main {
             throw new IllegalArgumentException("거기로 못가는 기물임");
         }
 
-        if (selectPiece instanceof 퀸비숍룩) {
-            퀸비숍룩 piece = (퀸비숍룩) selectPiece;
+        if (selectPiece instanceof 장애물체크해야하는Piece) {
+            장애물체크해야하는Piece piece = (장애물체크해야하는Piece) selectPiece;
             if (piece.경로상_장애물_확인(before, after)) {
                 throw new IllegalArgumentException("경로상 장애물 발견 !!");
             }
