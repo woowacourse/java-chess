@@ -28,10 +28,14 @@ public class Bishop implements ChessPiece {
             Position currentPosition = startPosition;
             while (currentPosition.canMove(movement)) {
                 currentPosition = currentPosition.move(movement);
-                if (positions.containsKey(currentPosition)) {
+                if (!positions.containsKey(currentPosition) || positions.get(currentPosition).getColor() != color) {
+                    destinations.add(currentPosition);
+                    if (positions.containsKey(currentPosition) && positions.get(currentPosition).getColor() != color) {
+                        break;
+                    }
+                } else {
                     break;
                 }
-                destinations.add(currentPosition);
             }
         }
 
