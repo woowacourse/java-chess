@@ -39,10 +39,11 @@ public enum Movement {
         int column = columnDiff;
         System.out.println(row + ", " + column);
         Map<Movement, Integer> movements = new HashMap<>();
-        while (row != 0 && column != 0) {
+        while (!(row == 0 && column == 0)) {
             for (Movement value : values()) {
                 if (value.y == row && value.x == column) {
                     movements.put(value, movements.getOrDefault(value, 0) + 1);
+                    System.out.println(value.name());
                     row -= row;
                     column -= column;
                 }

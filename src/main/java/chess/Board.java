@@ -95,9 +95,11 @@ public class Board {
         }
         for (Entry<Movement, Integer> entry : movements.entrySet()) {
             for (int i = 0; i < entry.getValue(); i++) {
-                piece.move(entry.getKey());
+                piece = piece.move(entry.getKey());
             }
         }
+        board.remove(start);
+        board.put(destination, piece);
 
     }
 
