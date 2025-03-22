@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Bishop implements ChessPiece {
-    // 대각선으로 원하는만큼 이동 가능
     private final Color color;
     private final List<Movement> movements = List.of(
             Movement.LEFT_UP,
@@ -25,45 +24,15 @@ public class Bishop implements ChessPiece {
     public List<Position> getAvailableDestinations(Position startPosition, Map<Position, ChessPiece> positions) {
         List<Position> destinations = new ArrayList<>();
 
-        // LEFT_UP
-        // todo: 이동 가능한 위치(장애물이 없고 보드를 벗어나지 않은 구간)까지 구하기
-        Position currentPosition = startPosition;
-        while (currentPosition.canMoveLeftUp()) {
-            currentPosition = currentPosition.move(Movement.LEFT_UP);
-            if (positions.containsKey(currentPosition)) {
-                break;
+        for (Movement movement : movements) {
+            Position currentPosition = startPosition;
+            while (currentPosition.canMove(movement)) {
+                currentPosition = currentPosition.move(movement);
+                if (positions.containsKey(currentPosition)) {
+                    break;
+                }
+                destinations.add(currentPosition);
             }
-            destinations.add(currentPosition);
-        }
-
-        // RIGHT_UP
-        currentPosition = startPosition;
-        while (currentPosition.canMoveRightUp()) {
-            currentPosition = currentPosition.move(Movement.RIGHT_UP);
-            if (positions.containsKey(currentPosition)) {
-                break;
-            }
-            destinations.add(currentPosition);
-        }
-
-        // LEFT_DOWN
-        currentPosition = startPosition;
-        while (currentPosition.canMoveLeftDown()) {
-            currentPosition = currentPosition.move(Movement.LEFT_DOWN);
-            if (positions.containsKey(currentPosition)) {
-                break;
-            }
-            destinations.add(currentPosition);
-        }
-
-        // RIGHT_DOWN
-        currentPosition = startPosition;
-        while (currentPosition.canMoveRightDown()) {
-            currentPosition = currentPosition.move(Movement.RIGHT_DOWN);
-            if (positions.containsKey(currentPosition)) {
-                break;
-            }
-            destinations.add(currentPosition);
         }
 
         return destinations;
