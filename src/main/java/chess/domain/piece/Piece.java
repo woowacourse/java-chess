@@ -20,7 +20,7 @@ public abstract class Piece {
 
     public abstract boolean canMove(List<Piece> piecesOnRoute, Position start, Position target);
 
-    public abstract boolean isEmpty();
+    public abstract boolean isEmptyPiece();
 
     public boolean isOtherTeam(Piece other) {
         return this.teamColor != other.teamColor;
@@ -40,6 +40,12 @@ public abstract class Piece {
 
     public boolean isOtherTeamColor(TeamColor teamColor) {
         return this.teamColor != teamColor;
+    }
+
+    public int countPieceOnRoute(List<Piece> pieces) {
+        return (int) pieces.stream()
+                .filter(piece -> !piece.isEmptyPiece())
+                .count();
     }
 
     public abstract boolean isKing();

@@ -29,7 +29,6 @@ public class Pawn extends Piece {
     @Override
     public boolean canMove(List<Piece> piecesOnRoute, Position start, Position target) {
 
-        // 백팀은 2번 행에서 시작하고 위로 이동
         int direction = (teamColor == TeamColor.WHITE) ? 1 : -1;
 
         // 두 칸 전진 가능
@@ -38,14 +37,17 @@ public class Pawn extends Piece {
                 return false;
             }
             if(moveCount != 0) {
-                return false;
+                throw new IllegalArgumentException("폰은 처음에만 두 칸을 이동할 수 있습니다.");
             }
             Position moved = start.moveUp(2 * direction);
             return moved.equals(target);
         }
 
+        if(piecesOnRoute.size() != 1) {
+            return false;
+        }
         // 한 칸 전진 가능
-        if (piecesOnRoute.isEmpty()) {
+        if (piecesOnRoute.getLast().isEmptyPiece()) {
             if (!start.canMoveUp(1 * direction)) {
                 return false;
             }
@@ -55,6 +57,9 @@ public class Pawn extends Piece {
 
         // 적이 있을 때
         for (Movement takeMovement : pawnTakeMovements) {
+            if (!this.isOtherTeam(piecesOnRoute.getLast())) {
+                return false;
+            }
             if (!start.canMove(takeMovement)) {
                 continue;
             }
@@ -68,7 +73,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isEmptyPiece() {
         return false;
     }
 

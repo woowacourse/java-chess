@@ -85,5 +85,7 @@ public class ChessBoard {
 
         board.remove(start);
         board.put(target, piece);
+
+        piece.incrementMoveCount();
     }
 }

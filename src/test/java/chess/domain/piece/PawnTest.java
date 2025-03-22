@@ -14,7 +14,7 @@ class PawnTest {
     @Test
     void Pawn_canMoveUp() {
         // given
-        Pawn pawn = new Pawn(TeamColor.BLACK);
+        Pawn pawn = new Pawn(TeamColor.WHITE);
         Piece targetPiece = EmptyPiece.getInstance();
 
         // when
@@ -70,7 +70,7 @@ class PawnTest {
     @Test
     void Pawn_cannotMoveDiagonal_whenEmptyTarget() {
         // given
-        Pawn pawn = new Pawn(TeamColor.BLACK);
+        Pawn pawn = new Pawn(TeamColor.WHITE);
         Piece targetPiece = EmptyPiece.getInstance();
 
         // when

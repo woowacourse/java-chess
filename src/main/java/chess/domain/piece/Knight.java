@@ -60,14 +60,11 @@ public class Knight extends Piece{
 
     @Override
     public boolean canMove(List<Piece> piecesOnRoute, Position start, Position target) {
-        boolean empty = piecesOnRoute.getLast().isEmpty();
-        boolean otherTeam = this.isOtherTeam(piecesOnRoute.getLast());
-
-        return piecesOnRoute.getLast().isEmpty() || this.isOtherTeam(piecesOnRoute.getLast());
+        return piecesOnRoute.getLast().isEmptyPiece() || this.isOtherTeam(piecesOnRoute.getLast());
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isEmptyPiece() {
         return false;
     }
 
