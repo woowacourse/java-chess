@@ -2,14 +2,20 @@ package chess;
 
 public enum Row {
 
-    EIGHT,
-    SEVEN,
-    SIX,
-    FIVE,
-    FOUR,
-    THREE,
-    TWO,
-    ONE;
+    EIGHT(7),
+    SEVEN(6),
+    SIX(5),
+    FIVE(4),
+    FOUR(3),
+    THREE(2),
+    TWO(1),
+    ONE(0);
+
+    private int number;
+
+    Row(int number) {
+        this.number = number;
+    }
 
     public boolean isTop() {
         return ordinal() == 0;
@@ -49,5 +55,9 @@ public enum Row {
         }
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
+    }
+
+    public int getNumber() {
+        return number;
     }
 }
