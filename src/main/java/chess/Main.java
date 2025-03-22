@@ -20,7 +20,9 @@ public class Main {
             Position before = inputPosition();
             Position after = inputPosition();
             Offset offset = Offset.calculate(before, after);
-
+            if (offset.is00()) {
+                throw new IllegalArgumentException("안움직였어");
+            }
 
         }
     }

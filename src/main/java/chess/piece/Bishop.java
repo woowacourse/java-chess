@@ -1,14 +1,14 @@
 package chess.piece;
 
-import chess.position.Movement;
+import chess.position.Offset;
 
-public class Bishop implements Piece{
+public class Bishop implements Piece {
 
     @Override
-    public boolean canMove(final Movement movement) {
-
-        return false;
+    public boolean canMove(final Offset offset) {
+        return offset.isDiagonal();
     }
+
 
     @Override
     public String toString() {
