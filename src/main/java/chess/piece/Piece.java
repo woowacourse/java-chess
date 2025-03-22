@@ -24,6 +24,11 @@ public abstract class Piece {
         return color == other.color;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+    
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

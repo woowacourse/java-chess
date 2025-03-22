@@ -71,4 +71,8 @@ public class LivePiece {
     public boolean isEndAble(Position endPosition, Pieces pieces) {
         return piece.isEndAble(endPosition, pieces);
     }
+
+    public boolean isSameColor(Piece piece) {
+        return this.piece.isSameColor(piece);
+    }
 }

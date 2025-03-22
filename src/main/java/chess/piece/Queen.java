@@ -37,8 +37,10 @@ public final class Queen extends Piece {
 
     @Override
     public boolean isEndAble(Position end, Pieces pieces) {
-        // TODO: 도착지에 아군 말 있어도 안됨
-
-        return pieces.isEmpty(end);
+        // 도착지에 아군 말이 있으면 안됨
+        if (pieces.isEmpty(end)) {
+            return true;
+        }
+        return !pieces.isSameColor(end, this);
     }
 }

@@ -2,6 +2,7 @@ package chess.board;
 
 import chess.Position;
 import chess.piece.LivePiece;
+import chess.piece.Piece;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,4 +30,10 @@ public class Pieces {
                 .noneMatch(lp -> lp.isSamePosition(position));
     }
 
+    public boolean isSameColor(Position end, Piece piece) {
+
+        return pieces.stream()
+                .filter(lp -> lp.isSamePosition(end))
+                .anyMatch(lp -> lp.isSameColor(piece));
+    }
 }
