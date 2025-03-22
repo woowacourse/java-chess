@@ -16,6 +16,16 @@ public record Position(
         this(Row.getRow(rowBaseByOne), Column.getColumn(columnBaseByOne));
     }
 
+    public static Position of(String str) {
+        char rowChar = str.charAt(0);
+        char colChar = str.charAt(1);
+
+        Row row = Row.getRow(rowChar);
+        Column col = Column.getColumn(colChar);
+
+        return new Position(row, col);
+    }
+
     // NOTE: 룩의 이동 가능 범위 검증용으로 씀
     // 같은 위치 안되고, 상하좌우로 이동하는지
     public boolean isOnlyVerticalOrHorizontalAndNotSame(final Position other) {

@@ -94,4 +94,14 @@ public class Board {
         return Collections.unmodifiableList(pieces);
     }
 
+    public void move(String start, String end) {
+        LivePiece startPiece = getPiece(Position.of(start));
+        startPiece.setPosition(Position.of(end));
+        // 도착지에 적 고려 ㄴㄴ
+    }
+
+    private LivePiece getPiece(Position position) {
+        return pieces.stream().filter(lp -> lp.isSamePosition(position)).findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("시작점에 기물 없음"));
+    }
 }

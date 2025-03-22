@@ -15,7 +15,12 @@ public class ChessController {
 
     public void start() {
         Board board = new Board();
-        outputView.printBoard(board);
+        while (true) {
+            outputView.printBoard(board);
+            String start = inputView.inputStart();
+            String end = inputView.inputEnd();
+            board.move(start, end);
+        }
     }
 
 }

@@ -17,6 +17,10 @@ public class LivePiece {
         this.position = position;
     }
 
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
     // 배열에 기물 채울 때 쓰는 index임
     public int getRowIndex() {
         return position.row().getIndex();
@@ -55,4 +59,7 @@ public class LivePiece {
         return candidate;
     }
 
+    public boolean isSamePosition(Position other) {
+        return position.equals(other);
+    }
 }
