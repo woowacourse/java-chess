@@ -1,17 +1,11 @@
 package chess.piece;
 
-import java.util.List;
 import java.util.Objects;
 
 import chess.Movement;
 import chess.Position;
 
 public class King {
-
-    private static final List<Movement> MOVEMENTS = List.of(
-            Movement.UP, Movement.LEFT, Movement.DOWN, Movement.RIGHT,
-            Movement.LEFT_UP, Movement.RIGHT_UP, Movement.LEFT_DOWN, Movement.RIGHT_DOWN
-    );
 
     private final Position position;
 
@@ -20,10 +14,10 @@ public class King {
     }
 
     public King move(final Movement movement) {
-        if (MOVEMENTS.contains(movement)) {
-            return new King(position.move(movement));
+        if (!movement.isHorizontal() && !movement.isVertical() && !movement.isDiagonal()) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
-        throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        return new King(position.move(movement));
     }
 
     @Override

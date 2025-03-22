@@ -19,7 +19,7 @@ public class Rook {
     }
 
     public Rook move(final Movement movement, final int moveCount) {
-        if (!MOVEMENTS.contains(movement)) {
+        if (!movement.isHorizontal() && !movement.isVertical()) {
             throw new IllegalArgumentException("움직일 수 없습니다.");
         }
         Position movedPosition = new Position(position.row(), position.column());
