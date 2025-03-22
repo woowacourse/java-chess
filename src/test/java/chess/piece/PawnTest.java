@@ -85,6 +85,26 @@ class PawnTest {
         assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
     }
 
+    @DisplayName("BLACK - 이전에 움직인 이력이 있는 경우, 앞으로 한 칸만 전진할 수 있따.")
+    @Test
+    void onlyOneForwardMoved_BLACK() {
+        // given
+        Pawn pawn = new Pawn(Color.BLACK);
+        Position previous = new Position(Row.SEVEN, Column.D);
+        Position current = new Position(Row.SIX, Column.D);
+        pawn.move(previous, current, Map.of());
+
+        List<Position> expect = List.of(
+                new Position(Row.FIVE, Column.D)
+        );
+
+        // when
+        List<Position> destinations = pawn.getAvailableDestinations(current, Map.of());
+
+        // then
+        assertThat(destinations).containsExactlyInAnyOrderElementsOf(expect);
+    }
+
     @DisplayName("WHITE - 처음 움직이는 경우 두 칸까지 전진할 수 있다.")
     @Test
     void notExistHurdleWhite() {
@@ -155,5 +175,25 @@ class PawnTest {
 
         // then
         assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
+    }
+
+    @DisplayName("WHITE - 이전에 움직인 이력이 있는 경우, 앞으로 한 칸만 전진할 수 있따.")
+    @Test
+    void onlyOneForwardMoved_WHITE() {
+        // given
+        Pawn pawn = new Pawn(Color.WHITE);
+        Position previous = new Position(Row.TWO, Column.D);
+        Position current = new Position(Row.THREE, Column.D);
+        pawn.move(previous, current, Map.of());
+
+        List<Position> expect = List.of(
+                new Position(Row.FOUR, Column.D)
+        );
+
+        // when
+        List<Position> destinations = pawn.getAvailableDestinations(current, Map.of());
+
+        // then
+        assertThat(destinations).containsExactlyInAnyOrderElementsOf(expect);
     }
 }
