@@ -3,6 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.Color;
 import chess.Column;
 import chess.Position;
 import chess.Row;
@@ -16,7 +17,7 @@ public class KnightTest {
     @Test
     void calculate_knight_can_move_direction() {
         Position departure = new Position(Column.A, Row.ONE);
-        Knight knight = new Knight();
+        Knight knight = new Knight(Color.BLACK);
         Position arrival = new Position(Column.B, Row.THREE);
         List<Position> canAblePositions = knight.calculateCanMovePosition(departure, arrival);
         List<Position> expectedPosition = List.of(
@@ -29,7 +30,7 @@ public class KnightTest {
     @Test
     void when_knight_cannot_go_then_throw_exception() {
         Position departure = new Position(Column.A, Row.ONE);
-        Knight knight = new Knight();
+        Knight knight = new Knight(Color.BLACK);
         Position arrival = new Position(Column.B, Row.ONE);
         assertThatThrownBy(() -> knight.calculateCanMovePosition(departure, arrival));
     }

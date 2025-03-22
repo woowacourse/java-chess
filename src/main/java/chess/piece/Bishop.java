@@ -1,11 +1,16 @@
 package chess.piece;
 
+import chess.Color;
 import chess.Position;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Bishop extends Piece{
+
+    public Bishop(Color color) {
+        super(color);
+    }
 
     @Override
     public List<Position> calculateCanMovePosition(Position departure, Position arrival) {

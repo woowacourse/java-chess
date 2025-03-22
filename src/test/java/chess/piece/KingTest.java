@@ -3,6 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.Color;
 import chess.Column;
 import chess.Position;
 import chess.Row;
@@ -21,7 +22,7 @@ public class KingTest {
         @DisplayName("up")
         void up_case() {
             Position departure = new Position(Column.A, Row.ONE);
-            King king = new King();
+            King king = new King(Color.BLACK);
             Position arrival = new Position(Column.A, Row.TWO);
             List<Position> canAblePositions = king.calculateCanMovePosition(departure, arrival);
 
@@ -34,7 +35,7 @@ public class KingTest {
         @DisplayName("down")
         void down_case() {
             Position departure = new Position(Column.D, Row.FOUR);
-            King king = new King();
+            King king = new King(Color.BLACK);
             Position arrival = new Position(Column.D, Row.THREE);
             List<Position> canAblePositions = king.calculateCanMovePosition(departure, arrival);
 
@@ -47,7 +48,7 @@ public class KingTest {
         @DisplayName("left")
         void left_case() {
             Position departure = new Position(Column.D, Row.FOUR);
-            King king = new King();
+            King king = new King(Color.BLACK);
             Position arrival = new Position(Column.C, Row.FOUR);
             List<Position> canAblePositions = king.calculateCanMovePosition(departure, arrival);
 
@@ -60,7 +61,7 @@ public class KingTest {
         @DisplayName("right")
         void right_case() {
             Position departure = new Position(Column.D, Row.FOUR);
-            King king = new King();
+            King king = new King(Color.BLACK);
             Position arrival = new Position(Column.E, Row.FOUR);
             List<Position> canAblePositions = king.calculateCanMovePosition(departure, arrival);
 
@@ -74,7 +75,7 @@ public class KingTest {
     @DisplayName("킹이 이동 못 하는 경로일 경우 예외가 발생해야 한다")
     void right_case() {
         Position departure = new Position(Column.A, Row.ONE);
-        King king = new King();
+        King king = new King(Color.BLACK);
         Position arrival = new Position(Column.C, Row.SIX);
         assertThatThrownBy(() -> king.calculateCanMovePosition(departure, arrival));
     }

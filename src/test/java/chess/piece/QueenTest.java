@@ -3,6 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.Color;
 import chess.Column;
 import chess.Position;
 import chess.Row;
@@ -16,7 +17,7 @@ public class QueenTest {
     @Test
     void calculate_queen_can_move_direction() {
         Position departure = new Position(Column.D, Row.TWO);
-        Queen queen = new Queen();
+        Queen queen = new Queen(Color.BLACK);
         Position arrival = new Position(Column.D, Row.EIGHT);
         List<Position> canAblePositions = queen.calculateCanMovePosition(departure, arrival);
 
@@ -34,7 +35,7 @@ public class QueenTest {
     @Test
     void calculate_king_can_move_direction() {
         Position departure = new Position(Column.A, Row.ONE);
-        Queen queen = new Queen();
+        Queen queen = new Queen(Color.BLACK);
         Position arrival = new Position(Column.C, Row.THREE);
         List<Position> canAblePositions = queen.calculateCanMovePosition(departure, arrival);
         List<Position> expectedPosition = List.of(
@@ -47,7 +48,7 @@ public class QueenTest {
     @Test
     void when_queen_cannot_move_then_throw_exception() {
         Position departure = new Position(Column.D, Row.FOUR);
-        Queen queen = new Queen();
+        Queen queen = new Queen(Color.BLACK);
         Position arrival = new Position(Column.F, Row.FIVE);
         assertThatThrownBy(() -> queen.calculateCanMovePosition(departure, arrival));
         }

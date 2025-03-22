@@ -3,6 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.Color;
 import chess.Column;
 import chess.Position;
 import chess.Row;
@@ -16,7 +17,7 @@ public class BishopTest {
     @Test
     void calculate_king_can_move_direction() {
         Position departure = new Position(Column.A, Row.ONE);
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Color.BLACK);
         Position arrival = new Position(Column.C, Row.THREE);
         List<Position> canAblePositions = bishop.calculateCanMovePosition(departure, arrival);
 
@@ -30,7 +31,7 @@ public class BishopTest {
     @Test
     void if_bishop_cannot_go_position_then_throw_exception() {
         Position departure = new Position(Column.A, Row.ONE);
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Color.BLACK);
         Position arrival = new Position(Column.A, Row.TWO);
         assertThatThrownBy(() -> bishop.calculateCanMovePosition(departure, arrival));
     }

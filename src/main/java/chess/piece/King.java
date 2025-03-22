@@ -1,10 +1,15 @@
 package chess.piece;
 
+import chess.Color;
 import chess.Position;
 import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece{
+
+    public King(Color color) {
+        super(color);
+    }
 
     @Override
     public List<Position> calculateCanMovePosition(Position departure, Position arrival) {
