@@ -8,6 +8,7 @@ import chess.Position;
 import chess.Row;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Queen implements Piece {
     private final Color color;
@@ -70,16 +71,44 @@ public class Queen implements Piece {
     }
 
     private void repeatMove(Movement movement, Board board, int step) {
-        for (int s = 0; s < step; s++) {
+        for (int pointer = 0; pointer < step; pointer++) {
             if (!this.position.canMove(movement)) {
                 throw new IllegalArgumentException("보드의 범위를 벗어난 위치입니다.");
             }
             Position newPosition = this.position.move(movement);
-            if (board.findByPosition(newPosition).isPresent()) {
-                throw new IllegalArgumentException("장애물이 존재합니다.");
+
+            if (canAttack(step, pointer, board, newPosition)) {
+                attack(board, newPosition);
+            } else {
+                simplyMove(board, newPosition);
             }
-            this.position = newPosition;
         }
+    }
+
+    private boolean canAttack(int step, int pointer, Board board, Position newPosition) {
+        if (pointer == step - 1) {
+            Optional<Piece> existingPiece = board.findByPosition(newPosition);
+            return existingPiece.isPresent()
+                    && existingPiece.get().isEnemyWith(this);
+        }
+        return false;
+    }
+
+    private void simplyMove(Board board, Position newPosition) {
+        if (board.findByPosition(newPosition).isPresent()) {
+            throw new IllegalArgumentException("장애물이 존재합니다.");
+        }
+        this.position = newPosition;
+    }
+
+    private void attack(Board board, Position newPosition) {
+        Optional<Piece> existingPiece = board.findByPosition(newPosition);
+        if (existingPiece.isPresent() && existingPiece.get().isEnemyWith(this)) {
+            this.position = newPosition;
+            board.remove(newPosition);
+            return;
+        }
+        throw new IllegalArgumentException("공격할 수 없습니다.");
     }
 
     public static List<Piece> initialize(Color color) {
