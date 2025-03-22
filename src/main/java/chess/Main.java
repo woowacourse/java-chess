@@ -21,9 +21,11 @@ public class Main {
 
         while (true) {
             try {
+                System.out.println("----------------------------");
                 Output.printBoard();
                 process();
             } catch (Exception e) {
+                System.out.println("##########################");
                 System.out.println(e.getMessage());
                 System.out.println("재입력 ㄱㄱ");
                 continue;
@@ -66,8 +68,10 @@ public class Main {
         final Piece targetKing = new King(turn.opposite());
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                pieceBoard.equals(targetKing);
-                return Position.of(i, j);
+                final Piece target = pieceBoard[i][j];
+                if (target != null && target.equals(targetKing)) {
+                    return Position.of(i, j);
+                }
             }
         }
         throw new IllegalStateException("왕이 없을 수가 없어..");

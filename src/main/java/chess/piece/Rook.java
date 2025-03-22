@@ -27,13 +27,13 @@ public class Rook implements Piece, 퀸비숍룩 {
         Position current = before;
         while (true) {
             current = current.plus(direction);
+            if (current.equals(after)) {
+                break;
+            }
             if (Main.pieceBoard[current.getI()][current.getJ()] != null) {
                 return true;
             }
 
-            if (current.equals(after)) {
-                break;
-            }
         }
         return false;
     }
