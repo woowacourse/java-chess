@@ -6,6 +6,7 @@ public enum Color {
     WHITE,
     EMPTY;
 
+
     public boolean isWhite() {
         return this == WHITE;
     }
