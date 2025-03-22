@@ -24,4 +24,9 @@ public class Pieces {
         return Collections.unmodifiableList(pieces);
     }
 
+    public boolean isEmpty(Position position) {
+        return pieces.stream()
+                .noneMatch(lp -> lp.isSamePosition(position));
+    }
+
 }

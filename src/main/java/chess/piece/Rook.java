@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.Color;
 import chess.Position;
+import chess.board.Pieces;
 
 public final class Rook extends Piece {
 
@@ -20,7 +21,13 @@ public final class Rook extends Piece {
         // NOTE: 그럼 일단 다른 말들을 사용해 검증하는 건 나중에 하기
         // TODO: 경로상에 기물 있으면 안됨,
 
-        // TODO: 도착지에 아군 말 있어도 안됨
         return true;
+    }
+
+    @Override
+    public boolean isEndAble(Position end, Pieces pieces) {
+        // TODO: 도착지에 아군 말 있어도 안됨
+        
+        return pieces.isEmpty(end);
     }
 }

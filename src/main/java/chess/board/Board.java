@@ -101,6 +101,9 @@ public class Board {
         if (!startPiece.canMove(startPosition, endPosition)) {
             return false;
         }
+        if (!startPiece.isEndAble(endPosition, pieces)) {
+            return false;
+        }
 
         startPiece.setPosition(Position.of(end));
         return true;

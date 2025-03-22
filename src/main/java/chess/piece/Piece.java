@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.Color;
 import chess.Position;
+import chess.board.Pieces;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -13,8 +14,14 @@ public abstract class Piece {
 
     abstract public boolean canMove(Position start, Position end);
 
+    abstract public boolean isEndAble(Position end, Pieces pieces);
+
     public boolean isBlack() {
         return color == color.BLACK;
+    }
+
+    public boolean isSameColor(Piece other) {
+        return color == other.color;
     }
 
     @Override

@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.Color;
 import chess.Position;
+import chess.board.Pieces;
 
 public final class Knight extends Piece {
     public Knight(Color color) {
@@ -25,10 +26,14 @@ public final class Knight extends Piece {
 
         // NOTE: 아래 것 때문에 모든 기물 위치 받아와야겠네
         // NOTE: 그럼 일단 다른 말들을 사용해 검증하는 건 나중에 하기
-        
-        // TODO: 도착지에 아군 말 있어도 안됨
 
         return true;
     }
 
+    @Override
+    public boolean isEndAble(Position end, Pieces pieces) {
+        // TODO: 도착지에 아군 말 있어도 안됨
+
+        return pieces.isEmpty(end);
+    }
 }

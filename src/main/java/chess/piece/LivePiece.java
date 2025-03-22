@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.Position;
+import chess.board.Pieces;
 
 // NOTE: 살아있는 기물정보를 다룸
 public class LivePiece {
@@ -65,5 +66,9 @@ public class LivePiece {
 
     public boolean canMove(Position start, Position end) {
         return piece.canMove(start, end);
+    }
+
+    public boolean isEndAble(Position endPosition, Pieces pieces) {
+        return piece.isEndAble(endPosition, pieces);
     }
 }
