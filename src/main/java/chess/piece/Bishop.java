@@ -36,7 +36,26 @@ public final class Bishop extends Piece {
 
     @Override
     public boolean isPathAble(Position start, Position end, Pieces pieces) {
-        // TODO: 경로상에 기물 있으면 안됨,
+        // 경로상에 기물 있으면 안됨
+        int moveAmount = Math.abs(end.i() - start.i());
+
+        int direction_i = 1;
+        if (end.i() < start.i()) {
+            direction_i = -1;
+        }
+        int direction_j = 1;
+        if (end.j() < start.j()) {
+            direction_j = -1;
+        }
+
+        for (int i = 1; i < moveAmount; ++i) {
+            Position p = new Position(
+                    start.i() + (i * direction_i),
+                    start.j() + (i * direction_j));
+            if (!pieces.isEmpty(p)) {
+                return false;
+            }
+        }
         return true;
     }
 }
