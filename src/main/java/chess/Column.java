@@ -27,7 +27,7 @@ public enum Column {
 
     // 정확한 범위 내 문자를 주지 않으면 예외 발생
     public static Column getColumn(char col) {
-        int indexBaseByOne = col - 'A' + 1;
+        int indexBaseByOne = Character.toUpperCase(col) - 'A' + 1;
         Column result = getColumnByIndex(indexBaseByOne);
         return result;
     }
