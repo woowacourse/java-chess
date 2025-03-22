@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Movement;
+import chess.domain.Position;
 import java.util.List;
 
 public class Rook extends LinearMovingChessPiece {

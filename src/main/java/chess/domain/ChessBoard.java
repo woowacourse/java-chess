@@ -6,6 +6,7 @@ import chess.domain.piece.ChessPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.None;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.WhitePawn;
@@ -60,8 +61,24 @@ public class ChessBoard {
         board.put(new Position(Row.TWO, Column.H), new WhitePawn());
     }
 
-    public Map<Position, ChessPiece> getBoard() {
-        return this.board;
+    // 1. 도착지 자체가 말이 갈 수 있는 도착지인지 확인(Piece.canMove에 출발, 도착지 넘겨줌)
+    // 2. 장애물 있는지 확인
+    // 3. 도착지 말 색 확인
+    public void movePiece(Position origin, Position destination) {
+        ChessPiece movePiece = getPieceOfPosition(origin);
+
+        if (movePiece.getClass().equals(Knight.class)) {
+            // 장애물 있어도 됨
+        }
+        else if (movePiece.getClass().equals(BlackPawn.class) || movePiece.getClass().equals(WhitePawn.class)) {
+            // 경로 달라짐
+        }
+        else {
+            // 장애물 있는지 확인
+
+        }
+
+        // 도착지
     }
 
     public ChessPiece getPieceOfPosition(Position position) {

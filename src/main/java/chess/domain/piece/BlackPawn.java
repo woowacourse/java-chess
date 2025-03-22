@@ -3,15 +3,10 @@ package chess.domain.piece;
 import chess.domain.Movement;
 import java.util.List;
 
-public class BlackPawn extends LimitedMovingChessPiece {
+public class BlackPawn extends Pawn {
 
     // TODO: 색깔에 따라 방향 달라지고, 초기 위치인가에 따라 UP_UP 가능 / 불가능, 대각선 기물 먹기 가능
     public BlackPawn() {
         super(List.of(Movement.DOWN_DOWN, Movement.DOWN, Movement.LEFT_DOWN, Movement.LEFT_UP));
-    }
-
-    @Override
-    public String name() {
-        return "P";
     }
 }
