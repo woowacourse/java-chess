@@ -37,7 +37,7 @@ public class ResultView {
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i <= 8; i++) {
             for (int j = 1; j <= 8; j++) {
-                Position position = new Position(rows.get(i), columns.get(j));
+                Position position = new Position(rows.get(Math.abs(i - 9)), columns.get(j));
                 if (getBoard.containsKey(position)) {
                     sb.append(getBoard.get(position).getDisplay());
                 } else {

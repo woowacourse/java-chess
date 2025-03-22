@@ -8,7 +8,8 @@ import chess.Position;
 
 public class Pawn extends Piece {
 
-    private static final List<Movement> MOVEMENTS = List.of(Movement.UP, Movement.UP_UP);
+    private static final List<Movement> MOVEMENTS = List.of(Movement.UP, Movement.UP_UP, Movement.DOWN,
+            Movement.DOWN_DOWN);
 
     private final Position position;
     private final boolean hasMoveExperience;

@@ -21,6 +21,8 @@ public class Application {
             String[] tokens2 = tokens[1].split(",");
             Position start = new Position(Row.of(tokens1[1]), Column.valueOf(tokens1[0]));
             Position destination = new Position(Row.of(tokens2[1]), Column.valueOf(tokens2[0]));
+            System.out.println("start = " + start);
+            System.out.println("destination = " + destination);
             board.move(start, destination);
 
             resultView.printBoard(board);
