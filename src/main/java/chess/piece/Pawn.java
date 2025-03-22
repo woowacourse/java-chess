@@ -27,7 +27,7 @@ public class Pawn implements ChessPiece {
     public List<Position> getAvailableDestinations(Position startPosition, Map<Position, ChessPiece> positions) {
         List<Position> destinations = new ArrayList<>();
         for (Movement movement : getMovements()) {
-            if (startPosition.canMove(movement)) {
+            if (canMove(startPosition, movement, positions)) {
                 destinations.add(startPosition.move(movement));
             }
         }
@@ -38,12 +38,29 @@ public class Pawn implements ChessPiece {
         if (isFirstMove) {
             return List.of(
                     Movement.DOWN,
-                    Movement.DOWN_DOWN
+                    Movement.DOWN_DOWN,
+                    Movement.LEFT_DOWN,
+                    Movement.RIGHT_DOWN
             );
         }
         return List.of(
-                Movement.DOWN
+                Movement.DOWN,
+                Movement.LEFT_DOWN,
+                Movement.RIGHT_DOWN
         );
+    }
+
+    private boolean canMove(Position startPosition, Movement movement, Map<Position, ChessPiece> positions) {
+        if (!startPosition.canMove(movement)) {
+            return false;
+        }
+        Position targetPosition = startPosition.move(movement);
+        if (movement.isDiagonal()) {
+            // 대각선 방향인 경우 - 상대 기물이 존재하는지 확인
+            return positions.containsKey(targetPosition) && positions.get(targetPosition).getColor() != color;
+        }
+        // 빈 칸 확인
+        return !positions.containsKey(targetPosition);
     }
 
     @Override
