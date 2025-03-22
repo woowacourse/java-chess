@@ -53,4 +53,9 @@ public class Rook extends ChessPiece {
     public ChessPiece promotion(final PromotionOrder promotionOrder) {
         throw new IllegalStateException("룩은 프로모션 불가능합니다.");
     }
+
+    @Override
+    public boolean isCheckmatedBy(final List<Position> allyPiecePositions, final List<ChessPiece> enemyPieces) {
+        return false;
+    }
 }

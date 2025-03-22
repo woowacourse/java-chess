@@ -123,4 +123,16 @@ public class ChessPieces {
                 .filter(position -> position.equals(kingPosition) || position.equals(rookPosition))
                 .anyMatch(position -> position.isBetween(kingPosition, rookPosition));
     }
+
+    public boolean isCheckmateBy(final ChessPieces enemyPieces) {
+        final ChessPiece king = getKing();
+        return king.isCheckmatedBy(chessPieces.stream().map(ChessPiece::getPosition).toList(), enemyPieces.chessPieces);
+    }
+
+    private ChessPiece getKing() {
+        return chessPieces.stream()
+                .filter(piece -> piece instanceof King)
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+    }
 }

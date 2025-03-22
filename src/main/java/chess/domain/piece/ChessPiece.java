@@ -45,6 +45,8 @@ public abstract class ChessPiece {
         return this.color;
     }
 
+    public abstract boolean isCheckmatedBy(final List<Position> allyPiecePositions, final List<ChessPiece> enemyPieces);
+
     public abstract void castling(final ChessPiece other);
 
     public abstract ChessPiece promotion(PromotionOrder promotionOrder);

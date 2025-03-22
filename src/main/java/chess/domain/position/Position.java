@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import java.util.List;
+
 public record Position(
         Column column,
         Row row
@@ -184,5 +186,9 @@ public record Position(
             return row.isBetween(position1.row, position2.row);
         }
         return false;
+    }
+
+    public List<Position> getSurroundedPositions() {
+        return null;
     }
 }

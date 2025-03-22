@@ -22,7 +22,7 @@ public class ChessController {
     public void run() {
         final Board board = initializeBoard();
 
-        while (!board.isGameEnd()) {
+        while (!board.isKingDead() && !board.isCheckMate()) {
             if (board.hasPromotionablePawn()) {
                 PromotionOrder order = inputView.getPromotionOrder();
                 board.promotion(order);
@@ -37,6 +37,7 @@ public class ChessController {
                 case CASTLING -> board.castling(order.piecePosition(), order.newPosition());
             }
         }
+
         outputView.outputWinner(board.getWinnerColor());
     }
 

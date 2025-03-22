@@ -62,4 +62,9 @@ public class Knight extends ChessPiece {
     public ChessPiece promotion(final PromotionOrder promotionOrder) {
         throw new IllegalStateException("나이트는 프로모션 불가능합니다.");
     }
+
+    @Override
+    public boolean isCheckmatedBy(final List<Position> allyPiecePositions, final List<ChessPiece> enemyPieces) {
+        return false;
+    }
 }

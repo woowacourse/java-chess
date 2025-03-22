@@ -81,4 +81,9 @@ public class Pawn extends ChessPiece {
     public void castling(final ChessPiece chessPiece) {
         throw new IllegalStateException("폰은 캐슬링 불가능합니다.");
     }
+
+    @Override
+    public boolean isCheckmatedBy(final List<Position> allyPiecePositions, final List<ChessPiece> enemyPieces) {
+        return false;
+    }
 }

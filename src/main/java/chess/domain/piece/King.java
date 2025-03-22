@@ -85,4 +85,22 @@ public class King extends ChessPiece {
     public ChessPiece promotion(final PromotionOrder promotionOrder) {
         throw new IllegalStateException("킹은 프로모션 불가능합니다.");
     }
+
+    @Override
+    public boolean isCheckmatedBy(final List<Position> allyPiecePositions, final List<ChessPiece> enemyPieces) {
+        return cannotMove(allyPiecePositions, enemyPieces) && cannotStay(enemyPieces);
+    }
+
+    private boolean cannotMove(final List<Position> allyPiecePositions, final List<ChessPiece> enemyPieces) {
+        return position.getSurroundedPositions().stream()
+                .filter(allyPiecePositions::contains)
+                .filter(moveablePosition -> enemyPieces.stream()
+                        .anyMatch(enemyPiece -> enemyPiece.canTake(moveablePosition)))
+                .count() == 0;
+    }
+
+    private boolean cannotStay(final List<ChessPiece> enemyPieces) {
+        return enemyPieces.stream()
+                .anyMatch(enemyPiece -> enemyPiece.canTake(position));
+    }
 }

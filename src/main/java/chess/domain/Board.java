@@ -38,6 +38,15 @@ public class Board {
         getCurrentTurnPieces().castling(piecePosition, newPosition, getEnemyPieces());
     }
 
+    public boolean isCheckMate() {
+        nextTurn();
+        return getCurrentTurnPieces().isCheckmateBy(getEnemyPieces());
+    }
+
+    public boolean isKingDead() {
+        return !whitePieces.isKingAlive() || !blackPieces.isKingAlive();
+    }
+
     private void nextTurn() {
         turn = turn.opposite();
     }
@@ -62,12 +71,8 @@ public class Board {
         throw new IllegalStateException();
     }
 
-    public boolean isGameEnd() {
-        return !whitePieces.isKingAlive() || !blackPieces.isKingAlive();
-    }
-
     public Color getWinnerColor() {
-        if (!isGameEnd()) {
+        if (!isKingDead()) {
             throw new IllegalStateException();
         }
         if (whitePieces.isKingAlive()) {
