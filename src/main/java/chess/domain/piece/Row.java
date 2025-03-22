@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.piece;
 
 public enum Row {
 
@@ -49,5 +49,34 @@ public enum Row {
         }
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
+    }
+
+    public static Row findRowByNumber(String input) {
+
+        if (input.equals("8")) {
+            return EIGHT;
+        }
+        if (input.equals("7")) {
+            return SEVEN;
+        }
+        if (input.equals("6")) {
+            return SIX;
+        }
+        if (input.equals("5")) {
+            return FIVE;
+        }
+        if (input.equals("4")) {
+            return FOUR;
+        }
+        if (input.equals("3")) {
+            return THREE;
+        }
+        if (input.equals("2")) {
+            return TWO;
+        }
+        if (input.equals("1")) {
+            return ONE;
+        }
+        throw new IllegalArgumentException("위치가 올바르지 않습니다.");
     }
 }

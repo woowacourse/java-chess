@@ -1,4 +1,7 @@
-package chess;
+package chess.domain.piece;
+
+import chess.domain.Movement;
+import java.util.Objects;
 
 public record Position(
         Column column,
@@ -166,5 +169,19 @@ public record Position(
             return moveLeft(-step);
         }
         return this;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Position position = (Position) o;
+        return row == position.row && column == position.column;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(column, row);
     }
 }

@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.piece;
 
 public enum Column {
 
@@ -49,5 +49,36 @@ public enum Column {
         }
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
+    }
+
+    public static Column findColumnByAlphabet(String input) {
+
+        if (input.equals("A")) {
+            return A;
+        }
+        if (input.equals("B")) {
+            return B;
+        }
+        if (input.equals("C")) {
+            return C;
+        }
+        if (input.equals("D")) {
+            return D;
+        }
+        if (input.equals("E")) {
+            return E;
+        }
+        if (input.equals("F")) {
+            return F;
+        }
+        if (input.equals("G")) {
+            return G;
+        }
+        if (input.equals("H")) {
+            return H;
+        }
+
+        throw new IllegalArgumentException("위치가 올바르지 않습니다.");
+
     }
 }
