@@ -167,4 +167,16 @@ public record Position(
         }
         return this;
     }
+
+    public boolean onStraight(Position other) {
+        return this.row() == other.row() || this.column == other.column;
+    }
+
+    public boolean onSameRow(Position other) {
+        return this.row == other.row();
+    }
+
+    public boolean onSameColumn(Position other) {
+        return this.column == other.column;
+    }
 }

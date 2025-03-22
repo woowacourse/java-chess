@@ -2,14 +2,20 @@ package chess;
 
 public enum Column {
 
-    A,
-    B,
-    C,
-    D,
-    E,
-    F,
-    G,
-    H;
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8);
+
+    private final int value;
+
+    Column(int value) {
+        this.value = value;
+    }
 
     public boolean isFarLeft() {
         return ordinal() == 0;
@@ -50,4 +56,9 @@ public enum Column {
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
     }
+
+    public int intValue() {
+        return value;
+    };
+
 }
