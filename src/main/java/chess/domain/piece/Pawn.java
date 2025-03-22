@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import chess.dto.PromotionOrder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,20 @@ public class Pawn extends ChessPiece {
             }
         }
         return positions;
+    }
+
+    @Override
+    public ChessPiece promotion(final PromotionOrder order) {
+        if (!isPromotionable()) {
+            throw new IllegalStateException("프로모션 할 수 없습니다.");
+        }
+
+        return switch (order) {
+            case PromotionOrder.QUEEN -> new Queen(color, position);
+            case PromotionOrder.ROOK -> new Rook(color, position);
+            case PromotionOrder.BISHOP -> new Bishop(color, position);
+            case PromotionOrder.KNIGHT -> new Knight(color, position);
+        };
     }
 
     @Override

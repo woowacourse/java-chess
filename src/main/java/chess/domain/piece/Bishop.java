@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.dto.PromotionOrder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,5 +46,10 @@ public class Bishop extends ChessPiece {
     @Override
     public void castling(final ChessPiece chessPiece) {
         throw new IllegalStateException("비숍은 캐슬링 불가능합니다.");
+    }
+
+    @Override
+    public ChessPiece promotion(final PromotionOrder promotionOrder) {
+        throw new IllegalStateException("비숍은 프로모션 불가능합니다.");
     }
 }

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.dto.PromotionOrder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +47,10 @@ public class Rook extends ChessPiece {
     @Override
     public void castling(final ChessPiece chessPiece) {
         chessPiece.castling(this);
+    }
+
+    @Override
+    public ChessPiece promotion(final PromotionOrder promotionOrder) {
+        throw new IllegalStateException("룩은 프로모션 불가능합니다.");
     }
 }

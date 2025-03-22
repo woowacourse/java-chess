@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.dto.PromotionOrder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,5 +79,10 @@ public class King extends ChessPiece {
 
     private boolean isLeftThenRook(final ChessPiece chessPiece) {
         return this.position.column().isLeftThen(chessPiece.position.column());
+    }
+
+    @Override
+    public ChessPiece promotion(final PromotionOrder promotionOrder) {
+        throw new IllegalStateException("킹은 프로모션 불가능합니다.");
     }
 }

@@ -1,6 +1,8 @@
 package chess.domain;
 
-import chess.domain.piece.*;
+import chess.domain.piece.ChessPiece;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
 import chess.domain.position.Position;
 import chess.dto.PromotionOrder;
 
@@ -93,14 +95,9 @@ public class ChessPieces {
             throw new IllegalArgumentException("프로모션 가능한 폰이 없습니다.");
         }
         final ChessPiece targetPawn = promotionablePawn.get();
-        switch (order) {
-            case PromotionOrder.QUEEN -> chessPieces.add(new Queen(targetPawn.getColor(), targetPawn.getPosition()));
-            case PromotionOrder.ROOK -> chessPieces.add(new Rook(targetPawn.getColor(), targetPawn.getPosition()));
-            case PromotionOrder.BISHOP -> chessPieces.add(new Bishop(targetPawn.getColor(), targetPawn.getPosition()));
-            case PromotionOrder.KNIGHT -> chessPieces.add(new Knight(targetPawn.getColor(), targetPawn.getPosition()));
-        }
-
+        final ChessPiece promotion = targetPawn.promotion(order);
         chessPieces.remove(targetPawn);
+        chessPieces.add(promotion);
     }
 
     private Optional<ChessPiece> getPromotionablePawn() {

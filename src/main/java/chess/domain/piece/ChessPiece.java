@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.dto.PromotionOrder;
 
 import java.util.List;
 
@@ -45,6 +46,8 @@ public abstract class ChessPiece {
     }
 
     public abstract void castling(final ChessPiece other);
+
+    public abstract ChessPiece promotion(PromotionOrder promotionOrder);
 
     public abstract boolean isPromotionable();
 
