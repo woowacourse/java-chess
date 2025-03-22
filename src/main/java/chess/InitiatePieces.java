@@ -6,10 +6,22 @@ import chess.piece.Knight;
 import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Rook;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InitiatePieces {
+
+    private final List<Piece> pieces = new ArrayList<>();
+
+    public InitiatePieces(){
+        pieces.addAll(pawns);
+        pieces.addAll(kings);
+        pieces.addAll(queens);
+        pieces.addAll(rooks);
+        pieces.addAll(bishops);
+        pieces.addAll(knights);
+    }
+
     private final List<Piece> pawns = List.of(
             new Pawn(new Position(Row.TWO,Column.A),Color.WHITE),
             new Pawn(new Position(Row.TWO,Column.B),Color.WHITE),
@@ -60,6 +72,10 @@ public class InitiatePieces {
             new Knight(new Position(Row.EIGHT,Column.B),Color.BLACK),
             new Knight(new Position(Row.EIGHT,Column.G),Color.BLACK)
     );
+
+    public List<Piece> pieces(){
+        return pieces;
+    }
 }
 
 

@@ -1,9 +1,9 @@
 package chess.piece;
 
 public enum PieceType {
-    BISHOP("비숍"),
+    BISHOP("숍"),
     KING("킹"),
-    KNIGHT("나이트"),
+    KNIGHT("말"),
     PAWN("폰"),
     QUEEN("퀸"),
     ROOK("룩");
@@ -12,5 +12,9 @@ public enum PieceType {
 
     PieceType(String type) {
         this.type = type;
+    }
+
+    public String getType() {
+        return type;
     }
 }

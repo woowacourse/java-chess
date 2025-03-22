@@ -2,6 +2,8 @@ package chess;
 
 import chess.piece.King;
 import chess.piece.Piece;
+import chess.view.InputView;
+import chess.view.OutputView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +19,8 @@ public class ChessGame {
     }
 
     public ChessGame() {
-
-        this.pieces = new ArrayList<>(pieces);
+        InitiatePieces initiatePieces = new InitiatePieces();
+        this.pieces = new ArrayList<>(initiatePieces.pieces());
     }
 
     public boolean isSomeBodyKingDoesntExist(){
@@ -81,5 +83,9 @@ public class ChessGame {
                 pieces.remove(piece);
             }
         }
+    }
+
+    public List<Piece> getPieces() {
+        return pieces;
     }
 }
