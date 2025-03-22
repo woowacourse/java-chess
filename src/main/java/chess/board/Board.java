@@ -4,6 +4,7 @@ import chess.position.Position;
 import chess.piece.Piece;
 import chess.piece.Pieces;
 import java.util.List;
+import java.util.Set;
 
 public class Board {
 
@@ -23,6 +24,14 @@ public class Board {
                 throw new IllegalArgumentException("같은 팀이 있는 위치로는 이동할 수 없습니다.");
             }
         }
+
+        Set<Position> path = pickedPiece.calculatePath(differenceX, differenceY);
+        boolean existsPieceOnPath = path.stream()
+                .anyMatch(pieces::existsByPosition);
+        if (existsPieceOnPath) {
+            throw new IllegalArgumentException("경로 상에 말이 존재합니다");
+        }
+
         pickedPiece.move(differenceX, differenceY);
     }
 

@@ -29,7 +29,7 @@ public class OutputView {
             for (int j = 0; j < boardOutput.length; j++) {
                 System.out.printf("%s\t", boardOutput[i][j]);
             }
-            System.out.printf("\t%d%n", i + 1);
+            System.out.printf("\t%d%n", 8 - i);
         }
         System.out.println();
         System.out.println("A\tB\tC\tD\tE\tF\tG\tH");

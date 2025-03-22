@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.position.Color;
 import chess.position.Position;
+import java.util.Set;
 
 public abstract class Piece {
 
@@ -18,6 +19,8 @@ public abstract class Piece {
     }
 
     public abstract void move(int x, int y);
+
+    public abstract Set<Position> calculatePath(int x, int y);
 
     public Color getColor() {
         return color;

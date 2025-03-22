@@ -3,6 +3,7 @@ package chess.piece;
 import chess.position.Color;
 import chess.position.Position;
 import chess.position.Row;
+import java.util.Set;
 
 public class Pawn extends Piece {
 
@@ -10,6 +11,7 @@ public class Pawn extends Piece {
         super(color, position);
     }
 
+    @Override
     public void move(final int x, final int y) {
         boolean canMove = false;
         if (color == Color.WHITE && y > 0 && y <= 2) {
@@ -36,5 +38,10 @@ public class Pawn extends Piece {
             return;
         }
         throw new IllegalArgumentException("이동할 수 없습니다.");
+    }
+
+    @Override
+    public Set<Position> calculatePath(int x, int y) {
+        return Set.of();
     }
 }

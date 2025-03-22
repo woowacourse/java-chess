@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.position.Color;
 import chess.position.Position;
+import java.util.Set;
 
 public class Knight extends Piece {
 
@@ -9,6 +10,7 @@ public class Knight extends Piece {
         super(color, position);
     }
 
+    @Override
     public void move(final int x, final int y) {
         boolean canMove = position.canMoveHorizontal(x) && position.canMoveVertical(y);
 
@@ -17,6 +19,11 @@ public class Knight extends Piece {
             return;
         }
         throw new IllegalArgumentException("이동할 수 없습니다.");
+    }
+
+    @Override
+    public Set<Position> calculatePath(int x, int y) {
+        return Set.of();
     }
 
     private boolean isMovingRule(final int x, final int y) {
