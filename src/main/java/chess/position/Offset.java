@@ -14,6 +14,10 @@ public record Offset(int x, int y) {
         return x != 0 && y != 0 && Math.abs(x) == Math.abs(y);
     }
 
+    public boolean hasOneMovement() {
+        return (x == 1 && y == 0) || (x == 0 && y == 1);
+    }
+
     public static Offset calculate(
             final Position before,
             final Position after
