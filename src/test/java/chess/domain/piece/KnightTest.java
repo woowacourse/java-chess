@@ -1,8 +1,11 @@
 package chess.domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.Column;
+import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.Row;
 import org.assertj.core.api.Assertions;
@@ -16,8 +19,7 @@ class KnightTest {
         Position origin = new Position(Row.FOUR, Column.D);
         Position destination = new Position(Row.FIVE, Column.F);
 
-        Assertions.assertThat(knight.canMove(origin, destination))
-                .isTrue();
+        assertDoesNotThrow(() -> knight.validateCanMove(origin, destination));
     }
 
     @Test
@@ -26,7 +28,16 @@ class KnightTest {
         Position origin = new Position(Row.FOUR, Column.D);
         Position destination = new Position(Row.SIX, Column.F);
 
-        Assertions.assertThat(knight.canMove(origin, destination))
-                .isFalse();
+        assertThatThrownBy(() -> knight.validateCanMove(origin, destination));
+    }
+
+    @Test
+    void 경로를_찾을_수_있다() {
+        ChessPiece knight = new Knight();
+        Position origin = new Position(Row.FOUR, Column.D);
+        Position destination = new Position(Row.FIVE, Column.F);
+
+        assertThat(knight.findRoute(origin, destination))
+                .containsExactly(Movement.RIGHT_RIGHT_UP);
     }
 }

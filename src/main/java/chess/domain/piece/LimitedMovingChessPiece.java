@@ -13,13 +13,27 @@ public abstract class LimitedMovingChessPiece implements ChessPiece {
     }
 
     @Override
-    public boolean canMove(Position origin, Position destination) {
+    public void validateCanMove(Position origin, Position destination) {
+        boolean canMove = false;
         for (Movement movement : movements) {
             if (origin.move(movement).equals(destination)) {
-                return true;
+                canMove = true;
+                break;
             }
         }
-        return false;
+        if (!canMove) {
+            throw new IllegalStateException("해당 기물은 해당 경로로 이동할 수 없습니다.");
+        }
+    }
+
+    @Override
+    public List<Movement> findRoute(Position origin, Position destination) {
+        for (Movement movement : movements) {
+            if (origin.move(movement).equals(destination)) {
+                return List.of(movement);
+            }
+        }
+        return List.of();
     }
 
     @Override

@@ -6,11 +6,11 @@ import chess.domain.piece.ChessPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.None;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.WhitePawn;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
@@ -61,27 +61,41 @@ public class ChessBoard {
         board.put(new Position(Row.TWO, Column.H), new WhitePawn());
     }
 
+    public ChessPiece getPieceOfPosition(Position position) {
+        return board.get(position);
+    }
+
     // 1. 도착지 자체가 말이 갈 수 있는 도착지인지 확인(Piece.canMove에 출발, 도착지 넘겨줌)
     // 2. 장애물 있는지 확인
     // 3. 도착지 말 색 확인
     public void movePiece(Position origin, Position destination) {
         ChessPiece movePiece = getPieceOfPosition(origin);
+        movePiece.validateCanMove(origin, destination); // 움직일 수 있는 경로에 있는지 확인
 
         if (movePiece.getClass().equals(Knight.class)) {
             // 장애물 있어도 됨
         }
         else if (movePiece.getClass().equals(BlackPawn.class) || movePiece.getClass().equals(WhitePawn.class)) {
             // 경로 달라짐
+
+            validateExistHurdle(movePiece, origin, destination);
         }
         else {
             // 장애물 있는지 확인
+            validateExistHurdle(movePiece, origin, destination);
 
         }
-
-        // 도착지
     }
 
-    public ChessPiece getPieceOfPosition(Position position) {
-        return board.get(position);
+    private void validateExistHurdle(ChessPiece piece, Position origin, Position destination) {
+        List<Movement> route = piece.findRoute(origin, destination);
+        List<Movement> routeWithoutDestination = route.subList(0, route.size() - 1);
+        Position origin2 = origin;
+        for (Movement movement : routeWithoutDestination) {
+            origin2 = origin2.move(movement);
+            if (!getPieceOfPosition(origin2).isEmpty()) {
+                throw new IllegalStateException("경로에 장애물이 존재하여 움직일 수 없습니다.");
+            }
+        }
     }
 }
