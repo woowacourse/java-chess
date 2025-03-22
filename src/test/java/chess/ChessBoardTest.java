@@ -3,9 +3,10 @@ package chess;
 import static chess.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.piece.EmptyPiece;
-import chess.piece.Piece;
-import chess.piece.Rook;
+import chess.domain.ChessBoard;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

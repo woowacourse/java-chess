@@ -1,19 +1,19 @@
-package chess.piece;
+package chess.domain.piece;
 
-import static chess.Movement.DOWN_DOWN_LEFT;
-import static chess.Movement.DOWN_DOWN_RIGHT;
-import static chess.Movement.LEFT_LEFT_DOWN;
-import static chess.Movement.LEFT_LEFT_UP;
-import static chess.Movement.RIGHT_RIGHT_DOWN;
-import static chess.Movement.RIGHT_RIGHT_UP;
-import static chess.Movement.UP_UP_LEFT;
-import static chess.Movement.UP_UP_RIGHT;
+import static chess.domain.Movement.DOWN_DOWN_LEFT;
+import static chess.domain.Movement.DOWN_DOWN_RIGHT;
+import static chess.domain.Movement.LEFT_LEFT_DOWN;
+import static chess.domain.Movement.LEFT_LEFT_UP;
+import static chess.domain.Movement.RIGHT_RIGHT_DOWN;
+import static chess.domain.Movement.RIGHT_RIGHT_UP;
+import static chess.domain.Movement.UP_UP_LEFT;
+import static chess.domain.Movement.UP_UP_RIGHT;
 
-import chess.Column;
-import chess.Movement;
-import chess.Position;
-import chess.Row;
-import chess.TeamColor;
+import chess.domain.Column;
+import chess.domain.Movement;
+import chess.domain.Position;
+import chess.domain.Row;
+import chess.domain.TeamColor;
 import java.util.List;
 
 public class Knight extends Piece{

@@ -1,8 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Movement;
-import chess.Position;
-import chess.TeamColor;
+import chess.domain.Movement;
+import chess.domain.Position;
+import chess.domain.TeamColor;
 import java.util.List;
 
 public class King extends Piece{
