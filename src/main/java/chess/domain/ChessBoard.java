@@ -64,7 +64,9 @@ public class ChessBoard {
     }
 
 
-    public void move(Piece piece, Position start, Position target) {
+    public void move(Position start, Position target) {
+        Piece piece = findPieceBy(start);
+
         boolean availablePath = piece.availablePath(start, target);
         if (!availablePath) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");

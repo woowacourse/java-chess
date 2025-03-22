@@ -6,9 +6,11 @@ import java.util.List;
 
 public abstract class Piece {
     private final TeamColor teamColor;
+    private final PieceType pieceType;
 
-    Piece(TeamColor teamColor) {
+    Piece(TeamColor teamColor, PieceType pieceType) {
         this.teamColor = teamColor;
+        this.pieceType = pieceType;
     }
 
     public abstract boolean availablePath(Position start, Position target);
@@ -20,5 +22,9 @@ public abstract class Piece {
 
     public boolean isOtherTeam(Piece other) {
         return this.teamColor != other.teamColor;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }

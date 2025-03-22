@@ -8,7 +8,7 @@ import java.util.List;
 public class Queen extends Piece {
 
     public Queen(TeamColor teamColor) {
-        super(teamColor);
+        super(teamColor, PieceType.QUEEN);
     }
 
     @Override

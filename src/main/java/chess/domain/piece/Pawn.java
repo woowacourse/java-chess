@@ -2,16 +2,17 @@ package chess.domain.piece;
 
 import chess.domain.Movement;
 import chess.domain.Position;
+import chess.domain.Row;
 import chess.domain.TeamColor;
 import java.util.List;
 
-public class Pawn extends Piece{
+public class Pawn extends Piece {
     private final static Movement pawnMovement = Movement.UP;
     private final static List<Movement> pawnTakeMovements =
             List.of(Movement.LEFT_UP, Movement.RIGHT_UP);
 
     public Pawn(TeamColor teamColor) {
-        super(teamColor);
+        super(teamColor, PieceType.PAWN);
     }
 
 
@@ -27,8 +28,20 @@ public class Pawn extends Piece{
 
     @Override
     public boolean canMove(List<Piece> piecesOnRoute, Position start, Position target) {
-        if(piecesOnRoute.getFirst().isEmpty()) {
-            if(!start.canMoveUp(1)) {
+
+        if (target.rowValue() - start.rowValue() == 2) {
+            if (!start.canMoveUp(2)) {
+                return false;
+            }
+            if (start.row() != Row.TWO) {
+                return false;
+            }
+            Position moved = start.moveUp(2);
+            return moved.equals(target);
+        }
+
+        if (piecesOnRoute.getLast().isEmpty()) {
+            if (!start.canMoveUp(1)) {
                 return false;
             }
             Position moved = start.moveUp(1);
@@ -37,12 +50,12 @@ public class Pawn extends Piece{
 
         //적이 있을때
         for (Movement takeMovement : pawnTakeMovements) {
-            if(!start.canMove(takeMovement)) {
+            if (!start.canMove(takeMovement)) {
                 continue;
             }
 
             Position moved = start.move(takeMovement);
-            if(moved.equals(target)){
+            if (moved.equals(target)) {
                 return true;
             }
         }

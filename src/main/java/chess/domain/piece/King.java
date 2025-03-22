@@ -19,7 +19,7 @@ public class King extends Piece{
     private final List<Movement> availableMovement;
 
     public King(TeamColor teamColor) {
-        super(teamColor);
+        super(teamColor, PieceType.KING);
         this.availableMovement = kingMovement;
     }
 

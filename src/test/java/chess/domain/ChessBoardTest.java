@@ -33,7 +33,7 @@ class ChessBoardTest {
         Piece piece = board.findPieceBy(B1);
 
         // when
-        board.move(piece, B1, C3);
+        board.move(B1, C3);
 
         // then
         Piece movedPiece = board.findPieceBy(C3);

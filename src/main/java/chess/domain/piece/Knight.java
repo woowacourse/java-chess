@@ -31,7 +31,7 @@ public class Knight extends Piece{
     private final List<Movement> availableMovement;
 
     public Knight(TeamColor teamColor) {
-        super(teamColor);
+        super(teamColor, PieceType.KNIGHT);
         this.availableMovement = knightMovement;
     }
 

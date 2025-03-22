@@ -8,7 +8,7 @@ public class EmptyPiece extends Piece{
     private final static EmptyPiece INSTANCE = new EmptyPiece();
 
     private EmptyPiece() {
-        super(TeamColor.NONE);
+        super(TeamColor.NONE, PieceType.NONE);
     }
 
     public static EmptyPiece getInstance() {
