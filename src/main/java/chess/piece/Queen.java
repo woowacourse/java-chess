@@ -18,15 +18,18 @@ public final class Queen extends Piece {
 
         int abs_diff_i = Math.abs(end.row().getIndex() - start.row().getIndex());
         int abs_diff_j = Math.abs(end.column().getIndex() - start.column().getIndex());
-        // 대각선 이동이라면 증가량이 동일해야 함.
-        if (abs_diff_i != abs_diff_j) {
-            return false;
+        if (isUDLR(start, end)) {
+            // 상하좌우 이동이라면 i나 j가 같아야 함.
+            if (abs_diff_i != 0 && abs_diff_j != 0) {
+                return false;
+            }
+        } else {
+            // 대각선 이동이라면 증가량이 동일해야 함.
+            if (abs_diff_i != abs_diff_j) {
+                return false;
+            }
         }
 
-        // 가로세로 이동이라면 i나 j가 같아야 함.
-        if (abs_diff_i != 0 && abs_diff_j != 0) {
-            return false;
-        }
         return true;
     }
 
@@ -44,4 +47,12 @@ public final class Queen extends Piece {
         // TODO: 경로상에 기물 있으면 안됨,
         return true;
     }
+    private boolean isUDLR(Position start, Position end) {
+        // 가로세로 이동이라면 i나 j가 같아야 함.
+        if (start.i() != end.i() && start.j() != end.j()) {
+            return false;
+        }
+        return true;
+    }
+
 }
