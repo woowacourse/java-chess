@@ -68,8 +68,8 @@ public class InputView {
 
     private OrderOption parseOrderType(final String orderType) {
         return switch (orderType) {
-            case "M" -> OrderOption.MOVE;
-            case "T" -> OrderOption.TAKE;
+            case "M", "m" -> OrderOption.MOVE;
+            case "T", "t" -> OrderOption.TAKE;
             default -> throw new IllegalArgumentException("잘못된 입력: " + orderType);
         };
     }
