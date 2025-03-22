@@ -54,4 +54,9 @@ public enum Column {
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
     }
+
+    public boolean isBetween(final Column column1, final Column column2) {
+        return column1.ordinal() < this.ordinal() && this.ordinal() < column2.ordinal()
+                || column1.ordinal() > this.ordinal() && this.ordinal() > column2.ordinal();
+    }
 }

@@ -175,4 +175,14 @@ public record Position(
         }
         return this;
     }
+
+    public boolean isBetween(final Position position1, final Position position2) {
+        if (position1.column == position2.column) {
+            return column.isBetween(position1.column, position2.column);
+        }
+        if (position1.row == position2.row) {
+            return row.isBetween(position1.row, position2.row);
+        }
+        return false;
+    }
 }

@@ -37,7 +37,7 @@ public class Board {
 
     public void castling(final Position piecePosition, final Position newPosition) {
         nextTurn();
-        getCurrentTurnPieces().castling(piecePosition, newPosition);
+        getCurrentTurnPieces().castling(piecePosition, newPosition, getEnemyPieces());
     }
 
     private void nextTurn() {

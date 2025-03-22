@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.position.Position;
 import chess.dto.PromotionOrder;
 
@@ -102,14 +101,26 @@ public class ChessPieces {
 
     private Optional<ChessPiece> getPromotionablePawn() {
         return chessPieces.stream()
-                .filter(piece -> piece instanceof Pawn)
                 .filter(ChessPiece::isPromotionable)
                 .findFirst();
     }
 
-    public void castling(final Position piecePosition, final Position newPosition) {
-        final ChessPiece piece1 = getPieceOf(piecePosition);
-        final ChessPiece piece2 = getPieceOf(newPosition);
-        piece1.castling(piece2);
+    public void castling(final Position kingPosition, final Position rookPosition, final ChessPieces otherPieces) {
+        if (havePieceBetween(kingPosition, rookPosition, otherPieces)) {
+            throw new IllegalArgumentException("캐슬링할 수 없습니다.");
+        }
+        final ChessPiece king = getPieceOf(kingPosition);
+        final ChessPiece rook = getPieceOf(rookPosition);
+        king.castling(rook);
+    }
+
+    private boolean havePieceBetween(final Position kingPosition, final Position rookPosition, final ChessPieces otherPieces) {
+        final List<ChessPiece> allPieces = new ArrayList<>();
+        allPieces.addAll(chessPieces);
+        allPieces.addAll(otherPieces.chessPieces);
+        return allPieces.stream()
+                .map(ChessPiece::getPosition)
+                .filter(position -> position.equals(kingPosition) || position.equals(rookPosition))
+                .anyMatch(position -> position.isBetween(kingPosition, rookPosition));
     }
 }
