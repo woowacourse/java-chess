@@ -39,6 +39,20 @@ public enum Column {
         };
     }
 
+    public int toInt() {
+        return switch (this) {
+            case A -> 1;
+            case B -> 2;
+            case C -> 3;
+            case D -> 4;
+            case E -> 5;
+            case F -> 6;
+            case G -> 7;
+            case H -> 8;
+            default -> throw new IllegalArgumentException("Unknown column: " + this);
+        };
+    }
+
     public boolean isFarLeft() {
         return ordinal() == 0;
     }

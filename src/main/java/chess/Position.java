@@ -21,6 +21,16 @@ public record Position(
         }
     }
 
+    public static boolean isSameLine(Position pos1, Position pos2) {
+        if (pos1.row == pos2.row) {
+            return true;
+        }
+        if (pos1.column == pos2.column) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean canMoveUp() {
         return row.canMoveUp(1);
     }
