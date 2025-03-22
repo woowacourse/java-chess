@@ -25,7 +25,7 @@ public final class Pawn extends Piece {
 
         if (Math.abs(diff_i) == 2) {
             // 2칸 이동하는 경우는 첫 이동시임.
-            if (isMoved(start)) {
+            if (!isMoved(start)) {
                 return false;
             }
             if (diff_i != 2 * direction) {
