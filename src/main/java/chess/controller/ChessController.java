@@ -20,8 +20,7 @@ public class ChessController {
 
     public void run() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardBasicInitializer());
-        List<Color> colors = Color.getGameColors();
-        Color nowTurn = colors.getFirst();
+        Color nowTurn = Color.WHITE;
 
         while (true) {
             outputView.printChessBoard(chessBoard);
@@ -41,12 +40,16 @@ public class ChessController {
         InputProcessor.processUntilSuccess(() -> {
             List<Position> originAndDestination = inputView.getMoveInput();
             Position origin = originAndDestination.get(0);
-            if (chessBoard.getPieceOfPosition(origin).getColor() != nowTurn) {
-                throw new IllegalArgumentException("현재는 %s의 차례입니다.".formatted(nowTurn.name()));
-            }
+            checkValidPieceColor(chessBoard, nowTurn, origin);
             Position destination = originAndDestination.get(1);
 
             chessBoard.moveAndCapturePiece(origin, destination);
         }, OutputView::printErrorMessage);
+    }
+
+    private void checkValidPieceColor(ChessBoard chessBoard, Color nowTurn, Position origin) {
+        if (chessBoard.getPieceOfPosition(origin).getColor() != nowTurn) {
+            throw new IllegalArgumentException("현재는 %s의 차례입니다.".formatted(nowTurn.name()));
+        }
     }
 }
