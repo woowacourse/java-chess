@@ -13,7 +13,7 @@ import chess.Column;
 import chess.Movement;
 import chess.Position;
 import chess.Row;
-import java.util.ArrayList;
+import chess.TeamColor;
 import java.util.List;
 
 public class Knight extends Piece{
@@ -30,7 +30,8 @@ public class Knight extends Piece{
 
     private final List<Movement> availableMovement;
 
-    public Knight() {
+    public Knight(TeamColor teamColor) {
+        super(teamColor);
         this.availableMovement = knightMovement;
     }
 
@@ -55,5 +56,15 @@ public class Knight extends Piece{
 
         Position position = new Position(row, column);
         return List.of(position);
+    }
+
+    @Override
+    public boolean canMove(Piece targetPiece, Position start, Position target) {
+        return false;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
     }
 }

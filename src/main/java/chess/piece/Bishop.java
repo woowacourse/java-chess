@@ -1,11 +1,15 @@
 package chess.piece;
 
-import chess.Movement;
 import chess.Position;
+import chess.TeamColor;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Piece{
+
+    public Bishop(TeamColor teamColor) {
+        super(teamColor);
+    }
 
     @Override
     public boolean availablePath(Position start, Position target) {
@@ -26,5 +30,15 @@ public class Bishop extends Piece{
         }
 
         return positions;
+    }
+
+    @Override
+    public boolean canMove(Piece targetPiece, Position start, Position target) {
+        return false;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
     }
 }

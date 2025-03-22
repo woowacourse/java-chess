@@ -4,6 +4,7 @@ import static chess.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.Position;
+import chess.TeamColor;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class RookTest {
     @Test
     void Rook_canMove_Straight_Row() {
         // given
-        Rook rook = new Rook();
+        Rook rook = new Rook(TeamColor.BLACK);
 
         // when
         boolean canMove = rook.availablePath(A1, A8);
@@ -27,7 +28,7 @@ class RookTest {
     @Test
     void Rook_canMove_Straight_Column() {
         // given
-        Rook rook = new Rook();
+        Rook rook = new Rook(TeamColor.BLACK);
 
         // when
         boolean canMove = rook.availablePath(A1, H1);
@@ -40,7 +41,7 @@ class RookTest {
     @Test
     void Rook_cannotMove_when_notStraight() {
         // given
-        Rook rook = new Rook();
+        Rook rook = new Rook(TeamColor.BLACK);
 
         // when
         boolean canMove = rook.availablePath(A1, B2);
@@ -53,7 +54,7 @@ class RookTest {
     @Test
     void Rook_findAllRoute() {
         // given
-        Rook rook = new Rook();
+        Rook rook = new Rook(TeamColor.BLACK);
 
         // when
         List<Position> routes = rook.findAllRouteToTarget(A1, A4);

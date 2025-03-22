@@ -4,6 +4,7 @@ import static chess.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.Position;
+import chess.TeamColor;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class BishopTest {
     @Test
     void Bishop_canMove_diagonal() {
         // given
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(TeamColor.BLACK);
 
         // when
         boolean canMove = bishop.availablePath(A1, B2);
@@ -27,7 +28,7 @@ class BishopTest {
     @Test
     void Bishop_cannotMove_Straight() {
         // given
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(TeamColor.BLACK);
 
         // when
         boolean canMove = bishop.availablePath(A1, A2);
@@ -40,7 +41,7 @@ class BishopTest {
     @Test
     void Bishop_findAllRoute() {
         // given
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(TeamColor.BLACK);
 
         // when
         List<Position> routes = bishop.findAllRouteToTarget(A1, D4);

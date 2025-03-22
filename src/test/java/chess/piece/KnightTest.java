@@ -3,6 +3,7 @@ package chess.piece;
 import static chess.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.TeamColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ class KnightTest {
     @Test
     void Horse_canMoveTest() {
         // given
-        Piece knight = new Knight();
+        Piece knight = new Knight(TeamColor.BLACK);
 
         // when
         boolean canMove = knight.availablePath(B1, C3);
@@ -27,7 +28,7 @@ class KnightTest {
     @Test
     void Horse_canMove_False() {
         // given
-        Piece knight = new Knight();
+        Piece knight = new Knight(TeamColor.BLACK);
 
         // when
         boolean canMove = knight.availablePath(B1, C2);

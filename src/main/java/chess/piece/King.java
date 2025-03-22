@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.Movement;
 import chess.Position;
+import chess.TeamColor;
 import java.util.List;
 
 public class King extends Piece{
@@ -17,7 +18,8 @@ public class King extends Piece{
 
     private final List<Movement> availableMovement;
 
-    public King() {
+    public King(TeamColor teamColor) {
+        super(teamColor);
         this.availableMovement = kingMovement;
     }
 
@@ -38,5 +40,15 @@ public class King extends Piece{
     @Override
     public List<Position> findAllRouteToTarget(Position start, Position target) {
         return List.of(target);
+    }
+
+    @Override
+    public boolean canMove(Piece targetPiece, Position start, Position target) {
+        return false;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
     }
 }

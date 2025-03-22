@@ -4,6 +4,7 @@ import static chess.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.Position;
+import chess.TeamColor;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class QueenTest {
     @Test
     void Queen_canMove_diagonal() {
         // given
-        Queen queen = new Queen();
+        Queen queen = new Queen(TeamColor.BLACK);
 
         // when
         boolean canMove = queen.availablePath(A1, C3);
@@ -27,7 +28,7 @@ class QueenTest {
     @Test
     void Queen_canMove_Straight() {
         // given
-        Queen queen = new Queen();
+        Queen queen = new Queen(TeamColor.BLACK);
 
         // when
         boolean canMove = queen.availablePath(A1, A3);
@@ -40,7 +41,7 @@ class QueenTest {
     @Test
     void Queen_cannotMove() {
         // given
-        Queen queen = new Queen();
+        Queen queen = new Queen(TeamColor.BLACK);
 
         // when
         boolean canMove = queen.availablePath(A1, B3);
@@ -53,7 +54,7 @@ class QueenTest {
     @Test
     void Queen_findAllRoute() {
         // given
-        Queen queen = new Queen();
+        Queen queen = new Queen(TeamColor.BLACK);
 
         // when
         List<Position> routes = queen.findAllRouteToTarget(D4, G7);

@@ -4,6 +4,7 @@ import static chess.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.Position;
+import chess.TeamColor;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ class KingTest {
     @MethodSource("provideKingMovesTo")
     void King_canMove_Left(Position target) {
         // given
-        King king = new King();
+        King king = new King(TeamColor.BLACK);
 
         // when
         boolean canMove = king.availablePath(B2, target);
@@ -34,7 +35,7 @@ class KingTest {
     @DisplayName("킹이 이동할 수 없는 칸이면 false")
     @Test
     void King_cannotMove() {
-        King king = new King();
+        King king = new King(TeamColor.BLACK);
 
         // when
         boolean canMove = king.availablePath(B2, D2);

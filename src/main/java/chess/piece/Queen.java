@@ -1,12 +1,15 @@
 package chess.piece;
 
-import chess.Movement;
 import chess.Position;
+import chess.TeamColor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Queen extends Piece {
+
+    public Queen(TeamColor teamColor) {
+        super(teamColor);
+    }
 
     @Override
     public boolean availablePath(Position start, Position target) {
@@ -43,6 +46,16 @@ public class Queen extends Piece {
         }
 
         return positions;
+    }
+
+    @Override
+    public boolean canMove(Piece targetPiece, Position start, Position target) {
+        return false;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
     }
 
 }
