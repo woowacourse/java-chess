@@ -8,6 +8,7 @@ import chess.Position;
 import chess.Row;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Knight implements Piece {
     private final Color color;
@@ -33,16 +34,41 @@ public class Knight implements Piece {
     }
 
     private void repeatMove(List<Movement> movements, Board board) {
+        int step = 0;
         for (Movement movement : movements) {
+            step++;
             if (!this.position.canMove(movement)) {
                 throw new IllegalArgumentException("보드의 범위를 벗어난 위치입니다.");
             }
             Position newPosition = this.position.move(movement);
-            if (board.findByPosition(newPosition).isPresent()) {
-                throw new IllegalArgumentException("장애물이 존재합니다.");
+
+            if (canAttack(step, board, newPosition)) {
+                attack(board, newPosition);
+            } else {
+                simplyMove(board, newPosition);
             }
-            this.position = newPosition;
         }
+    }
+
+    private boolean canAttack(int step, Board board, Position newPosition) {
+       if (step == 3) {
+           Optional<Piece> existingPiece = board.findByPosition(newPosition);
+           return existingPiece.isPresent()
+                   && existingPiece.get().isEnemyWith(this);
+       }
+        return false;
+    }
+
+    private void attack(Board board, Position newPosition) {
+        this.position = newPosition;
+        board.remove(newPosition);
+    }
+
+    private void simplyMove(Board board, Position newPosition) {
+        if (board.findByPosition(newPosition).isPresent()) {
+            throw new IllegalArgumentException("장애물이 존재합니다.");
+        }
+        this.position = newPosition;
     }
 
     private static Movement decideFirstMovement(int rowGap, int columnGap) {
