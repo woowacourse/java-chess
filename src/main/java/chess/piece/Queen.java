@@ -1,5 +1,7 @@
 package chess.piece;
 
+import chess.board.ChessBoard;
+import chess.board.Color;
 import chess.board.Movement;
 import chess.board.Position;
 import java.util.Set;
@@ -17,18 +19,31 @@ public class Queen implements Piece {
             Movement.RIGHT_UP
     );
 
+    private final Color color;
+
+    public Queen(Color color) {
+        this.color = color;
+    }
+
     @Override
-    public boolean moveToDestination(Position start, Position end) {
+    public boolean canMoveToDestination(ChessBoard chessBoard, Position start, Position end) {
         for (Movement direction : DIRECTIONS) {
             Position current = new Position(start.row(), start.column());
             while (!current.equals(end) && current.canMove(direction)) {
+                if (!chessBoard.isEmpty(current)) {
+                    return false;
+                }
                 current = current.move(direction);
             }
-            if(current.equals(end)) {
-                return true;
+            if (current.equals(end)) {
+                return chessBoard.isNotSameColor(current, color);
             }
         }
-
         return false;
+    }
+
+    @Override
+    public boolean isSameColor(Color color) {
+        return this.color == color;
     }
 }
