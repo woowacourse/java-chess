@@ -1,11 +1,12 @@
 package chess.domain.pieces;
 
-import chess.domain.piece.ChessPiece;
-import chess.domain.piece.King;
+import chess.domain.piece.*;
 import chess.domain.position.Position;
+import chess.dto.PromotionOrder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ChessPieces {
 
@@ -80,5 +81,32 @@ public class ChessPieces {
 
     public List<ChessPiece> getChessPieces() {
         return chessPieces;
+    }
+
+    public boolean hasPromotionablePawn() {
+        return getPromotionablePawn().isPresent();
+    }
+
+    public void promotion(final PromotionOrder order) {
+        final Optional<ChessPiece> promotionablePawn = getPromotionablePawn();
+        if (promotionablePawn.isEmpty()) {
+            throw new IllegalArgumentException("프로모션 가능한 폰이 없습니다.");
+        }
+        final ChessPiece targetPawn = promotionablePawn.get();
+        switch (order) {
+            case PromotionOrder.QUEEN -> chessPieces.add(new Queen(targetPawn.getColor(), targetPawn.getPosition()));
+            case PromotionOrder.ROOK -> chessPieces.add(new Rook(targetPawn.getColor(), targetPawn.getPosition()));
+            case PromotionOrder.BISHOP -> chessPieces.add(new Bishop(targetPawn.getColor(), targetPawn.getPosition()));
+            case PromotionOrder.KNIGHT -> chessPieces.add(new Knight(targetPawn.getColor(), targetPawn.getPosition()));
+        }
+
+        chessPieces.remove(targetPawn);
+    }
+
+    private Optional<ChessPiece> getPromotionablePawn() {
+        return chessPieces.stream()
+                .filter(piece -> piece instanceof Pawn)
+                .filter(ChessPiece::isPromotionable)
+                .findFirst();
     }
 }

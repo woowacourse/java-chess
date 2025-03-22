@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.Board;
 import chess.domain.initializer.ChessPieceInitializer;
 import chess.dto.MoveOrder;
+import chess.dto.PromotionOrder;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -22,6 +23,12 @@ public class ChessController {
         final Board board = initializeBoard();
 
         while (!board.isGameEnd()) {
+            if (board.hasPromotionablePawn()) {
+                PromotionOrder order = inputView.getPromotionOrder();
+                board.promotion(order);
+                continue;
+            }
+
             outputView.outputBoard(board.getBlackPieces(), board.getWhitePieces());
             MoveOrder order = inputView.getOrder();
             switch (order.orderOption()) {

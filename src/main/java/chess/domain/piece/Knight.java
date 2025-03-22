@@ -47,4 +47,9 @@ public class Knight extends ChessPiece {
     protected List<Position> calculateCanTakePositions() {
         return calculateCanMovePositions();
     }
+
+    @Override
+    public boolean isPromotionable() {
+        return false;
+    }
 }

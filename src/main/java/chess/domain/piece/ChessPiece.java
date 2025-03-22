@@ -37,6 +37,13 @@ public abstract class ChessPiece {
         return this.position;
     }
 
+    public Color getColor() {
+        return this.color;
+    }
+
+    public abstract boolean isPromotionable();
+
     protected abstract List<Position> calculateCanMovePositions();
+
     protected abstract List<Position> calculateCanTakePositions();
 }

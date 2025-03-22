@@ -57,4 +57,9 @@ public class Pawn extends ChessPiece {
         }
         return positions;
     }
+
+    @Override
+    public boolean isPromotionable() {
+        return color.isWhite() && position.isTop() || color.isBlack() && position.isBottom();
+    }
 }

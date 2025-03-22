@@ -5,6 +5,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 import chess.dto.MoveOrder;
 import chess.dto.OrderOption;
+import chess.dto.PromotionOrder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,15 +15,18 @@ public class InputView {
 
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
 
-    public MoveOrder getOrder() {
-        System.out.println(getOrderDescription());
-
-        final String input;
+    private String readLine() {
         try {
-            input = READER.readLine();
+            return READER.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public MoveOrder getOrder() {
+        System.out.println(getOrderDescription());
+
+        final String input = readLine();
 
         final String from = input.substring(0, 2); // 0, 1
         final String orderType = input.substring(2, 3); // 2
@@ -80,6 +84,26 @@ public class InputView {
         sb.append("입력 방법 : [기물위치][행동][대상위치]").append("\n");
         sb.append("기물위치 / 대상위치 예시 : F6, D5, C3").append("\n");
         sb.append("행동 : 이동 = M, 공격 = T").append("\n");
+        return sb.toString();
+    }
+
+    public PromotionOrder getPromotionOrder() {
+        System.out.println(getPromotionDescription());
+
+        final String input = readLine();
+        return switch (input) {
+            case "Q", "q" -> PromotionOrder.QUEEN;
+            case "R", "r" -> PromotionOrder.ROOK;
+            case "B", "b" -> PromotionOrder.BISHOP;
+            case "K", "k" -> PromotionOrder.KNIGHT;
+            default -> throw new IllegalArgumentException("잘못된 입력: " + input);
+        };
+    }
+
+    private static String getPromotionDescription() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("무엇으로 프로모션 하시겠습니까?").append("\n");
+        sb.append("퀸 = Q, 룩 : R, 비숍 : B, 나이트 : K").append("\n");
         return sb.toString();
     }
 }

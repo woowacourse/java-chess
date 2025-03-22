@@ -37,4 +37,9 @@ public class Bishop extends ChessPiece {
     protected List<Position> calculateCanTakePositions() {
         return calculateCanMovePositions();
     }
+
+    @Override
+    public boolean isPromotionable() {
+        return false;
+    }
 }

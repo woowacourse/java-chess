@@ -49,4 +49,9 @@ public class King extends ChessPiece {
     protected List<Position> calculateCanTakePositions() {
         return calculateCanMovePositions();
     }
+
+    @Override
+    public boolean isPromotionable() {
+        return false;
+    }
 }

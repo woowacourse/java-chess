@@ -4,6 +4,7 @@ import chess.domain.piece.ChessPiece;
 import chess.domain.pieces.ChessPieces;
 import chess.domain.pieces.Color;
 import chess.domain.position.Position;
+import chess.dto.PromotionOrder;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Board {
     private final ChessPieces whitePieces;
     private final ChessPieces blackPieces;
 
-    private Color turn = Color.WHITE;
+    private Color turn = Color.BLACK;
 
     public Board(final ChessPieces pieces1, final ChessPieces pieces2) {
         // TODO : 하나는 검정색, 하나는 흰색 이어야 함
@@ -25,16 +26,20 @@ public class Board {
             final Position piecePosition,
             final Position newPosition
     ) {
-        getCurrentTurnPieces().move(piecePosition, newPosition, getEnemyPieces());
         nextTurn();
+        getCurrentTurnPieces().move(piecePosition, newPosition, getEnemyPieces());
     }
 
     public void take(
             final Position piecePosition,
             final Position newPosition
     ) {
-        getCurrentTurnPieces().take(piecePosition, newPosition, getEnemyPieces());
         nextTurn();
+        getCurrentTurnPieces().take(piecePosition, newPosition, getEnemyPieces());
+    }
+
+    public void promotion(final PromotionOrder order) {
+        getCurrentTurnPieces().promotion(order);
     }
 
     private void nextTurn() {
@@ -81,5 +86,9 @@ public class Board {
 
     public List<ChessPiece> getWhitePieces() {
         return whitePieces.getChessPieces();
+    }
+
+    public boolean hasPromotionablePawn() {
+        return whitePieces.hasPromotionablePawn() || blackPieces.hasPromotionablePawn();
     }
 }
