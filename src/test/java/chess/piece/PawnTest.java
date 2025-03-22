@@ -238,4 +238,23 @@ class PawnTest {
         // then
         assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
     }
+
+    @DisplayName("이동방향 바로 앞에 상대 기물이 존재하는 경우 움직일 수 없다.")
+    @Test
+    void firstMoveExistEnemyFront() {
+        // given
+        Position pawnPosition = new Position(Row.TWO, Column.D);
+        Pawn pawn = new Pawn(Color.WHITE);
+        Map<Position, ChessPiece> positions = Map.of(
+                pawnPosition, pawn,
+                new Position(Row.THREE, Column.D), new Knight(Color.BLACK)
+        );
+        List<Position> expected = List.of();
+
+        // when
+        List<Position> destinations = pawn.getAvailableDestinations(pawnPosition, positions);
+
+        // then
+        assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
+    }
 }
