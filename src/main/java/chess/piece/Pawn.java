@@ -20,7 +20,10 @@ public class Pawn implements Piece {
     public void move(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
         int step = Math.abs(position.calculateRowGap(targetPosition));
-        if (isMovingInitially() && step <= 2) { //초기 움직임
+        if (isMovingInitially()) {
+            if (step > 2) {
+                throw new IllegalArgumentException("폰은 시작 시 3칸 이상 전진할 수 없습니다.");
+            }
             repeatMove(movement, board, step);
             return;
         }
@@ -48,6 +51,9 @@ public class Pawn implements Piece {
 
     private void repeatMove(Movement movement, Board board, int step) {
         for (int s = 0; s < step; s++) {
+            if (!this.position.canMove(movement)) {
+                throw new IllegalArgumentException("보드의 범위를 벗어난 위치입니다.");
+            }
             Position newPosition = this.position.move(movement);
             if (board.findByPosition(newPosition).isPresent()) {
                 throw new IllegalArgumentException("장애물이 존재합니다.");
