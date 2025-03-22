@@ -1,6 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.piece.ChessPiece;
+import chess.domain.piece.King;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -64,5 +65,10 @@ public class ChessPieces {
                 .filter(piece -> piece.getPosition().equals(piecePosition))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("대상 기물이 존재하지 않습니다."));
+    }
+
+    public boolean isKingAlive() {
+        return chessPieces.stream()
+                .anyMatch(piece -> piece instanceof King);
     }
 }

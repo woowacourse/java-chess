@@ -1,8 +1,11 @@
 package chess.domain;
 
+import chess.domain.piece.ChessPiece;
 import chess.domain.pieces.ChessPieces;
 import chess.domain.pieces.Color;
 import chess.domain.position.Position;
+
+import java.util.List;
 
 public class Board {
 
@@ -56,5 +59,23 @@ public class Board {
             return whitePieces;
         }
         throw new IllegalStateException();
+    }
+
+    public boolean isGameEnd() {
+        return !whitePieces.isKingAlive() || blackPieces.isKingAlive();
+    }
+
+    public Color getWinnerColor() {
+        if (!isGameEnd()) {
+            throw new IllegalStateException();
+        }
+        if (whitePieces.isKingAlive()) {
+            return Color.WHITE;
+        }
+        return Color.BLACK;
+    }
+
+    public List<ChessPiece> getPieces() {
+        return null;
     }
 }
