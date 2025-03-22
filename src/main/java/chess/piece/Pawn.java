@@ -49,8 +49,17 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean isPathAble(Position start, Position end, Pieces pieces) {
-        // TODO: 첫 2칸 이동시 경로상에 기물 있으면 안됨,
-        // TODO: 경로상에 기물 있으면 안됨,
+        // 2칸 이동시 경로상에 기물 있으면 안됨,
+        if (isTwoMove(start, end)) {
+            int direction_i = 1;
+            if (start.i() > end.i()) {
+                direction_i = -1;
+            }
+            Position p = new Position(start.i() + direction_i, start.j());
+            if (!pieces.isEmpty(p)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -60,5 +69,10 @@ public final class Pawn extends Piece {
             return i == 7;
         }
         return i == 2;
+    }
+
+    private boolean isTwoMove(Position start, Position end) {
+        int abs_diff_x = Math.abs(end.i() - start.i());
+        return abs_diff_x == 2;
     }
 }
