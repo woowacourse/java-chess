@@ -10,4 +10,9 @@ public class Queen extends LinearMovingChessPiece {
                 Movement.UP, Movement.DOWN, Movement.LEFT, Movement.RIGHT,
                 Movement.RIGHT_DOWN, Movement.LEFT_DOWN, Movement.RIGHT_UP, Movement.LEFT_UP));
     }
+
+    @Override
+    public String name() {
+        return "Q";
+    }
 }

@@ -11,4 +11,9 @@ public class King extends LimitedMovingChessPiece {
                 Movement.LEFT_DOWN, Movement.LEFT_UP, Movement.RIGHT_DOWN, Movement.RIGHT_UP
         ));
     }
+
+    @Override
+    public String name() {
+        return "K";
+    }
 }

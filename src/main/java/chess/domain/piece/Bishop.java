@@ -10,4 +10,9 @@ public class Bishop extends LinearMovingChessPiece {
                 Movement.LEFT_DOWN, Movement.LEFT_UP, Movement.RIGHT_DOWN, Movement.RIGHT_UP
         ));
     }
+
+    @Override
+    public String name() {
+        return "B";
+    }
 }

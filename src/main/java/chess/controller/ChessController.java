@@ -16,5 +16,6 @@ public class ChessController {
 
     public void run() {
         ChessBoard chessBoard = new ChessBoard();
+        outputView.printChessBoard(chessBoard);
     }
 }

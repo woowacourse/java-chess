@@ -10,4 +10,9 @@ public class Rook extends LinearMovingChessPiece {
                 Movement.UP, Movement.DOWN, Movement.LEFT, Movement.RIGHT
         ));
     }
+
+    @Override
+    public String name() {
+        return "R";
+    }
 }

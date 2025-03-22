@@ -9,4 +9,9 @@ public class WhitePawn extends LimitedMovingChessPiece {
     public WhitePawn() {
         super(List.of(Movement.UP_UP, Movement.UP, Movement.LEFT_UP, Movement.RIGHT_UP));
     }
+
+    @Override
+    public String name() {
+        return "P";
+    }
 }

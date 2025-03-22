@@ -5,6 +5,7 @@ import chess.domain.piece.BlackPawn;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.None;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.WhitePawn;
@@ -18,7 +19,7 @@ public class ChessBoard {
     public ChessBoard() {
         for (Row row : Row.values()) {
             for (Column column : Column.values()) {
-                board.put(new Position(row, column), null);
+                board.put(new Position(row, column), new None());
             }
         }
 
@@ -59,5 +60,11 @@ public class ChessBoard {
         board.put(new Position(Row.TWO, Column.H), new WhitePawn());
     }
 
+    public Map<Position, ChessPiece> getBoard() {
+        return this.board;
+    }
 
+    public ChessPiece getPieceOfPosition(Position position) {
+        return board.get(position);
+    }
 }

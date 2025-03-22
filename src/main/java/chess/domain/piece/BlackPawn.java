@@ -9,4 +9,9 @@ public class BlackPawn extends LimitedMovingChessPiece {
     public BlackPawn() {
         super(List.of(Movement.DOWN_DOWN, Movement.DOWN, Movement.LEFT_DOWN, Movement.LEFT_UP));
     }
+
+    @Override
+    public String name() {
+        return "P";
+    }
 }

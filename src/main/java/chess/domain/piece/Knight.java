@@ -13,4 +13,9 @@ public class Knight extends LimitedMovingChessPiece {
                 Movement.LEFT_LEFT_DOWN, Movement.LEFT_LEFT_UP
         ));
     }
+
+    @Override
+    public String name() {
+        return "N";
+    }
 }
