@@ -3,6 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.Color;
 import chess.Fixtures;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class KingTest {
             "1, 2"
     })
     void cant_move_over_two_step(int x, int y) {
-        King king = new King(Fixtures.D1);
+        King king = new King(Color.WHITE, Fixtures.D1);
 
         assertThatThrownBy(() -> king.move(x, y))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -29,7 +30,7 @@ class KingTest {
     @DisplayName("상하로 한 칸 이동 가능하다.")
     @Test
     void move_vertical_one_step() {
-        King king = new King(Fixtures.D1);
+        King king = new King(Color.WHITE, Fixtures.D1);
 
         king.move(0, 1);
 
@@ -39,7 +40,7 @@ class KingTest {
     @DisplayName("좌우로 한 칸 이동 가능하다.")
     @Test
     void move_horizontal_one_step() {
-        King king = new King(Fixtures.D1);
+        King king = new King(Color.WHITE, Fixtures.D1);
 
         king.move(1, 0);
 
@@ -49,7 +50,7 @@ class KingTest {
     @DisplayName("대각선으로 한 칸 이동 가능하다.")
     @Test
     void move_diagonal_one_step() {
-        King king = new King(Fixtures.D1);
+        King king = new King(Color.WHITE, Fixtures.D1);
 
         king.move(1, 1);
 
@@ -63,7 +64,7 @@ class KingTest {
             "0, -1",
     })
     void cant_move_out_of_board(int x, int y) {
-        King king = new King(Fixtures.A1);
+        King king = new King(Color.WHITE, Fixtures.A1);
 
         assertThatThrownBy(() -> king.move(x, y))
                 .isInstanceOf(IllegalArgumentException.class);

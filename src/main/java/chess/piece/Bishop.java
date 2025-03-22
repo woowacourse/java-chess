@@ -1,11 +1,12 @@
 package chess.piece;
 
+import chess.Color;
 import chess.Position;
 
 public class Bishop extends Piece {
 
-    public Bishop(final Position position) {
-        super(position);
+    public Bishop(final Color color, final Position position) {
+        super(color, position);
     }
 
     public void move(final int x, final int y) {

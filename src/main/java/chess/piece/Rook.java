@@ -1,11 +1,12 @@
 package chess.piece;
 
+import chess.Color;
 import chess.Position;
 
 public class Rook extends Piece {
 
-    public Rook(final Position position) {
-        super(position);
+    public Rook(final Color color, final Position position) {
+        super(color, position);
     }
 
     public void move(final int x, final int y) {

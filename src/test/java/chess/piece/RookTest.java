@@ -3,6 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.Color;
 import chess.Fixtures;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class RookTest {
     @DisplayName("대각선으로 이동하려고 하면, 예외를 던진다.")
     @Test
     void throw_exception_move_diagonal() {
-        Rook rook = new Rook(Fixtures.A1);
+        Rook rook = new Rook(Color.WHITE, Fixtures.A1);
 
         assertThatThrownBy(() -> rook.move(1, 1))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -23,7 +24,7 @@ class RookTest {
     @DisplayName("상하로 원하는 만큼 이동 가능하다.")
     @Test
     void move_vertical() {
-        Rook rook = new Rook(Fixtures.A1);
+        Rook rook = new Rook(Color.WHITE, Fixtures.A1);
 
         rook.move(0, 5);
 
@@ -33,7 +34,7 @@ class RookTest {
     @DisplayName("좌우로 원하는 만큼 이동 가능하다.")
     @Test
     void move_horizontal() {
-        Rook rook = new Rook(Fixtures.A1);
+        Rook rook = new Rook(Color.WHITE, Fixtures.A1);
 
         rook.move(5, 0);
 
@@ -49,7 +50,7 @@ class RookTest {
             "0, 100"
     })
     void cant_move_out_of_board(int x, int y) {
-        Rook rook = new Rook(Fixtures.A1);
+        Rook rook = new Rook(Color.WHITE, Fixtures.A1);
 
         assertThatThrownBy(() -> rook.move(x, y))
                 .isInstanceOf(IllegalArgumentException.class);

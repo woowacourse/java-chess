@@ -3,6 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.Color;
 import chess.Fixtures;
 import chess.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,7 @@ class BishopTest {
     void move_diagonal() {
         Position current = Fixtures.C1;
         Position dest = Fixtures.B2;
-        Bishop bishop = new Bishop(current);
+        Bishop bishop = new Bishop(Color.WHITE, current);
 
         bishop.move(-1, 1);
 
@@ -26,7 +27,7 @@ class BishopTest {
     @Test
     void cant_move_not_diagonal() {
         Position current = Fixtures.C1;
-        Bishop bishop = new Bishop(current);
+        Bishop bishop = new Bishop(Color.WHITE, current);
 
         assertThatThrownBy(() -> bishop.move(1, 0))
                 .isInstanceOf(IllegalArgumentException.class);

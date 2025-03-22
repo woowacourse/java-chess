@@ -3,6 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.Color;
 import chess.Fixtures;
 import chess.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,7 @@ class QueenTest {
     @DisplayName("상하로 원하는 만큼 이동 가능하다.")
     @Test
     void move_vertical() {
-        Queen queen = new Queen(Fixtures.A1);
+        Queen queen = new Queen(Color.WHITE, Fixtures.A1);
 
         queen.move(0, 5);
 
@@ -25,7 +26,7 @@ class QueenTest {
     @DisplayName("좌우로 원하는 만큼 이동 가능하다.")
     @Test
     void move_horizontal() {
-        Queen queen = new Queen(Fixtures.A1);
+        Queen queen = new Queen(Color.WHITE, Fixtures.A1);
 
         queen.move(5, 0);
 
@@ -37,7 +38,7 @@ class QueenTest {
     void move_diagonal() {
         Position current = Fixtures.C1;
         Position dest = Fixtures.B2;
-        Queen queen = new Queen(current);
+        Queen queen = new Queen(Color.WHITE, current);
 
         queen.move(-1, 1);
 
@@ -52,7 +53,7 @@ class QueenTest {
     })
     void cant_move_not_diagonal_not_horizontal_or_vertical(int x, int y) {
         Position current = Fixtures.C1;
-        Queen queen = new Queen(current);
+        Queen queen = new Queen(Color.WHITE, current);
 
         assertThatThrownBy(() -> queen.move(x, y))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -67,7 +68,7 @@ class QueenTest {
             "0, 100"
     })
     void cant_move_out_of_board(int x, int y) {
-        Queen queen = new Queen(Fixtures.A1);
+        Queen queen = new Queen(Color.WHITE, Fixtures.A1);
 
         assertThatThrownBy(() -> queen.move(x, y))
                 .isInstanceOf(IllegalArgumentException.class);
