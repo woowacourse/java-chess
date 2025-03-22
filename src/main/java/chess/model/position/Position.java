@@ -169,4 +169,14 @@ public record Position(
         }
         return this;
     }
+
+    @Override
+    public Column column() {
+        return column;
+    }
+
+    @Override
+    public Row row() {
+        return row;
+    }
 }

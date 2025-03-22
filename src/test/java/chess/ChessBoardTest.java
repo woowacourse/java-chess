@@ -1,5 +1,6 @@
 package chess;
 
+import chess.model.BoardFactory;
 import chess.model.ChessBoard;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +20,8 @@ class ChessBoardTest {
             // given
             final int initBoardSize = 32;
             // when
-            ChessBoard board = ChessBoard.createInitBoard();
+            BoardFactory boardFactory = new BoardFactory();
+            ChessBoard board = boardFactory.generateBoard();
 
             // then
             Assertions.assertThat(board.getPositionByPieceBoard()).hasSize(initBoardSize);

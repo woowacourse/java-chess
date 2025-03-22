@@ -19,11 +19,10 @@ public enum Color {
 //        return this == EMPTY;
 //    }
 
-//    public Color opposite() {
-//        return switch (this) {
-//            case BLACK -> WHITE;
-//            case WHITE -> BLACK;
-//            default -> EMPTY;
-//        };
-//    }
+    public Color opposite() {
+        return switch (this) {
+            case BLACK -> WHITE;
+            case WHITE -> BLACK;
+        };
+    }
 }
