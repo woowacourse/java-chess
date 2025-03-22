@@ -10,14 +10,14 @@ public class Pawn extends Piece{
     private final static List<Movement> pawnTakeMovements =
             List.of(Movement.LEFT_UP, Movement.RIGHT_UP);
 
-    Pawn(TeamColor teamColor) {
+    public Pawn(TeamColor teamColor) {
         super(teamColor);
     }
 
 
     @Override
     public boolean availablePath(Position start, Position target) {
-        return false;
+        return true;
     }
 
     @Override
@@ -26,8 +26,8 @@ public class Pawn extends Piece{
     }
 
     @Override
-    public boolean canMove(Piece targetPiece, Position start, Position target) {
-        if(targetPiece.isEmpty()) {
+    public boolean canMove(List<Piece> piecesOnRoute, Position start, Position target) {
+        if(piecesOnRoute.getFirst().isEmpty()) {
             if(!start.canMoveUp(1)) {
                 return false;
             }

@@ -5,8 +5,14 @@ import chess.TeamColor;
 import java.util.List;
 
 public class EmptyPiece extends Piece{
-    public EmptyPiece() {
+    private final static EmptyPiece INSTANCE = new EmptyPiece();
+
+    private EmptyPiece() {
         super(TeamColor.NONE);
+    }
+
+    public static EmptyPiece getInstance() {
+        return INSTANCE;
     }
 
     @Override
@@ -20,7 +26,7 @@ public class EmptyPiece extends Piece{
     }
 
     @Override
-    public boolean canMove(Piece targetPiece, Position start, Position target) {
+    public boolean canMove(List<Piece> piecesOnRoute, Position start, Position target) {
         return false;
     }
 

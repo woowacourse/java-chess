@@ -49,8 +49,11 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean canMove(Piece targetPiece, Position start, Position target) {
-        return false;
+    public boolean canMove(List<Piece> piecesOnRoute, Position start, Position target) {
+        if(piecesOnRoute.size() != 1){
+            return false;
+        }
+        return piecesOnRoute.getLast().isEmpty() || this.isOtherTeam(piecesOnRoute.getLast());
     }
 
     @Override

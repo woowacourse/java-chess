@@ -4,6 +4,7 @@ import static chess.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.TeamColor;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +15,10 @@ class PawnTest {
     void Pawn_canMoveUp() {
         // given
         Pawn pawn = new Pawn(TeamColor.BLACK);
-        Piece targetPiece = new EmptyPiece();
+        Piece targetPiece = EmptyPiece.getInstance();
 
         // when
-        boolean canMove = pawn.canMove(targetPiece, A1, A2);
+        boolean canMove = pawn.canMove(List.of(targetPiece), A1, A2);
 
         // then
         assertThat(canMove).isTrue();
@@ -31,7 +32,7 @@ class PawnTest {
         Piece targetPiece = new Pawn(TeamColor.WHITE);
 
         // when
-        boolean canMove = pawn.canMove(targetPiece, A1, A2);
+        boolean canMove = pawn.canMove(List.of(targetPiece), A1, A2);
 
         // then
         assertThat(canMove).isFalse();
@@ -45,7 +46,7 @@ class PawnTest {
         Piece targetPiece = new Pawn(TeamColor.WHITE);
 
         // when
-        boolean canMove = pawn.canMove(targetPiece, B1, C2);
+        boolean canMove = pawn.canMove(List.of(targetPiece), B1, C2);
 
         // then
         assertThat(canMove).isTrue();
@@ -59,7 +60,7 @@ class PawnTest {
         Piece targetPiece = new Pawn(TeamColor.WHITE);
 
         // when
-        boolean canMove = pawn.canMove(targetPiece, B1, A2);
+        boolean canMove = pawn.canMove(List.of(targetPiece), B1, A2);
 
         // then
         assertThat(canMove).isTrue();
@@ -70,10 +71,10 @@ class PawnTest {
     void Pawn_cannotMoveDiagonal_whenEmptyTarget() {
         // given
         Pawn pawn = new Pawn(TeamColor.BLACK);
-        Piece targetPiece = new EmptyPiece();
+        Piece targetPiece = EmptyPiece.getInstance();
 
         // when
-        boolean canMove = pawn.canMove(targetPiece, B1, A2);
+        boolean canMove = pawn.canMove(List.of(targetPiece), B1, A2);
 
         // then
         assertThat(canMove).isFalse();

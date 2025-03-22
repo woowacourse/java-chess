@@ -14,7 +14,11 @@ public abstract class Piece {
     public abstract boolean availablePath(Position start, Position target);
     public abstract List<Position> findAllRouteToTarget(Position start, Position target);
 
-    public abstract boolean canMove(Piece targetPiece, Position start, Position target);
+    public abstract boolean canMove(List<Piece> piecesOnRoute, Position start, Position target);
 
     public abstract boolean isEmpty();
+
+    public boolean isOtherTeam(Piece other) {
+        return this.teamColor != other.teamColor;
+    }
 }

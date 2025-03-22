@@ -55,12 +55,15 @@ public class Knight extends Piece{
         Column column = Column.from((start.colValue() + target.colValue()) / 2);
 
         Position position = new Position(row, column);
-        return List.of(position);
+        return List.of(position, target);
     }
 
     @Override
-    public boolean canMove(Piece targetPiece, Position start, Position target) {
-        return false;
+    public boolean canMove(List<Piece> piecesOnRoute, Position start, Position target) {
+        boolean empty = piecesOnRoute.getLast().isEmpty();
+        boolean otherTeam = this.isOtherTeam(piecesOnRoute.getLast());
+
+        return piecesOnRoute.getLast().isEmpty() || this.isOtherTeam(piecesOnRoute.getLast());
     }
 
     @Override
