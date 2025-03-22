@@ -18,7 +18,7 @@ public class Rook extends Piece {
             canMove = position.canMoveHorizontal(x);
         }
         if (y != 0) {
-            canMove = position.canMoveHorizontal(y);
+            canMove = position.canMoveVertical(y);
         }
 
         if (canMove) {
