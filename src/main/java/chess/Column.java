@@ -13,7 +13,7 @@ public enum Column {
 
     public static Column from(String s) {
         for (Column value : Column.values()) {
-            if (value.toString().toLowerCase().equals(s.toLowerCase())) {
+            if (value.toString().equalsIgnoreCase(s)) {
                 return value;
             }
         }

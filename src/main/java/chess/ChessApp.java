@@ -8,6 +8,7 @@ public class ChessApp {
     public static void main(String[] args) {
         GameBoard gameBoard = new GameBoard();
         StartPosAndEndPos moveData = GameView.askMove();
-//        gameBoard.move(moveData);
+        gameBoard.move(moveData);
+        GameView.printBoard(gameBoard);
     }
 }

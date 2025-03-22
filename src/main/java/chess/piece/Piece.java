@@ -35,4 +35,28 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hashCode(color);
     }
+
+    @Override
+    public String toString() {
+        if (this instanceof Bishop) {
+            return this.color.isWhite() ? "♗" : "♝";
+        }
+        if (this instanceof King) {
+            return this.color.isWhite() ? "♔" : "♚";
+        }
+        if (this instanceof Queen) {
+            return this.color.isWhite() ? "♕" : "♛";
+        }
+        if (this instanceof Rook) {
+            return this.color.isWhite() ? "♖" : "♜";
+        }
+        if (this instanceof Knight) {
+            return this.color.isWhite() ? "♘" : "♞";
+        }
+        if (this instanceof Pawn) {
+            return this.color.isWhite() ? "♙" : "♟";
+        }
+        return "?";
+    }
+
 }
