@@ -179,4 +179,11 @@ public record Position(
     public boolean onSameColumn(Position other) {
         return this.column == other.column;
     }
+
+    public boolean onDiagonal(Position other) {
+        int rowDiff = Math.abs(this.row().intValue() - other.row().intValue());
+        int colDiff = Math.abs(this.column.intValue() - other.column.intValue());
+
+        return rowDiff == colDiff;
+    }
 }
