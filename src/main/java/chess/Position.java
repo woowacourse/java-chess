@@ -1,5 +1,10 @@
 package chess;
 
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public record Position(
         Column column,
         Row row
@@ -167,4 +172,29 @@ public record Position(
         }
         return this;
     }
+
+    //내 포지션으롭투 MoveMent들을 받아서 모든 곳으로 갈 수 있는가? 다시 말해서 이 기물 능력으로 거기 가는 거 가능?
+    // Is that true? 오키도키요! 정말로? Yes! 오키도키요! 세이, 나 나나 나나 오키도키요!
+    public Set<Position> findMoveAblePositions(Set<Movement> movements) {
+        return movements.stream()
+                .map(this::move)
+                .collect(Collectors.toSet());
+    }
+
+    //지금 포지션에서 위 아래로 movement 몇 개 추가할 수 있는지 구한다
+    // 추가 가능한 movement만큼 positions에 추가한다.
+    public Set<Position> findSlidingAblePositions(Set<Movement> movements) {
+        Set<Position> positions = new HashSet<>();
+
+        for (Movement movement : movements) {
+            Position current = this; // ← 매 방향마다 원래 위치에서 시작
+            while (current.canMove(movement)) {
+                current = current.move(movement);
+                positions.add(current);
+            }
+        }
+
+        return positions;
+    }
+
 }

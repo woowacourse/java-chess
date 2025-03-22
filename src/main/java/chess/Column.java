@@ -50,4 +50,10 @@ public enum Column {
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
     }
+
+    public Column move(final int step) {
+        return moveRight(step);
+
+
+    }
 }
