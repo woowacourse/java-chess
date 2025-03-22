@@ -4,6 +4,7 @@ import chess.domain.piece.ChessPiece;
 import chess.domain.piece.King;
 import chess.domain.position.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChessPieces {
@@ -11,7 +12,7 @@ public class ChessPieces {
     private final List<ChessPiece> chessPieces;
 
     public ChessPieces(final List<ChessPiece> chessPieces) {
-        this.chessPieces = chessPieces;
+        this.chessPieces = new ArrayList<>(chessPieces);
     }
 
     public void move(
@@ -40,7 +41,7 @@ public class ChessPieces {
         if (isIsMyChessPieceExistInNewPosition(newPosition)) {
             throw new IllegalArgumentException("우리팀 기물이 존재합니다.");
         }
-        if (isOtherChessPieceExistInNewPosition(newPosition, otherChessPieces)) {
+        if (!isOtherChessPieceExistInNewPosition(newPosition, otherChessPieces)) {
             throw new IllegalArgumentException("상대방 기물이 존재하지 않습니다. 이동 명령을 사용하세요.");
         }
 
