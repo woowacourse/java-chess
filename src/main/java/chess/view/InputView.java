@@ -36,13 +36,4 @@ public class InputView {
             throw new IllegalArgumentException("위치는 숫자만 가능 합니다.");
         }
     }
-
-    public static <T> T tryCatchLoop(Supplier<T> callBack) {
-        try {
-            return callBack.get();
-        } catch (IllegalStateException | IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return tryCatchLoop(callBack);
-        }
-    }
 }

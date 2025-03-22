@@ -4,6 +4,7 @@ import chess.piece.Board;
 import chess.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.function.Supplier;
 
 public class ChessApplication {
 
@@ -15,8 +16,8 @@ public class ChessApplication {
 
     public static void gameStart(final Board board) {
         OutputView.printBoard(board.getMapView());
-        final Position startPosition = InputView.tryCatchLoop(InputView::readStartPosition);
-        final Position endPosition = InputView.tryCatchLoop(InputView::readEndPosition);
+        final Position startPosition = tryCatchLoop(InputView::readStartPosition);
+        final Position endPosition = tryCatchLoop(InputView::readEndPosition);
         final Piece targetPiece = board.move(startPosition, endPosition);
         OutputView.printEndPiece(targetPiece);
         gameStart(board);
@@ -28,6 +29,15 @@ public class ChessApplication {
         } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println(e.getMessage());
             runnable.run();
+        }
+    }
+
+    private static <T> T tryCatchLoop(Supplier<T> callBack) {
+        try {
+            return callBack.get();
+        } catch (IllegalStateException | IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return tryCatchLoop(callBack);
         }
     }
 
