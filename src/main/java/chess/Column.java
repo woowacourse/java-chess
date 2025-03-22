@@ -1,5 +1,6 @@
 package chess;
 
+// Column에 들어가는 거 문자열임~
 public enum Column {
 
     A,

@@ -1,5 +1,6 @@
 package chess;
 
+// Row에 들어가는 거 숫자임~
 public enum Row {
 
     EIGHT,
