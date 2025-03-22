@@ -15,7 +15,7 @@ import java.util.Objects;
 import chess.Movement;
 import chess.Position;
 
-public class Knight {
+public class Knight extends Piece {
 
     private static final List<Movement> MOVEMENTS = List.of(
             LEFT_LEFT_UP, LEFT_LEFT_DOWN, RIGHT_RIGHT_UP, RIGHT_RIGHT_DOWN,

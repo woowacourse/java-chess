@@ -5,7 +5,7 @@ import java.util.Objects;
 import chess.Movement;
 import chess.Position;
 
-public class Queen {
+public class Queen extends Piece {
 
     private final Position position;
 

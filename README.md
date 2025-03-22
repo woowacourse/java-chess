@@ -4,14 +4,14 @@
 
 ```text
   ABCDEFGH
-8 
-7
+8 RNBQKBNR
+7 PPPPPPPP
 6
 5
 4
 3
-2
-1
+2 PPPPPPPP
+1 RNBQKBNR
 ```
 
 ## 요구사항

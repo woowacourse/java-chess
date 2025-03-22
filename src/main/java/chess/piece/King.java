@@ -5,7 +5,7 @@ import java.util.Objects;
 import chess.Movement;
 import chess.Position;
 
-public class King {
+public class King extends Piece {
 
     private final Position position;
 

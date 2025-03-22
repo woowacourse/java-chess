@@ -6,7 +6,7 @@ import java.util.Objects;
 import chess.Movement;
 import chess.Position;
 
-public class Pawn {
+public class Pawn extends Piece {
 
     private static final List<Movement> MOVEMENTS = List.of(Movement.UP, Movement.UP_UP);
 

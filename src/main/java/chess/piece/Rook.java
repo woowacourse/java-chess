@@ -1,16 +1,11 @@
 package chess.piece;
 
-import java.util.List;
 import java.util.Objects;
 
 import chess.Movement;
 import chess.Position;
 
-public class Rook {
-
-    private static final List<Movement> MOVEMENTS = List.of(
-            Movement.UP, Movement.LEFT, Movement.DOWN, Movement.RIGHT
-    );
+public class Rook extends Piece {
 
     private final Position position;
 
