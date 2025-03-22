@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class KingTest {
     @DisplayName("장애물이 없는 경우, 8개 방향으로 한 칸씩 이동할 수 있다.")
