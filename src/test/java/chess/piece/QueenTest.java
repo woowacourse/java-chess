@@ -101,4 +101,46 @@ class QueenTest {
         // then
         assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
     }
+
+    @DisplayName("같은 팀 기물이 존재하는 경우, 해당 위치 이전까지만 이동할 수 있다.")
+    @Test
+    void existSameTeam() {
+        // given
+        Map<Position, ChessPiece> positions = Map.of(
+                new Position(Row.FIVE, Column.E), new Bishop(Color.BLACK),
+                new Position(Row.TWO, Column.D), new Knight(Color.BLACK)
+        );
+        Queen queen = new Queen(Color.BLACK);
+        List<Position> expected = List.of(
+                new Position(Row.FIVE, Column.C),
+                new Position(Row.SIX, Column.B),
+                new Position(Row.SEVEN, Column.A),
+                new Position(Row.THREE, Column.E),
+                new Position(Row.TWO, Column.F),
+                new Position(Row.ONE, Column.G),
+                new Position(Row.THREE, Column.C),
+                new Position(Row.TWO, Column.B),
+                new Position(Row.ONE, Column.A),
+                new Position(Row.EIGHT, Column.D),
+                new Position(Row.SEVEN, Column.D),
+                new Position(Row.SIX, Column.D),
+                new Position(Row.FIVE, Column.D),
+                new Position(Row.THREE, Column.D),
+                new Position(Row.FOUR, Column.A),
+                new Position(Row.FOUR, Column.B),
+                new Position(Row.FOUR, Column.C),
+                new Position(Row.FOUR, Column.E),
+                new Position(Row.FOUR, Column.F),
+                new Position(Row.FOUR, Column.G),
+                new Position(Row.FOUR, Column.H)
+        );
+
+        // when
+        List<Position> destinations = queen.getAvailableDestinations(
+                new Position(Row.FOUR, Column.D), positions
+        );
+
+        // then
+        assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
+    }
 }
