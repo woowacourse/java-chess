@@ -1,53 +1,35 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum Row {
+    ONE("1"),
+    TWO("2"),
+    THREE("3"),
+    FOUR("4"),
+    FIVE("5"),
+    SIX("6"),
+    SEVEN("7"),
+    EIGHT("8");
 
-    EIGHT,
-    SEVEN,
-    SIX,
-    FIVE,
-    FOUR,
-    THREE,
-    TWO,
-    ONE;
+    private final String name;
 
-    public boolean isTop() {
-        return ordinal() == 0;
+    Row(final String name) {
+        this.name = name;
     }
 
-    public boolean isBottom() {
-        return ordinal() + 1 == values().length;
+    public static Row find(final String s) {
+        return Arrays.stream(values())
+            .filter(row -> row.name.equals(s))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("해당하는 Row가 없습니다."));
     }
 
-    public boolean canMoveUp(final int step) {
-        return ordinal() - step >= 0;
-    }
-
-    public Row moveUp() {
-        return moveUp(1);
-    }
-
-    public Row moveUp(final int step) {
-        if (canMoveUp(step)) {
-            return values()[ordinal() - step];
+    public Row move(final int step) {
+        final int next = ordinal() + step;
+        if (next >= 0 && next < values().length) {
+            return values()[next];
         }
-
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
-    }
-
-    public boolean canMoveDown(final int step) {
-        return ordinal() + step < values().length;
-    }
-
-    public Row moveDown() {
-        return moveDown(1);
-    }
-
-    public Row moveDown(final int step) {
-        if (canMoveDown(step)) {
-            return values()[ordinal() + step];
-        }
-
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        return null;
     }
 }
