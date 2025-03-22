@@ -48,6 +48,10 @@ public class GameView {
             }
             System.out.println();
         }
+    }
 
+    public static boolean doYouWantToPlayMore() {
+        System.out.println("계속 하시겠습니까? (y/n)");
+        return scanner.nextLine().trim().equalsIgnoreCase("y");
     }
 }
