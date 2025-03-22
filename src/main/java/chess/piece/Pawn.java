@@ -5,6 +5,7 @@ import chess.Movement;
 import chess.Position;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -36,33 +37,33 @@ public class Pawn implements ChessPiece {
 
     private List<Movement> getMovements() {
         if (color.isBlack()) {
-            if (isFirstMove) {
-                return List.of(
-                        Movement.DOWN,
-                        Movement.DOWN_DOWN,
-                        Movement.LEFT_DOWN,
-                        Movement.RIGHT_DOWN
-                );
-            }
-            return List.of(
-                    Movement.DOWN,
-                    Movement.LEFT_DOWN,
-                    Movement.RIGHT_DOWN
-            );
+            return getBlackMovements();
         }
+        return getWhiteMovements();
+    }
+
+    private List<Movement> getBlackMovements() {
+        List<Movement> result = new ArrayList<>(List.of(
+                Movement.DOWN,
+                Movement.LEFT_DOWN,
+                Movement.RIGHT_DOWN
+        ));
         if (isFirstMove) {
-            return List.of(
-                    Movement.UP,
-                    Movement.UP_UP,
-                    Movement.LEFT_UP,
-                    Movement.RIGHT_UP
-            );
+            result.add(Movement.DOWN_DOWN);
         }
-        return List.of(
+        return Collections.unmodifiableList(result);
+    }
+
+    private List<Movement> getWhiteMovements() {
+        List<Movement> result = new ArrayList<>(List.of(
                 Movement.UP,
                 Movement.LEFT_UP,
                 Movement.RIGHT_UP
-        );
+        ));
+        if (isFirstMove) {
+            result.add(Movement.UP_UP);
+        }
+        return Collections.unmodifiableList(result);
     }
 
     private boolean canMove(Position startPosition, Movement movement, Map<Position, ChessPiece> positions) {
