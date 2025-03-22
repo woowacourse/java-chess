@@ -1,5 +1,5 @@
 package chess.piece;
 
-public class Pawn {
+public class Pawn implements Piece{
 
 }

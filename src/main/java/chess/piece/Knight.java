@@ -1,5 +1,5 @@
 package chess.piece;
 
-public class Knight {
+public class Knight implements Piece{
 
 }
