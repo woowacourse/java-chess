@@ -35,6 +35,9 @@ public class LivePiece {
         if (piece instanceof Bishop) {
             candidate = 'B';
         }
+        if (piece instanceof Queen) {
+            candidate = 'Q';
+        }
 
         // 팀에 따라 검정말이면 소문자로 변환하기
         if (piece.isBlack()) {

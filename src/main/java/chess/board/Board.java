@@ -4,6 +4,7 @@ import chess.Color;
 import chess.Position;
 import chess.piece.Bishop;
 import chess.piece.LivePiece;
+import chess.piece.Queen;
 import chess.piece.Rook;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,6 +42,9 @@ public class Board {
         result.add(new LivePiece(new Position(1, 3), new Bishop(Color.WHITE)));
         result.add(new LivePiece(new Position(1, 6), new Bishop(Color.WHITE)));
 
+        // 퀸 추가
+        result.add(new LivePiece(new Position(1, 4), new Queen(Color.WHITE)));
+
         return result;
     }
 
@@ -54,6 +58,9 @@ public class Board {
         // 비숍 추가
         result.add(new LivePiece(new Position(8, 3), new Bishop(Color.BLACK)));
         result.add(new LivePiece(new Position(8, 6), new Bishop(Color.BLACK)));
+
+        // 퀸 추가
+        result.add(new LivePiece(new Position(8, 4), new Queen(Color.BLACK)));
 
         return result;
     }
