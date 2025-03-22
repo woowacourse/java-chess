@@ -17,8 +17,11 @@ class PawnTest {
     @Test
     void notExistHurdle() {
         // given
-        Map<Position, ChessPiece> positions = Map.of();
+        Position pawnPosition = new Position(Row.SEVEN, Column.D);
         Pawn pawn = new Pawn(Color.BLACK);
+        Map<Position, ChessPiece> positions = Map.of(
+                pawnPosition, pawn
+        );
         List<Position> expected = List.of(
                 new Position(Row.SIX, Column.D),
                 new Position(Row.FIVE, Column.D)
@@ -26,7 +29,7 @@ class PawnTest {
 
         // when
         List<Position> destinations = pawn.getAvailableDestinations(
-                new Position(Row.SEVEN, Column.D), positions
+                pawnPosition, positions
         );
 
         // then
@@ -71,6 +74,29 @@ class PawnTest {
         List<Position> expected = List.of(
                 new Position(Row.SIX, Column.D),
                 new Position(Row.FIVE, Column.D)
+        );
+
+        // when
+        List<Position> destinations = pawn.getAvailableDestinations(
+                pawnPosition, positions
+        );
+
+        // then
+        assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
+    }
+
+    @DisplayName("WHITE - 처음 움직이는 경우 두 칸까지 전진할 수 있다.")
+    @Test
+    void notExistHurdleWhite() {
+        // given
+        Position pawnPosition = new Position(Row.TWO, Column.D);
+        Pawn pawn = new Pawn(Color.WHITE);
+        Map<Position, ChessPiece> positions = Map.of(
+                pawnPosition, pawn
+        );
+        List<Position> expected = List.of(
+                new Position(Row.THREE, Column.D),
+                new Position(Row.FOUR, Column.D)
         );
 
         // when
