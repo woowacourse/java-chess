@@ -1,4 +1,4 @@
-package chess;
+package chess.position;
 
 public record Position(
         Column column,
