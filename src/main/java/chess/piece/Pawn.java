@@ -22,7 +22,7 @@ public class Pawn extends Piece {
 
     private boolean hasMoved;
 
-    protected Pawn(Color color, Position position) {
+    public Pawn(Color color, Position position) {
         super(color, position);
         hasMoved = false;
     }

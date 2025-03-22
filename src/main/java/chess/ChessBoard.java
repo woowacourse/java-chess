@@ -18,16 +18,17 @@ public class ChessBoard {
         Piece startPiece = pieces.stream().filter(piece -> piece.isSamePosition(startPosition) && piece.isSameColor(turn))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 자리에는 말이 없거나 상대 말입니다."));
-        boolean canMove = startPiece.canMove(startPosition, findAlivePiece());
+        boolean canMove = startPiece.canMove(endPosition, findAlivePiece());
 
         if(!canMove){
             throw new IllegalArgumentException("해당 자리에 이동할 수 없습니다.");
         }
+
         Optional<Piece> endPiece = pieces.stream()
                 .filter(piece -> piece.isSamePosition(endPosition) && piece.isAnotherTeam(startPiece))
                 .findAny();
-        endPiece.ifPresent(Piece::changePieceToDead);
         startPiece.moveTo(endPosition,findAlivePiece());
+        endPiece.ifPresent(Piece::changePieceToDead);
     }
 
     public boolean isKingDead(){
@@ -45,7 +46,7 @@ public class ChessBoard {
         return deadKing.get().getColor().opposite();
     }
 
-    private List<Piece> findAlivePiece(){
+    public List<Piece> findAlivePiece(){
         return pieces.stream()
                 .filter(Piece::isAlive)
                 .toList();

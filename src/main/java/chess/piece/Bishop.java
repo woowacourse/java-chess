@@ -15,7 +15,7 @@ public class Bishop extends Piece {
         movements = List.of(Movement.LEFT_UP,Movement.RIGHT_UP,Movement.LEFT_DOWN,Movement.RIGHT_DOWN);
     }
 
-    protected Bishop(Color color, Position position) {
+    public Bishop(Color color, Position position) {
         super(color, position);
     }
 
@@ -88,12 +88,6 @@ public class Bishop extends Piece {
         if (!canMove(position,pieces)) {
             throw new IllegalArgumentException("해당 자리에 이동할 수 없습니다.");
         }
-        Optional<Movement> findMovement = getFindMovement(position, movements);
-        if (findMovement.isEmpty()) {
-            throw new IllegalArgumentException("해당 자리에 이동할 수 없습니다.");
-        }
-        this.position = this.position.move(findMovement.get());
+        this.position = Position.copyOf(position);
     }
-
-
 }

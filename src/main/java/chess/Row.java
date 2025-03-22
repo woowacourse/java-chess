@@ -1,15 +1,34 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum Row {
 
-    EIGHT,
-    SEVEN,
-    SIX,
-    FIVE,
-    FOUR,
-    THREE,
-    TWO,
-    ONE;
+    EIGHT('8'),
+    SEVEN('7'),
+    SIX('6'),
+    FIVE('5'),
+    FOUR('4'),
+    THREE('3'),
+    TWO('2'),
+    ONE('1');
+
+    private final char name;
+
+    Row(char name) {
+        this.name = name;
+    }
+
+    public char getName() {
+        return name;
+    }
+
+    public static Row findRow(char input){
+        return Arrays.stream(Row.values())
+                .filter(row -> row.name==input)
+                .findAny()
+                .orElseThrow(()->new IllegalArgumentException("1부터 8까지 행을 선택해주세요"));
+    }
 
     public boolean isTop() {
         return ordinal() == 0;

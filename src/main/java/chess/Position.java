@@ -8,6 +8,10 @@ public record Position(
         this(column, row);
     }
 
+    public static Position copyOf(final Position position){
+        return new Position(position.row,position.column);
+    }
+
     public boolean canMoveUp() {
         return row.canMoveUp(1);
     }

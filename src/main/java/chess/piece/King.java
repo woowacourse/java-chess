@@ -15,7 +15,7 @@ public class King extends Piece {
                 Movement.RIGHT_UP,Movement.LEFT_UP,Movement.RIGHT_DOWN,Movement.LEFT_DOWN);
     }
 
-    protected King(Color color, Position position) {
+    public King(Color color, Position position) {
         super(color, position);
     }
 

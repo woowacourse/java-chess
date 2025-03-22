@@ -15,7 +15,7 @@ public class Knight extends Piece {
                 Movement.RIGHT_RIGHT_DOWN,Movement.RIGHT_RIGHT_UP,Movement.LEFT_LEFT_DOWN,Movement.LEFT_LEFT_UP);
     }
 
-    protected Knight(Color color, Position position) {
+    public Knight(Color color, Position position) {
         super(color, position);
     }
 

@@ -16,7 +16,7 @@ public class Queen extends Piece  {
                 Movement.UP,Movement.DOWN,Movement.LEFT,Movement.RIGHT);
     }
 
-    protected Queen(Color color, Position position) {
+    public Queen(Color color, Position position) {
         super(color, position);
     }
 

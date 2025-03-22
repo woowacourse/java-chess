@@ -104,7 +104,6 @@ class PawnTest {
         Position toPosition = new Position(Row.FOUR, Column.B);
         Pawn pawn1 = new Pawn(Color.WHITE,toPosition);
 
-
         boolean canMove = pawn.canMove(toPosition, List.of(pawn1));
 
         assertThat(canMove).isFalse();

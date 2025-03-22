@@ -15,7 +15,7 @@ public class Rook extends Piece {
         movements = List.of(Movement.UP,Movement.DOWN,Movement.LEFT,Movement.RIGHT);
     }
 
-    protected Rook(Color color, Position position) {
+    public Rook(Color color, Position position) {
         super(color, position);
     }
 
