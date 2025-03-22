@@ -30,6 +30,9 @@ public class Bishop implements ChessPiece {
         Position currentPosition = startPosition;
         while (currentPosition.canMoveLeftUp()) {
             currentPosition = currentPosition.move(Movement.LEFT_UP);
+            if (positions.containsKey(currentPosition)) {
+                break;
+            }
             destinations.add(currentPosition);
         }
 
@@ -37,6 +40,9 @@ public class Bishop implements ChessPiece {
         currentPosition = startPosition;
         while (currentPosition.canMoveRightUp()) {
             currentPosition = currentPosition.move(Movement.RIGHT_UP);
+            if (positions.containsKey(currentPosition)) {
+                break;
+            }
             destinations.add(currentPosition);
         }
 
@@ -44,6 +50,9 @@ public class Bishop implements ChessPiece {
         currentPosition = startPosition;
         while (currentPosition.canMoveLeftDown()) {
             currentPosition = currentPosition.move(Movement.LEFT_DOWN);
+            if (positions.containsKey(currentPosition)) {
+                break;
+            }
             destinations.add(currentPosition);
         }
 
@@ -51,6 +60,9 @@ public class Bishop implements ChessPiece {
         currentPosition = startPosition;
         while (currentPosition.canMoveRightDown()) {
             currentPosition = currentPosition.move(Movement.RIGHT_DOWN);
+            if (positions.containsKey(currentPosition)) {
+                break;
+            }
             destinations.add(currentPosition);
         }
 
