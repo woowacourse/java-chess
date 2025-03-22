@@ -76,12 +76,24 @@ public record Position(
         return canMoveLeft() && canMoveUp();
     }
 
+    public boolean canMoveLeftUp(final int step) {
+        return canMoveLeft(step) && canMoveUp(step);
+    }
+
     public Position moveLeftUp() {
         return moveLeft().moveUp();
     }
 
+    public Position moveLeftUp(final int step) {
+        return moveLeft(step).moveUp(step);
+    }
+
     public boolean canMoveLeftDown() {
         return canMoveLeft() && canMoveDown();
+    }
+
+    public boolean canMoveLeftDown(final int step) {
+        return canMoveLeft(step) && canMoveDown(step);
     }
 
     public Position moveLeftDown() {
@@ -92,16 +104,32 @@ public record Position(
         return canMoveUp() && canMoveRight();
     }
 
+    public boolean canMoveRightUp(final int step) {
+        return canMoveUp(step) && canMoveRight(step);
+    }
+
     public Position moveRightUp() {
         return moveRight().moveUp();
+    }
+
+    public Position moveRightUp(final int step) {
+        return moveRight(step).moveUp(step);
     }
 
     public boolean canMoveRightDown() {
         return canMoveRight() && canMoveDown();
     }
 
+    public boolean canMoveRightDown(final int step) {
+        return canMoveRight(step) && canMoveDown(step);
+    }
+
     public Position moveRightDown() {
         return moveRight().moveDown();
+    }
+
+    public Position moveRightDown(final int step) {
+        return moveRight(step).moveDown(step);
     }
 
     public boolean isTop() {
