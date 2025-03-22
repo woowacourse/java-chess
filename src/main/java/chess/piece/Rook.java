@@ -8,22 +8,22 @@ import java.util.List;
 public class Rook {
 
     public List<Position> calculateCanMovePosition(Position departure, Position arrival) {
-        List<Position> rightUpResult = calculateUp(departure, arrival);
-        List<Position> leftDownResult = calculateDown(departure, arrival);
-        List<Position> leftUpResult = calculateLeft(departure, arrival);
-        List<Position> rightDownResult = calculateRight(departure, arrival);
+        List<Position> upResult = calculateUp(departure, arrival);
+        List<Position> downResult = calculateDown(departure, arrival);
+        List<Position> leftResult = calculateLeft(departure, arrival);
+        List<Position> rightResult = calculateRight(departure, arrival);
 
-        if (!rightUpResult.isEmpty()) {
-            return rightUpResult;
+        if (!upResult.isEmpty()) {
+            return upResult;
         }
-        if (!leftDownResult.isEmpty()) {
-            return leftDownResult;
+        if (!downResult.isEmpty()) {
+            return downResult;
         }
-        if (!leftUpResult.isEmpty()) {
-            return leftUpResult;
+        if (!leftResult.isEmpty()) {
+            return leftResult;
         }
-        if (!rightDownResult.isEmpty()) {
-            return rightDownResult;
+        if (!rightResult.isEmpty()) {
+            return rightResult;
         }
         throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
     }
