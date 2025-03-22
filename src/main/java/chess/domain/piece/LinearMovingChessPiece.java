@@ -66,4 +66,9 @@ public abstract class LinearMovingChessPiece implements ChessPiece {
     public void capture() {
         this.isCaptured = true;
     }
+
+    @Override
+    public boolean isCaptured() {
+        return isCaptured;
+    }
 }

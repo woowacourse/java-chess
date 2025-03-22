@@ -17,8 +17,13 @@ import java.util.Map;
 public class ChessBoard {
 
     private final Map<Position, ChessPiece> board = new HashMap<>();
+    private final ChessPiece blackKing;
+    private final ChessPiece whiteKing;
 
     public ChessBoard() {
+        blackKing = new King(Color.BLACK);
+        whiteKing = new King(Color.WHITE);
+
         for (Row row : Row.values()) {
             for (Column column : Column.values()) {
                 board.put(new Position(row, column), new None());
@@ -29,7 +34,7 @@ public class ChessBoard {
         board.put(new Position(Row.EIGHT, Column.B), new Knight(Color.BLACK));
         board.put(new Position(Row.EIGHT, Column.C), new Bishop(Color.BLACK));
         board.put(new Position(Row.EIGHT, Column.D), new Queen(Color.BLACK));
-        board.put(new Position(Row.EIGHT, Column.E), new King(Color.BLACK));
+        board.put(new Position(Row.EIGHT, Column.E), blackKing);
         board.put(new Position(Row.EIGHT, Column.F), new Bishop(Color.BLACK));
         board.put(new Position(Row.EIGHT, Column.G), new Knight(Color.BLACK));
         board.put(new Position(Row.EIGHT, Column.H), new Rook(Color.BLACK));
@@ -47,7 +52,7 @@ public class ChessBoard {
         board.put(new Position(Row.ONE, Column.B), new Knight(Color.WHITE));
         board.put(new Position(Row.ONE, Column.C), new Bishop(Color.WHITE));
         board.put(new Position(Row.ONE, Column.D), new Queen(Color.WHITE));
-        board.put(new Position(Row.ONE, Column.E), new King(Color.WHITE));
+        board.put(new Position(Row.ONE, Column.E), whiteKing);
         board.put(new Position(Row.ONE, Column.F), new Bishop(Color.WHITE));
         board.put(new Position(Row.ONE, Column.G), new Knight(Color.WHITE));
         board.put(new Position(Row.ONE, Column.H), new Rook(Color.WHITE));
@@ -143,5 +148,15 @@ public class ChessBoard {
                 }
             }
         }
+    }
+
+    public boolean checkOppositeKingCaptured(Color color) {
+        if (color == Color.BLACK) {
+            return whiteKing.isCaptured();
+        }
+        if (color == Color.WHITE) {
+            return blackKing.isCaptured();
+        }
+        return false;
     }
 }

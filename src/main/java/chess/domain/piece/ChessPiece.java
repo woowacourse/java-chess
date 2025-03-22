@@ -16,4 +16,5 @@ public interface ChessPiece {
     }
     Color getColor();
     void capture();
+    boolean isCaptured();
 }

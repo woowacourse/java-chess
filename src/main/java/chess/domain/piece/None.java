@@ -48,4 +48,9 @@ public class None implements ChessPiece {
         throw new IllegalStateException("말이 존재하지 않습니다.");
 
     }
+
+    @Override
+    public boolean isCaptured() {
+        return false;
+    }
 }

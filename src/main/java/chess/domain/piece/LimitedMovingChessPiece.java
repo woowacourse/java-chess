@@ -55,4 +55,9 @@ public abstract class LimitedMovingChessPiece implements ChessPiece {
     public void capture() {
         this.isCaptured = true;
     }
+
+    @Override
+    public boolean isCaptured() {
+        return isCaptured;
+    }
 }

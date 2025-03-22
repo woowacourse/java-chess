@@ -9,9 +9,10 @@ import java.util.Scanner;
 public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     public List<Position> getMoveInput() {
-        System.out.println("움직일 말의 위치와 도착지를 입력하세요.(ex. a1 b2)");
+        System.out.println(LINE_SEPARATOR + "움직일 말의 위치와 도착지를 입력하세요.(ex. a1 b2)");
 
         try {
             String positions = scanner.nextLine();

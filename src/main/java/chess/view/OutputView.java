@@ -8,26 +8,36 @@ import chess.domain.Row;
 import chess.domain.piece.ChessPiece;
 
 public class OutputView {
-    public void printChessBoard(ChessBoard chessBoard) {
 
-        System.out.print(" ");
+    private static final String LINE_SEPARATOR = System.lineSeparator();
+
+    public void printChessBoard(ChessBoard chessBoard) {
+        System.out.print("  ");
         for (Column column : Column.values()) {
-            System.out.print(parseColumn(column));
+            System.out.print(parseColumn(column) + " ");
         }
 
         System.out.println();
         for (Row row : Row.values()) {
-            System.out.print(parseRow(row));
+            System.out.print(parseRow(row) + " ");
             for (Column column : Column.values()) {
                 ChessPiece piece = chessBoard.getPieceOfPosition(new Position(row, column));
-                System.out.print(piece.name());
+                System.out.print(colorMessage(piece.name(), piece.getColor()) + " ");
             }
             System.out.println();
         }
     }
 
     public void printTurnMessage(Color color) {
-        System.out.println(color.name() + "의 차례입니다.");
+        System.out.println(LINE_SEPARATOR + colorMessage(color.name(), color) + "의 차례입니다.");
+    }
+
+    public void printWinningMessage(Color winner) {
+        System.out.println(LINE_SEPARATOR + colorMessage(winner.name(), winner) + "의 승리입니다!");
+    }
+
+    public static void printErrorMessage(String message) {
+        System.out.println(message);
     }
 
     private String parseColumn(Column column) {
@@ -86,7 +96,13 @@ public class OutputView {
         return null;
     }
 
-    public static void printErrorMessage(String message) {
-        System.out.println(message);
+    private String colorMessage(String message, Color color) {
+        if (color == Color.BLACK) {
+            return "\u001B[90m" +  message +  "\u001B[0m";
+        }
+        if (color == Color.WHITE) {
+            return "\u001B[97m" +  message +  "\u001B[0m";
+        }
+        return "\u001B[34m" +  message +  "\u001B[0m";
     }
 }

@@ -19,19 +19,34 @@ public class ChessController {
 
     public void run() {
         ChessBoard chessBoard = new ChessBoard();
+        List<Color> colors = Color.getGameColors();
+        Color nowTurn = colors.get(0);
 
-        while (true) {
+        boolean isKingCaptured = false;
+        while (!isKingCaptured) {
             outputView.printChessBoard(chessBoard);
-            InputProcessor.processUntilSuccess(() -> {
-                List<Position> originAndDestination = inputView.getMoveInput();
-                chessBoard.movePiece(originAndDestination.get(0), originAndDestination.get(1));
-            }, OutputView::printErrorMessage);
+            outputView.printTurnMessage(nowTurn);
 
-
-//            List<Color> colors = Color.getGameColors();
-//            for (Color color : colors) {
-//                outputView.printTurnMessage(color);
-//            }
+            processChessTurn(chessBoard, nowTurn);
+            if (chessBoard.checkOppositeKingCaptured(nowTurn)) {
+                break;
+            }
+            nowTurn = nowTurn.opposite();
         }
+
+        outputView.printWinningMessage(nowTurn);
+    }
+
+    private void processChessTurn(ChessBoard chessBoard, Color nowTurn) {
+        InputProcessor.processUntilSuccess(() -> {
+            List<Position> originAndDestination = inputView.getMoveInput();
+            Position origin = originAndDestination.get(0);
+            if (chessBoard.getPieceOfPosition(origin).getColor() != nowTurn) {
+                throw new IllegalArgumentException("현재는 %s의 차례입니다.".formatted(nowTurn.name()));
+            }
+            Position destination = originAndDestination.get(1);
+
+            chessBoard.movePiece(origin, destination);
+        }, OutputView::printErrorMessage);
     }
 }
