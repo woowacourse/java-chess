@@ -34,7 +34,7 @@ public class Knight extends Piece{
         this.availableMovement = knightMovement;
     }
 
-    public boolean canMove(Position start, Position target) {
+    public boolean availablePath(Position start, Position target) {
         for (Movement movement : availableMovement) {
             if(!start.canMove(movement)) {
                 continue;

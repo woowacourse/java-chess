@@ -17,7 +17,7 @@ class QueenTest {
         Queen queen = new Queen();
 
         // when
-        boolean canMove = queen.canMove(A1, C3);
+        boolean canMove = queen.availablePath(A1, C3);
 
         // then
         assertThat(canMove).isTrue();
@@ -30,7 +30,7 @@ class QueenTest {
         Queen queen = new Queen();
 
         // when
-        boolean canMove = queen.canMove(A1, A3);
+        boolean canMove = queen.availablePath(A1, A3);
 
         // then
         assertThat(canMove).isTrue();
@@ -43,7 +43,7 @@ class QueenTest {
         Queen queen = new Queen();
 
         // when
-        boolean canMove = queen.canMove(A1, B3);
+        boolean canMove = queen.availablePath(A1, B3);
 
         // then
         assertThat(canMove).isFalse();

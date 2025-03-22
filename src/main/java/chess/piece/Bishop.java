@@ -8,7 +8,7 @@ import java.util.List;
 public class Bishop extends Piece{
 
     @Override
-    public boolean canMove(Position start, Position target) {
+    public boolean availablePath(Position start, Position target) {
         return start.onDiagonal(target);
     }
 

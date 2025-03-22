@@ -2,7 +2,6 @@ package chess.piece;
 
 import static chess.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,8 +15,8 @@ class KnightTest {
         Piece knight = new Knight();
 
         // when
-        boolean canMove = knight.canMove(B1, C3);
-        boolean canMove2 = knight.canMove(B1, A3);
+        boolean canMove = knight.availablePath(B1, C3);
+        boolean canMove2 = knight.availablePath(B1, A3);
 
         // then
         assertThat(canMove).isTrue();
@@ -31,7 +30,7 @@ class KnightTest {
         Piece knight = new Knight();
 
         // when
-        boolean canMove = knight.canMove(B1, C2);
+        boolean canMove = knight.availablePath(B1, C2);
 
         // then
         assertThat(canMove).isFalse();

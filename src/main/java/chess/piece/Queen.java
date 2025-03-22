@@ -9,7 +9,7 @@ import java.util.Map;
 public class Queen extends Piece {
 
     @Override
-    public boolean canMove(Position start, Position target) {
+    public boolean availablePath(Position start, Position target) {
         return start.onStraight(target) || start.onDiagonal(target);
     }
 

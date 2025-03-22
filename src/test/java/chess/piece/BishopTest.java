@@ -17,7 +17,7 @@ class BishopTest {
         Bishop bishop = new Bishop();
 
         // when
-        boolean canMove = bishop.canMove(A1, B2);
+        boolean canMove = bishop.availablePath(A1, B2);
 
         // then
         assertThat(canMove).isTrue();
@@ -30,7 +30,7 @@ class BishopTest {
         Bishop bishop = new Bishop();
 
         // when
-        boolean canMove = bishop.canMove(A1, A2);
+        boolean canMove = bishop.availablePath(A1, A2);
 
         // then
         assertThat(canMove).isFalse();

@@ -17,7 +17,7 @@ class RookTest {
         Rook rook = new Rook();
 
         // when
-        boolean canMove = rook.canMove(A1, A8);
+        boolean canMove = rook.availablePath(A1, A8);
 
         // then
         assertThat(canMove).isTrue();
@@ -30,7 +30,7 @@ class RookTest {
         Rook rook = new Rook();
 
         // when
-        boolean canMove = rook.canMove(A1, H1);
+        boolean canMove = rook.availablePath(A1, H1);
 
         // then
         assertThat(canMove).isTrue();
@@ -43,7 +43,7 @@ class RookTest {
         Rook rook = new Rook();
 
         // when
-        boolean canMove = rook.canMove(A1, B2);
+        boolean canMove = rook.availablePath(A1, B2);
 
         // then
         assertThat(canMove).isFalse();

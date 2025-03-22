@@ -8,7 +8,7 @@ public abstract class Piece {
     Piece() {
     }
 
-    public abstract boolean canMove(Position start, Position target);
+    public abstract boolean availablePath(Position start, Position target);
 
     public abstract List<Position> findAllRouteToTarget(Position start, Position target);
 }

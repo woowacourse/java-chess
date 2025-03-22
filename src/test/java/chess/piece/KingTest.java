@@ -25,7 +25,7 @@ class KingTest {
         King king = new King();
 
         // when
-        boolean canMove = king.canMove(B2, target);
+        boolean canMove = king.availablePath(B2, target);
 
         // then
         assertThat(canMove).isTrue();
@@ -37,7 +37,7 @@ class KingTest {
         King king = new King();
 
         // when
-        boolean canMove = king.canMove(B2, D2);
+        boolean canMove = king.availablePath(B2, D2);
 
         // then
         assertThat(canMove).isFalse();
