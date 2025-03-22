@@ -29,7 +29,6 @@ public class ChessBoard {
     }
 
     public void moveAndCapturePiece(Position origin, Position destination) {
-
         ChessPiece movePiece = getPieceOfPosition(origin);
         List<Movement> route = movePiece.findRoute(origin, destination);
         boolean isExistHurdleOnRoute = checkHurdleExistOnRouteWithoutDestination(origin, route);

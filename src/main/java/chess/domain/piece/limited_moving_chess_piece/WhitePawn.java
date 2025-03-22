@@ -6,7 +6,9 @@ import java.util.List;
 
 public class WhitePawn extends Pawn {
 
+    private static final List<Movement> ROUTES = List.of(Movement.UP_UP, Movement.UP, Movement.LEFT_UP, Movement.RIGHT_UP);
+
     public WhitePawn() {
-        super(List.of(Movement.UP_UP, Movement.UP, Movement.LEFT_UP, Movement.RIGHT_UP), Color.WHITE);
+        super(ROUTES, Color.WHITE);
     }
 }

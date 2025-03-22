@@ -6,11 +6,13 @@ import java.util.List;
 
 public class Queen extends LinearMovingChessPiece {
 
+    private static final List<Movement> DIRECTIONS = List.of(
+            Movement.UP, Movement.DOWN, Movement.LEFT, Movement.RIGHT,
+            Movement.RIGHT_DOWN, Movement.LEFT_DOWN, Movement.RIGHT_UP, Movement.LEFT_UP
+    );
+
     public Queen(Color side) {
-        super(List.of(
-                Movement.UP, Movement.DOWN, Movement.LEFT, Movement.RIGHT,
-                Movement.RIGHT_DOWN, Movement.LEFT_DOWN, Movement.RIGHT_UP, Movement.LEFT_UP)
-                , side);
+        super(DIRECTIONS, side);
     }
 
     @Override

@@ -6,10 +6,12 @@ import java.util.List;
 
 public class Rook extends LinearMovingChessPiece {
 
+    private static final List<Movement> DIRECTIONS = List.of(
+            Movement.UP, Movement.DOWN, Movement.LEFT, Movement.RIGHT
+    );
+
     public Rook(Color side) {
-        super(List.of(
-                Movement.UP, Movement.DOWN, Movement.LEFT, Movement.RIGHT
-        ), side);
+        super(DIRECTIONS, side);
     }
 
     @Override

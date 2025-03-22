@@ -6,11 +6,13 @@ import java.util.List;
 
 public class King extends LimitedMovingChessPiece {
 
+    private static final List<Movement> ROUTES = List.of(
+            Movement.LEFT, Movement.UP, Movement.RIGHT, Movement.DOWN,
+            Movement.LEFT_DOWN, Movement.LEFT_UP, Movement.RIGHT_DOWN, Movement.RIGHT_UP
+    );
+
     public King(Color side) {
-        super(List.of(
-                Movement.LEFT, Movement.LEFT_DOWN, Movement.UP, Movement.RIGHT,
-                Movement.LEFT_DOWN, Movement.LEFT_UP, Movement.RIGHT_DOWN, Movement.RIGHT_UP
-        ), side);
+        super(ROUTES, side);
     }
 
     @Override
