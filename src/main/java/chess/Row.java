@@ -11,6 +11,42 @@ public enum Row {
     TWO,
     ONE;
 
+    public static Row change(char value) {
+        if (value == '1') {
+            return ONE;
+        }
+
+        if (value == '2') {
+            return TWO;
+        }
+
+        if (value == '3') {
+            return THREE;
+        }
+
+        if (value == '4') {
+            return FOUR;
+        }
+
+        if (value == '5') {
+            return FIVE;
+        }
+
+        if (value == '6') {
+            return SIX;
+        }
+
+        if (value == '7') {
+            return SEVEN;
+        }
+
+        if (value == '8') {
+            return EIGHT;
+        }
+
+        throw new IllegalArgumentException("[ERROR] 그런 값은 없어요.");
+    }
+
     public boolean isTop() {
         return ordinal() == 0;
     }

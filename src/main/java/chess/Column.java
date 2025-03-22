@@ -11,6 +11,42 @@ public enum Column {
     G,
     H;
 
+    public static Column change(char value) {
+        if (value == 'A') {
+            return A;
+        }
+
+        if (value == 'B') {
+            return B;
+        }
+
+        if (value == 'C') {
+            return C;
+        }
+
+        if (value == 'D') {
+            return D;
+        }
+
+        if (value == 'E') {
+            return E;
+        }
+
+        if (value == 'F') {
+            return F;
+        }
+
+        if (value == 'G') {
+            return G;
+        }
+
+        if (value == 'H') {
+            return H;
+        }
+
+        throw new IllegalArgumentException("[ERROR] 그런 열은 없어용");
+    }
+
     public boolean isFarLeft() {
         return ordinal() == 0;
     }
