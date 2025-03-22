@@ -1,7 +1,8 @@
 package chess.piece;
 
-import static chess.Movement.LEFT_UP;
-import static chess.Movement.RIGHT_UP;
+import static chess.Movement.DOWN;
+import static chess.Movement.LEFT;
+import static chess.Movement.RIGHT;
 import static chess.Movement.UP;
 import static chess.Movement.UP_UP;
 import static chess.Row.TWO;
@@ -18,9 +19,13 @@ public class Pawn extends Piece {
 
     static {
         allMovements.add(List.of(UP));
-        allMovements.add(List.of(UP_UP));
-        allMovements.add(List.of(LEFT_UP));
-        allMovements.add(List.of(RIGHT_UP));
+        allMovements.add(List.of(UP, UP));
+        allMovements.add(List.of(DOWN));
+        allMovements.add(List.of(DOWN, DOWN));
+        allMovements.add(List.of(LEFT, UP));
+        allMovements.add(List.of(RIGHT, UP));
+        allMovements.add(List.of(LEFT, DOWN));
+        allMovements.add(List.of(RIGHT, DOWN));
     }
 
     public Pawn(final Color color) {
@@ -41,16 +46,27 @@ public class Pawn extends Piece {
                 root.add(now);
             }
             if (now.equals(goal)) {
+                if (color.isWhite() && movements.contains(DOWN)) {
+                    break;
+                }
+                if (color.isBlack() && movements.contains(UP) || movements.contains(UP_UP)) {
+                    break;
+                }
                 if (start.row() != TWO && movements.contains(UP_UP)) {
                     throw new IllegalArgumentException("처음 움직이는 폰만 앞으로 두 칸을 이동할 수 있습니다.");
                 }
                 return root;
             }
         }
-        throw new IllegalArgumentException("경로가 존재하지 않습니다.");
+        throw new IllegalArgumentException("해당 기물은 해당 위치로 이동할 수 없습니다.");
     }
 
     @Override
     protected void validateMiddlePath(Board board, List<Position> root) {
+    }
+
+    @Override
+    public String toString() {
+        return "폰";
     }
 }
