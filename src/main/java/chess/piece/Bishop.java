@@ -9,7 +9,6 @@ public class Bishop implements Piece {
         return offset.isDiagonal();
     }
 
-
     @Override
     public String toString() {
         return "숍";

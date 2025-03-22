@@ -6,7 +6,7 @@ public class King implements Piece {
 
     @Override
     public boolean canMove(final Offset offset) {
-        return !offset.isDiagonal() && offset.hasOneMovement();
+        return offset.isVerticalOrHorizontal() && offset.hasOneMovement();
     }
 
     @Override
