@@ -28,7 +28,6 @@ public final class Pawn extends Piece {
     }
 
     @Override
-
     public void validateMove(Position start, Position end) {
         for (Movement movement : movements) {
             if (!start.canMove(movement)) {
@@ -42,4 +41,6 @@ public final class Pawn extends Piece {
         // 일치하는거 못찾음
         throw new IllegalArgumentException("[ERROR] 기물의 이동 규칙에 어긋나는 움직임입니다.");
     }
+
+
 }

@@ -454,4 +454,101 @@ class BoardTest {
                     .hasMessage("[ERROR] 다른 기물에 의해 막혀서 이동할 수 없는 경로입니다.");
         }
     }
+
+    @Nested
+    @DisplayName("흰색 폰의 움직임")
+    class WhitePawnTest {
+        private final Position start = PositionFixture.C2;
+        private final Position upEnd = PositionFixture.C3;
+        private final Position upUpEnd = PositionFixture.C4;
+        private final Position rightUpEnd = PositionFixture.D3;
+        private final Position leftUpEnd = PositionFixture.B3;
+        private final Piece whitePawn = Pawn.white();
+
+        @DisplayName("C2에서 C3로 이동할 수 있다.")
+        @Test
+        void test1() {
+            // given
+            Board board = BoardFixture.createBoardWithOneWhitePiece(start, whitePawn);
+            // when
+            board.move(start, upEnd);
+            // then
+            assertThat(board.pieceTypeAt(upEnd)).isEqualTo(PieceType.PAWN);
+            assertThat(board.colorAt(upEnd)).isEqualTo(Color.WHITE);
+        }
+
+        @DisplayName("C2에서 C4로 이동할 수 있다.")
+        @Test
+        void test2() {
+            // given
+            Board board = BoardFixture.createBoardWithOneWhitePiece(start, whitePawn);
+            // when
+            board.move(start, upUpEnd);
+            // then
+            assertThat(board.pieceTypeAt(upUpEnd)).isEqualTo(PieceType.PAWN);
+            assertThat(board.colorAt(upUpEnd)).isEqualTo(Color.WHITE);
+        }
+
+        @DisplayName("중간에 기물이 있을 경우 두 칸 이동할 수 없다.")
+        @Test
+        void test22() {
+            // given
+            Board board = BoardFixture.createBoardWithTwoOppositePiece(start, upEnd, whitePawn, Pawn.black());
+            // when
+            // then
+            assertThatThrownBy(() -> board.move(start, upUpEnd))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("[ERROR] 다른 기물에 의해 막혀서 이동할 수 없는 경로입니다.");
+        }
+
+        @DisplayName("첫 이동이 아닌 경우 앞으로 2칸 이동할 수 없다.")
+        @Test
+        void test3() {
+            // given
+            Board board = BoardFixture.createBoardWithOneWhitePiece(start, whitePawn);
+            // when
+            board.move(start, PositionFixture.C3);
+            // then
+            assertThatThrownBy(() -> board.move(PositionFixture.C3, PositionFixture.C5))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("[ERROR] 폰은 첫 움직임에만 두 칸 이동할 수 있습니다.");
+        }
+
+        @DisplayName("대각선 위에 아무 것도 없으면 이동할 수 없다.")
+        @Test
+        void test44() {
+            // given
+            Board board = BoardFixture.createBoardWithOneWhitePiece(start, whitePawn);
+            // when
+            // then
+            assertThatThrownBy(() -> board.move(start, rightUpEnd))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("[ERROR] 해당 위치에 잡을 수 있는 기물이 없습니다.");
+        }
+
+        @DisplayName("대각선 위에 상대 기물이 있으면 잡을 수 있다.")
+        @Test
+        void test4() {
+            // given
+            Board board = BoardFixture.createBoardWithTwoOppositePiece(start, leftUpEnd, whitePawn, Pawn.black());
+            // when
+            assertThat(board.pieceTypeAt(leftUpEnd)).isEqualTo(PieceType.PAWN);
+            assertThat(board.colorAt(leftUpEnd)).isEqualTo(Color.BLACK);
+            board.move(start, leftUpEnd);
+            // then
+            assertThat(board.pieceTypeAt(leftUpEnd)).isEqualTo(PieceType.PAWN);
+            assertThat(board.colorAt(leftUpEnd)).isEqualTo(Color.WHITE);
+        }
+    }
+
+    @Nested
+    @DisplayName("검은색 폰의 움직임")
+    class BlackPawnTest {
+        private final Position start = PositionFixture.C3;
+        private final Position downEnd = PositionFixture.C2;
+        private final Position downDownEnd = PositionFixture.C1;
+        private final Position rightDownEnd = PositionFixture.D2;
+        private final Position leftDownEnd = PositionFixture.B2;
+        private final Piece blackPawn = Pawn.black();
+    }
 }

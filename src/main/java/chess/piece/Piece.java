@@ -8,6 +8,8 @@ public abstract class Piece {
 
     protected final List<Movement> movements;
     protected final PieceType pieceType;
+    private boolean moved = false;
+
 
     public Piece(List<Movement> movements, PieceType pieceType) {
         this.movements = movements;
@@ -32,5 +34,13 @@ public abstract class Piece {
 
     public PieceType type() {
         return pieceType;
+    }
+
+    public void recordMoved() {
+        this.moved = true;
+    }
+
+    public boolean moved() {
+        return moved;
     }
 }

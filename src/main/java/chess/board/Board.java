@@ -79,8 +79,37 @@ public final class Board {
         if (piece.type().canBeBlocked()) {
             validateRouteNotBlocked(piece.getValidateMovement(start, end), start, end);
         }
+        if (piece.type() == PieceType.PAWN) {
+            validatePawn(piece, start, end);
+        }
         pieces.put(end, piece);
         colors.put(end, color);
+        pieces.remove(start);
+        colors.put(start, Color.EMPTY);
+        piece.recordMoved();
+    }
+
+    private void validatePawn(Piece piece, Position start, Position end) {
+        Movement validateMovement = piece.getValidateMovement(start, end);
+        if (validateMovement == Movement.UP_UP) {
+            if (piece.moved()) {
+                throw new IllegalArgumentException("[ERROR] 폰은 첫 움직임에만 두 칸 이동할 수 있습니다.");
+            }
+            if (colorAt(start.move(Movement.UP)) != Color.EMPTY) {
+                throw new IllegalArgumentException("[ERROR] 다른 기물에 의해 막혀서 이동할 수 없는 경로입니다.");
+            }
+        }
+        if (validateMovement == Movement.DOWN_DOWN) {
+            if (piece.moved()) {
+                throw new IllegalArgumentException("[ERROR] 폰은 첫 움직임에만 두 칸 이동할 수 있습니다.");
+            }
+            if (colorAt(start.move(Movement.DOWN)) != Color.EMPTY) {
+                throw new IllegalArgumentException("[ERROR] 다른 기물에 의해 막혀서 이동할 수 없는 경로입니다.");
+            }
+        }
+        if (validateMovement.isDiagonal() && colorAt(end) == Color.EMPTY) {
+            throw new IllegalArgumentException("[ERROR] 해당 위치에 잡을 수 있는 기물이 없습니다.");
+        }
     }
 
     private void validateRouteNotBlocked(Movement movement, Position start, Position end) {
@@ -93,10 +122,10 @@ public final class Board {
     }
 
     private void validateEndPosition(Position start, Position end) {
-        if (colors.get(end).isEmpty()) {
+        if (colorAt(end).isEmpty()) {
             return;
         }
-        if (colors.get(end) == colors.get(start)) {
+        if (colorAt(end) == colorAt(start)) {
             throw new IllegalArgumentException("[ERROR] 같은 팀의 기물은 잡을 수 없습니다.");
         }
     }

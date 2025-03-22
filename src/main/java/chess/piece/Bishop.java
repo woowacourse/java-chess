@@ -20,7 +20,6 @@ public final class Bishop extends Piece {
     }
 
     @Override
-
     public void validateMove(Position start, Position end) {
         for (Movement movement : movements) {
             Position nextPosition = start;
