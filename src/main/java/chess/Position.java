@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Objects;
+
 public record Position(
         Column column,
         Row row
@@ -166,5 +168,23 @@ public record Position(
             return moveLeft(-step);
         }
         return this;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Position position = (Position) object;
+        return row == position.row && column == position.column;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(column, row);
+    }
+
+    public boolean canNotMove(Movement movement) {
+        return !canMove(movement);
     }
 }
