@@ -14,11 +14,9 @@ public class Board {
 
     private Color turn = Color.BLACK;
 
-    public Board(final ChessPieces pieces1, final ChessPieces pieces2) {
-        // TODO : 하나는 검정색, 하나는 흰색 이어야 함
-        // 색깔에 맞춰 넣기
-        this.whitePieces = pieces1;
-        this.blackPieces = pieces2;
+    public Board(final ChessPieces whitePieces, final ChessPieces blackPieces) {
+        this.whitePieces = whitePieces;
+        this.blackPieces = blackPieces;
     }
 
     public void move(final Position piecePosition, final Position newPosition) {
